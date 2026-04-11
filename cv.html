@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV</title>
+    <style>
+      :root { --bg:#050505; --text:#fff; }
+      html { scroll-behavior:smooth; }
+      * { box-sizing:border-box; margin:0; padding:0; }
+      body { min-height:100vh; background:var(--bg); color:var(--text); font-family:"Suisse Intl","Helvetica Neue",Arial,sans-serif; }
+      a { color:inherit; text-decoration:none; }
+      .page { width:min(620px, calc(100vw - 32px)); margin:0 auto; padding:120px 0 120px; min-height:100vh; display:grid; place-items:center; }
+      .topbar { position:fixed; top:0; left:16px; right:16px; z-index:20; min-height:64px; padding-top:24px; background:url("https://www.figma.com/api/mcp/asset/f1a87b44-4b1a-4236-8aa4-d308133efa6f") top center / 100% 64px no-repeat; }
+      .topbar__inner { position:relative; min-height:64px; }
+      .topbar__side, .topbar__controls { position:absolute; top:0; display:flex; align-items:center; }
+      .topbar__side--left { left:0; }
+      .topbar__side--right { right:0; gap:8px; }
+      .topbar__controls { left:50%; transform:translateX(-50%); gap:8px; }
+      .link, .button { transition:opacity 160ms ease; }
+      .link:hover, .button:hover { opacity:0.8; }
+      .link { display:inline-flex; align-items:center; min-height:40px; font-size:13px; line-height:17px; font-weight:400; text-decoration:underline; text-underline-offset:3px; }
+      .link--left, .link--right { width:98px; }
+      .link--right { justify-content:flex-end; text-align:right; }
+      .button { display:inline-flex; align-items:center; justify-content:center; height:40px; padding:8px; border-radius:2px; border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.8); backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%); box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 10px 30px rgba(0,0,0,.12); color:#000; font-size:13px; line-height:17px; font-weight:500; }
+      .button--small { width:48px; }
+      .button--wide { width:80px; }
+      .label { font-size:24px; line-height:32px; font-weight:400; }
+      .bottom-signs { position:fixed; left:16px; right:16px; bottom:0; z-index:18; height:64px; padding-bottom:12px; background:url("https://www.figma.com/api/mcp/asset/3b7635fe-826f-4e5f-9096-8a9a542162c1") bottom center / 100% 64px no-repeat; }
+      .bottom-signs__name, .bottom-signs__year { position:absolute; bottom:12px; font-size:13px; line-height:17px; font-weight:400; }
+      .bottom-signs__name { left:85px; transform:translateX(-100%); text-align:right; }
+      .bottom-signs__year { right:0; text-align:right; }
+    </style>
+  </head>
+  <body>
+    <div class="page" id="top">
+      <header class="topbar">
+        <div class="topbar__inner">
+          <div class="topbar__side topbar__side--left"><a class="link link--left" href="./Test visual.html#top">Main page</a></div>
+          <div class="topbar__controls"><a class="button button--small" href="./cv.html">CV</a><a class="button button--wide" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Telegram</a><a class="button button--small" href="mailto:eggy0510@gmail.com">Mail</a></div>
+          <div class="topbar__side topbar__side--right"><span class="link link--right">Ru</span><a class="link link--right" href="./wall.html">The wall</a></div>
+        </div>
+      </header>
+      <p class="label">CV</p>
+    </div>
+    <div class="bottom-signs" aria-hidden="true"><span class="bottom-signs__name">Tsarёv Andrey</span><span class="bottom-signs__year">2026</span></div>
+  </body>
+</html>

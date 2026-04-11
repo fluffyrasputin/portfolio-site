@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test visual</title>
+    <style>
+      :root {
+        --bg: #050505;
+        --text: #fff;
+        --muted: rgba(255, 255, 255, 0.6);
+      }
+
+      html { scroll-behavior: smooth; }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: var(--bg); color: var(--text); font-family: "Suisse Intl", "Helvetica Neue", Arial, sans-serif; }
+      img { display: block; max-width: 100%; }
+      a { color: inherit; text-decoration: none; }
+
+      .page { width: min(620px, calc(100vw - 32px)); margin: 0 auto; padding: 120px 0 120px; }
+
+      .topbar {
+        position: fixed;
+        top: 0; left: 16px; right: 16px;
+        z-index: 20;
+        min-height: 64px;
+        padding-top: 24px;
+        background: url("https://www.figma.com/api/mcp/asset/f1a87b44-4b1a-4236-8aa4-d308133efa6f") top center / 100% 64px no-repeat;
+      }
+
+      .topbar__inner { position: relative; min-height: 64px; }
+      .topbar__side, .topbar__controls { position: absolute; top: 0; display: flex; align-items: center; }
+      .topbar__side--left { left: 0; }
+      .topbar__side--right { right: 0; gap: 8px; }
+      .topbar__controls { left: 50%; transform: translateX(-50%); gap: 8px; }
+
+      .link, .button, .more { transition: opacity 160ms ease; }
+      .link:hover, .button:hover, .more:hover { opacity: 0.8; }
+
+      .link {
+        display: inline-flex; align-items: center; min-height: 40px;
+        font-size: 13px; line-height: 17px; font-weight: 400;
+        text-decoration: underline; text-underline-offset: 3px;
+      }
+
+      .link--left, .link--right { width: 98px; }
+      .link--right { justify-content: flex-end; text-align: right; }
+
+      .button, .more {
+        display: inline-flex; align-items: center; justify-content: center;
+        height: 40px; padding: 8px; border-radius: 2px;
+        border: 1px solid rgba(255,255,255,.3);
+        background: rgba(255,255,255,.8);
+        backdrop-filter: blur(18px) saturate(140%);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,.35),
+          0 10px 30px rgba(0,0,0,.12);
+        color: #000; font-size: 13px; line-height: 17px; font-weight: 500;
+      }
+      .button--small { width: 48px; }
+      .button--wide { width: 80px; }
+      .more { width: 56px; }
+
+      .loader {
+        position: fixed;
+        inset: 0;
+        z-index: 120;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at top, rgba(255,255,255,.05), transparent 36%),
+          rgba(5,5,5,.92);
+        animation: loader-fade 1.25s ease forwards;
+        pointer-events: none;
+      }
+
+      .loader__glass {
+        display: grid;
+        place-items: center;
+        width: 112px;
+        height: 112px;
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 32px;
+        background: rgba(255,255,255,.08);
+        backdrop-filter: blur(26px) saturate(140%);
+        -webkit-backdrop-filter: blur(26px) saturate(140%);
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,.18),
+          0 18px 48px rgba(0,0,0,.28);
+      }
+
+      .loader__track {
+        position: relative;
+        width: 54px;
+        height: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255,255,255,.12);
+      }
+
+      .loader__pulse {
+        position: absolute;
+        top: 1px;
+        left: -16px;
+        width: 26px;
+        height: 8px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(255,255,255,.24), rgba(255,255,255,.92));
+        box-shadow: 0 0 18px rgba(255,255,255,.32);
+        animation: loader-slide 1s cubic-bezier(.45,0,.2,1) infinite;
+      }
+
+      @keyframes loader-slide {
+        0% { transform: translateX(0); opacity: .2; }
+        45% { opacity: 1; }
+        100% { transform: translateX(60px); opacity: .2; }
+      }
+
+      @keyframes loader-fade {
+        0%, 68% { opacity: 1; visibility: visible; }
+        100% { opacity: 0; visibility: hidden; }
+      }
+
+      .hero { position: relative; min-height: 389px; padding-top: 48px; }
+      .hero__identity { position: relative; z-index: 2; display: grid; gap: 20px; width: fit-content; }
+      .hero__name { font-size: 32px; line-height: 32px; font-weight: 400; }
+      .hero__role, .hero__projects-list, .hero__promo-text, .text { font-size: 13px; line-height: 17px; font-weight: 400; }
+      .hero__wolf { position: absolute; left: calc(50% + 3px); bottom: 0; width: 254px; height: 389px; transform: translateX(-50%); overflow: hidden; }
+      .hero__wolf img { position: absolute; top: -20.3%; left: -60.09%; width: 220.53%; height: 144.36%; max-width: none; object-fit: cover; }
+      .hero__portrait { position: absolute; right: 0; bottom: 0; width: 96px; height: 96px; }
+      .hero__projects { position: absolute; left: 0; top: 202px; display: flex; gap: 28px; align-items: flex-start; }
+      .hero__project-list { display: flex; gap: 8px; align-items: flex-start; }
+      .hero__project-logos { display: grid; gap: 4px; padding-top: 2px; width: 13px; }
+      .hero__project-logo { position: relative; width: 13px; height: 13px; overflow: hidden; }
+      .hero__project-logo img { width: 100%; height: 100%; object-fit: cover; }
+      .hero__promo { position: absolute; left: 413px; top: 0; width: 207px; display: grid; gap: 10px; padding-top: 80px; }
+      .hero__promo img { width: 24px; height: 24px; }
+
+      .flow { display: grid; gap: 120px; padding-top: 155px; justify-items: start; }
+      .section { display: grid; gap: 40px; }
+      .flow > .section:not(:first-child),
+      .flow > .b24-case,
+      .flow > .stoloto-case { width: 620px; max-width: 100%; justify-self: start; }
+      .flow > .section:first-child { width: 620px; max-width: 100%; justify-self: start; }
+      .section__header { display: grid; gap: 32px; }
+      .wide-logo { width: 100%; height: 92px; }
+      .section__intro { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; }
+      .meta { width: 143px; display: grid; gap: 8px; }
+      .meta--button { gap: 16px; }
+      .title-block { display: grid; gap: 8px; }
+      .status { color: var(--muted); }
+      .desc { width: 201px; }
+
+      .media, .media-sm, .logo-box { position: relative; overflow: hidden; }
+      .media img, .media-sm img, .logo-box img { width: 100%; height: 100%; }
+
+      .atom-two, .atom-three, .pb-content, .stoloto-grid, .stoloto-grid-two {
+        display: flex; gap: 8px; align-items: flex-start; justify-content: space-between;
+      }
+
+      .atom-copy-wrap { width: 201px; display: grid; gap: 48px; }
+      .atom-kamaz { width: 105px; height: 150px; }
+      .atom-steering { width: 411px; height: 300px; }
+      .atom-left, .atom-right { width: 306px; display: grid; }
+      .atom-left { gap: 40px; justify-items: end; }
+      .atom-right { gap: 16px; justify-items: end; }
+      .atom-cards { width: 306px; aspect-ratio: 1688 / 911; }
+      .atom-small-copy { width: 201px; display: grid; gap: 32px; justify-self: start; }
+      .atom-small-photo { width: 128px; height: 75px; }
+      .atom-thin { width: 185px; height: 90px; }
+      .atom-radar { width: 306px; aspect-ratio: 1971 / 2050; }
+      .atom-last { width: 100%; aspect-ratio: 3731 / 2094; }
+
+      .obu-desc-image { width: 201px; height: 64px; }
+      .obu-copy { width: 364px; }
+
+      .title-32 { font-size: 32px; line-height: 32px; font-weight: 400; }
+      .pb-logo { width: 620px; max-width: 100%; height: 92px; }
+      .pb-intro { display: flex; align-items: flex-start; justify-content: space-between; width: 620px; max-width: 100%; }
+      .pb-meta { width: 143px; display: grid; gap: 8px; }
+      .pb-meta .more, .b24-meta .more, .stoloto-meta .more { margin-top: 8px; }
+      .pb-name, .pb-status, .pb-tag, .pb-description, .pb-copy { font-size: 13px; line-height: 17px; font-weight: 400; }
+      .pb-status, .pb-tag { color: var(--muted); }
+      .pb-left, .pb-right { width: 306px; display: grid; }
+      .pb-left { gap: 40px; }
+      .pb-right { gap: 0; }
+      .pb-phone { width: 306px; height: 620px; }
+      .pb-copy { width: 259px; }
+      .pb-description { width: 201px; min-height: 197px; padding-top: 72px; }
+      .pb-card { width: 306px; height: 465px; }
+      .pb-msc { width: 306px; height: 306px; margin-top: 40px; }
+      .pb-desc-card { width: 201px; height: 324px; }
+      .stoloto-left, .stoloto-right, .stoloto-bottom-left, .stoloto-bottom-right { width: 306px; }
+      .pb-pills { width: 306px; height: 170px; margin-top: 40px; }
+
+      .b24-case { display: grid; gap: 40px; }
+      .b24-logo { position: relative; width: 620px; max-width: 100%; height: 110px; }
+      .b24-logo img { width: 100%; height: 100%; object-fit: contain; object-position: left top; }
+      .b24-intro, .stoloto-intro { display: flex; align-items: flex-start; justify-content: space-between; width: 620px; max-width: 100%; }
+      .b24-meta, .stoloto-meta { width: 143px; display: grid; gap: 8px; }
+      .b24-tag, .stoloto-tag { padding-top: 25px; color: var(--muted); }
+      .b24-story { width: 620px; max-width: 100%; display: grid; gap: 24px; }
+      .b24-faces { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+      .b24-faces-left { position: relative; width: 201px; height: 113px; flex: 0 0 201px; }
+      .b24-faces-right { position: relative; width: 305px; height: 136px; flex: 0 0 305px; }
+      .b24-face { position: absolute; overflow: hidden; background: #fff; }
+      .b24-faces-left .b24-face { width: 97px; height: 97px; border-radius: 28.218px; }
+      .b24-faces-right .b24-face { width: 96px; height: 96px; border-radius: 50px; }
+      .b24-face--left-one { left: 0; top: 16px; }
+      .b24-face--left-two { left: 104px; top: 0; }
+      .b24-face--right-one { left: 0; top: 16px; }
+      .b24-face--right-two { left: 105px; top: 40px; }
+      .b24-face--right-three { left: 209px; top: 16px; }
+      .b24-face img { position: absolute; max-width: none; object-fit: cover; }
+      .b24-face--left-one img { left: calc(50% - 9.35px); top: -29.1px; width: 257.05px; height: 196.08px; transform: translateX(-50%); }
+      .b24-face--left-two img { left: calc(50% - 6.93px); top: -97.69px; width: 339.5px; transform: translateX(-50%); }
+      .b24-face--right-one img { left: calc(50% - 13.71px); top: calc(50% + 25.71px); width: 300.34px; height: 195.43px; transform: translate(-50%, -50%); }
+      .b24-face--right-two img { inset: -4.75px -28.5px -15.61px -29.18px; width: auto; height: auto; transform: scaleX(-1); }
+      .b24-face--right-three img { left: 0; top: 5.79%; width: 100%; height: 102.55%; }
+      .b24-badge { position: absolute; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9.6px; background: #19aef9; }
+      .b24-badge img { width: 19.2px; height: 19.2px; object-fit: contain; }
+      .b24-badge--file { left: 82px; top: 61px; }
+      .b24-badge--like { left: 72px; top: 12px; }
+      .b24-badge--brush { left: 189px; top: 64px; }
+      .b24-badge--brush img { width: 18.6px; height: 18.6px; }
+      .b24-copy-row { width: 515px; max-width: 100%; display: flex; justify-content: space-between; gap: 32px; }
+      .b24-description { width: 201px; }
+      .b24-block { width: 620px; max-width: 100%; height: 474px; }
+      .b24-bottom { display: grid; gap: 40px; justify-items: end; width: 620px; max-width: 100%; }
+      .b24-bottom-copy { width: 411px; max-width: 100%; display: flex; align-items: end; justify-content: space-between; gap: 8px; }
+      .b24-bottom-copy-left { width: 202px; min-height: 148px; display: grid; align-content: start; gap: 17px; }
+      .b24-bottom-copy-right { width: 201px; min-height: 148px; display: grid; align-content: end; }
+      .b24-last { width: 620px; max-width: 100%; height: 382px; }
+
+      .stoloto-case { display: grid; gap: 32px; width: 620px; max-width: 100%; }
+      .stoloto-logo { position: relative; width: 620px; max-width: 100%; height: 95px; }
+      .stoloto-logo img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; object-position: left center; }
+      .stoloto-block { width: 620px; max-width: 100%; height: 642px; }
+      .stoloto-feature { display: grid; gap: 40px; justify-items: end; width: 620px; max-width: 100%; }
+      .stoloto-description { width: 249px; }
+      .stoloto-matryoshka { position: relative; width: 620px; max-width: 100%; height: 243px; overflow: hidden; }
+      .stoloto-matryoshka img { position: absolute; left: -2.28%; top: -6.63%; width: 107.42%; height: 112.48%; max-width: none; object-fit: cover; }
+      .stoloto-lower { display: flex; align-items: flex-start; gap: 8px; width: 620px; max-width: 100%; }
+      .stoloto-lower-left, .stoloto-lower-right { width: 306px; flex: 0 0 306px; }
+      .stoloto-copy { width: 306px; min-height: 166px; padding-top: 40px; display: grid; align-content: center; }
+      .stoloto-copy > * { width: 264px; }
+      .stoloto-copy p + p { margin-top: 17px; }
+      .stoloto-lotteries { width: 306px; height: 369px; margin-top: 95px; }
+      .stoloto-lower-right { position: relative; height: 630px; overflow: hidden; }
+      .stoloto-lower-right img { position: absolute; left: -7.63%; top: -1.08%; width: 112.26%; height: 102.69%; max-width: none; object-fit: cover; }
+
+      .additional-cases { display: grid; gap: 64px; width: 620px; max-width: 100%; }
+      .additional-cases__heading { display: flex; align-items: end; justify-content: space-between; width: 620px; max-width: 100%; }
+      .additional-cases__title { font-size: 24px; line-height: 32px; font-weight: 400; }
+      .additional-cases__subtitle { font-size: 12px; line-height: normal; font-weight: 400; color: var(--muted); }
+      .additional-cases__list { display: grid; gap: 40px; }
+      .additional-cases__item { display: grid; gap: 50px; }
+      .additional-cases__row { display: flex; align-items: start; justify-content: space-between; width: 620px; max-width: 100%; }
+      .additional-cases__meta { display: grid; gap: 12px; width: 264px; }
+      .additional-cases__copy, .additional-cases__year { font-size: 13px; line-height: 17px; font-weight: 400; }
+      .additional-cases__logo, .additional-cases__image, .additional-cases__finance-logo { position: relative; overflow: hidden; }
+      .additional-cases__logo--moskvich { width: 144px; height: 40px; }
+      .additional-cases__logo--kultura { width: 223px; height: 32px; }
+      .additional-cases__logo--stoloto { width: 212px; height: 33px; }
+      .additional-cases__logo--postamat { width: 226px; height: 43px; }
+      .additional-cases__logo--auchan { width: 116px; height: 35px; }
+      .additional-cases__logo--haier { width: 110px; height: 34px; }
+      .additional-cases__logo--borishoff { width: 232px; height: 40px; }
+      .additional-cases__logo img { width: 100%; height: 100%; object-fit: contain; object-position: left center; }
+      .additional-cases__image { width: 306px; border-radius: 4px; }
+      .additional-cases__image--moskvich { height: 172px; }
+      .additional-cases__image--kultura, .additional-cases__image--stoloto, .additional-cases__image--postamat { width: 305px; height: 191px; }
+      .additional-cases__image--kultura { height: 185px; }
+      .additional-cases__image--auchan { width: 305px; height: 171px; }
+      .additional-cases__image--haier { width: 305px; height: 190px; }
+      .additional-cases__image--borishoff { width: 108px; height: 205px; }
+      .additional-cases__image--finance { width: 305px; height: 166px; }
+      .additional-cases__divider { width: 620px; height: 1px; background: rgba(217,217,217,.2); }
+      .additional-cases__finance-logo { width: 184px; height: 59px; }
+      .additional-cases__finance-logo img { width: 100%; height: 100%; object-fit: contain; object-position: left center; }
+
+      .pb-phone img, .pb-card img, .pb-pills img, .pb-msc img, .pb-desc-card img,
+      .b24-block img, .b24-last img, .stoloto-lotteries img {
+        object-fit: contain;
+      }
+
+      .stoloto-block img { position: absolute; left: -1.97%; top: -0.02%; width: 101.97%; height: 103.09%; max-width: none; object-fit: cover; }
+
+      .pb-phone img { object-fit: fill; }
+      .pb-card img { position: absolute; left: -34.77%; top: -6.66%; width: 169.55%; height: 111.68%; max-width: none; object-fit: cover; }
+      .pb-pills img { position: absolute; left: -9.84%; top: -0.01%; width: 119.74%; height: 119.41%; max-width: none; object-fit: cover; }
+
+      .bottom-signs {
+        position: fixed; left: 16px; right: 16px; bottom: 0; z-index: 18;
+        height: 64px; padding-bottom: 12px;
+        background: url("https://www.figma.com/api/mcp/asset/3b7635fe-826f-4e5f-9096-8a9a542162c1") bottom center / 100% 64px no-repeat;
+      }
+      .bottom-signs__name, .bottom-signs__year {
+        position: absolute; bottom: 12px;
+        font-size: 13px; line-height: 17px; font-weight: 400;
+      }
+      .bottom-signs__name { left: 85px; transform: translateX(-100%); text-align: right; }
+      .bottom-signs__year { right: 0; text-align: right; }
+
+      .page-end {
+        display: grid;
+        gap: 200px;
+        width: 1020px;
+        max-width: 1020px;
+        margin-left: -200px;
+        padding-top: 200px;
+        padding-bottom: 120px;
+      }
+
+      .back-to-top {
+        display: grid;
+        place-items: center;
+        justify-self: center;
+        width: 80px;
+        height: 80px;
+        padding: 0;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        transition: opacity 160ms ease;
+      }
+
+      .back-to-top:hover { opacity: 0.8; }
+
+      .back-to-top__label {
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+      }
+
+      .portfolio-footer {
+        position: relative;
+        width: 100%;
+        height: 469px;
+        max-width: 1020px;
+        padding-top: 0;
+      }
+
+      .portfolio-footer__left {
+        position: absolute;
+        left: 182px;
+        top: 0;
+        display: grid;
+        gap: 97px;
+        width: 180px;
+      }
+
+      .portfolio-footer__name {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 400;
+      }
+
+      .portfolio-footer__portrait {
+        position: relative;
+        width: 180px;
+        height: 180px;
+        overflow: hidden;
+        border-radius: 999px;
+        transform: scaleY(-1);
+      }
+
+      .portfolio-footer__center {
+        position: absolute;
+        left: 430px;
+        top: 0;
+        width: 355px;
+      }
+
+      .portfolio-footer__role,
+      .portfolio-footer__projects-label,
+      .portfolio-footer__projects-list,
+      .portfolio-footer__statuses {
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 400;
+      }
+
+      .portfolio-footer__role {
+        display: grid;
+        gap: 0;
+        width: 120px;
+        white-space: nowrap;
+      }
+
+      .portfolio-footer__divider {
+        position: absolute;
+        left: 0;
+        top: 69px;
+        width: 1px;
+        height: 104px;
+        background: rgba(217,217,217,.6);
+      }
+
+      .portfolio-footer__projects-block {
+        position: absolute;
+        left: 0;
+        top: 191px;
+        display: grid;
+        grid-template-columns: 55px 55px 120px 105px;
+        column-gap: 29px;
+        align-items: start;
+      }
+
+      .portfolio-footer__projects-label { width: 55px; }
+
+      .portfolio-footer__cv {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 55px;
+        height: 40px;
+        margin-top: 92px;
+        grid-column: 1;
+        justify-self: start;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+        transition: opacity 160ms ease;
+      }
+
+      .portfolio-footer__cv:hover { opacity: 0.8; }
+
+      .portfolio-footer__projects-grid {
+        display: grid;
+        grid-template-columns: 120px 105px;
+        column-gap: 60px;
+        grid-column: 3 / 5;
+      }
+
+      .portfolio-footer__projects-list {
+        display: grid;
+        gap: 0;
+        width: 120px;
+      }
+
+      .portfolio-footer__statuses {
+        display: grid;
+        gap: 0;
+        width: 105px;
+        color: var(--muted);
+      }
+
+      .portfolio-footer__contacts {
+        position: absolute;
+        left: 778px;
+        top: 0;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .portfolio-footer__contact-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        padding: 8px 12px;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+        transition: opacity 160ms ease;
+      }
+
+      .portfolio-footer__contact-button:hover {
+        opacity: 0.8;
+      }
+
+      @media (max-width: 700px) {
+        .page { padding-top: 96px; }
+        .topbar { left: 8px; right: 8px; }
+        .hero { min-height: auto; display: grid; gap: 20px; }
+        .hero__wolf, .hero__portrait, .hero__projects, .hero__promo {
+          position: relative; left: auto; right: auto; top: auto; bottom: auto; transform: none;
+        }
+        .hero__wolf { justify-self: center; }
+        .hero__projects, .atom-two, .atom-three, .section__intro, .pb-intro, .pb-content, .b24-intro, .b24-faces, .b24-copy-row, .b24-bottom-copy, .stoloto-intro, .stoloto-lower, .additional-cases__heading, .additional-cases__row { flex-direction: column; }
+        .desc, .atom-steering, .atom-left, .atom-right, .atom-cards, .atom-radar, .obu-copy, .obu-desc-image, .pb-logo, .pb-left, .pb-right, .pb-phone, .pb-card, .pb-msc, .pb-desc-card, .b24-story, .b24-faces-left, .b24-faces-right, .b24-description, .b24-block, .b24-last, .stoloto-block, .stoloto-matryoshka, .stoloto-lower-left, .stoloto-lower-right, .stoloto-lotteries, .stoloto-copy, .additional-cases, .additional-cases__heading, .additional-cases__row, .additional-cases__image, .additional-cases__meta, .additional-cases__divider { width: 100%; }
+        .atom-steering { height: auto; aspect-ratio: 411 / 300; }
+        .stoloto-copy > * { width: 100%; }
+        .stoloto-lotteries { margin-top: 40px; }
+        .bottom-signs { left: 8px; right: 8px; }
+        .page-end { width: 100%; max-width: 100%; margin-left: 0; gap: 120px; padding-top: 120px; }
+        .portfolio-footer { width: 100%; height: 469px; }
+      }
+
+      @media (max-width: 640px) {
+        .portfolio-footer { height: auto; min-height: 0; }
+        .portfolio-footer__left,
+        .portfolio-footer__center,
+        .portfolio-footer__contacts { position: static; width: 100%; }
+        .portfolio-footer__divider { display: none; }
+        .portfolio-footer__projects-block { position: static; grid-template-columns: 55px 55px 1fr; row-gap: 16px; }
+        .portfolio-footer__projects-grid { display: grid; grid-template-columns: 1fr; gap: 12px; grid-column: 1 / -1; }
+        .portfolio-footer__cv { margin-top: 0; }
+        .portfolio-footer__contacts { margin-top: 24px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader" aria-hidden="true">
+      <div class="loader__glass">
+        <div class="loader__track">
+          <span class="loader__pulse"></span>
+        </div>
+      </div>
+    </div>
+    <div class="page" id="top">
+      <header class="topbar">
+        <div class="topbar__inner">
+          <div class="topbar__side topbar__side--left"><a class="link link--left" href="#top">Main page</a></div>
+          <div class="topbar__controls"><a class="button button--small" href="./cv.html">CV</a><a class="button button--wide" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Telegram</a><a class="button button--small" href="mailto:eggy0510@gmail.com">Mail</a></div>
+          <div class="topbar__side topbar__side--right"><span class="link link--right">Ru</span><a class="link link--right" href="./wall.html">The wall</a></div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero__identity">
+          <h1 class="hero__name">Tsarёv Andrey</h1>
+          <div class="hero__role"><p>Digital design team-lead</p><p>art-d</p><p>designer</p></div>
+        </div>
+        <div class="hero__wolf"><img src="https://www.figma.com/api/mcp/asset/0bb4983b-f8ec-4606-a08b-a2f2121b6ee5" alt="" /></div>
+        <img class="hero__portrait" src="https://www.figma.com/api/mcp/asset/320b6c0e-2286-4992-b93d-90ff3e9f8575" alt="Portrait of Andrey" />
+        <div class="hero__projects">
+          <p class="hero__projects-list">Projects</p>
+          <div class="hero__project-list">
+            <div class="hero__project-logos">
+              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/976a41e8-393f-4f4c-8b89-4fb508dc2436" alt="" /></div>
+              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/f8f0979b-19a6-41a8-8a1c-3630c22ebe07" alt="" /></div>
+              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/f09ff26a-872d-4109-9a04-a5e603ad5aa8" alt="" /></div>
+              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/85724a96-d0fe-4008-82ed-4ef7eee5780b" alt="" /></div>
+              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/996fd9c6-09e3-48da-973e-b2df96def475" alt="" /></div>
+              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/2d72d8d3-9326-4600-bee5-3d1e466bf0bb" alt="" /></div>
+              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/46524196-da26-4f02-b3ab-434ae7614d7c" alt="" /></div>
+              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/fa5e1e80-db7c-4666-a675-5895f0c730ab" alt="" /></div>
+              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/a6813c64-acfd-4f69-8262-2d7da53e7ebf" alt="" /></div>
+              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/0bc209e1-45b7-4bcb-8688-bdc95027c5b1" alt="" /></div>
+            </div>
+            <div class="hero__projects-list"><p>ATOM auto</p><p>Pochta bank,</p><p>Bitrix24,</p><p>Stoloto,</p><p>Auchan,</p><p>Moskvich,</p><p>Haier,</p><p>Borishoff</p><p>Moscow Postamat</p><p>Culture of MSC</p><p>and more</p></div>
+          </div>
+        </div>
+        <div class="hero__promo">
+          <img src="https://www.figma.com/api/mcp/asset/18ccd54a-039b-46ca-8662-546690a2dadf" alt="" />
+          <div class="hero__promo-text"><p>Creating beautiful visuals,</p><p>making companies' design unique,</p><p>working with never known devices,</p><p>delievering teams growth</p></div>
+        </div>
+      </section>
+
+      <div class="flow">
+        <section class="section">
+          <div class="section__header">
+            <div class="logo-box wide-logo"><img src="https://www.figma.com/api/mcp/asset/0823ce35-bfb1-48fb-86dd-6c69827a1d5d" alt="ATOM" /></div>
+            <div class="section__intro">
+              <div class="meta meta--button"><div class="title-block"><p class="text">ATOM AUTOMOTIVE</p><p class="text status">art-d • designer • 24-26</p></div><a class="more" href="./case-atom.html">More</a></div>
+              <p class="text desc">This legendary company managed to revolutionize the automotive market, becoming the rock star of the industry, but it met its end just as dramatically and prematurely</p>
+            </div>
+          </div>
+          <div class="media" style="aspect-ratio:620/300"><img src="https://www.figma.com/api/mcp/asset/fe7ea884-77d8-4160-b520-a2b167f2d7f8" alt="ATOM car side view" /></div>
+          <div class="atom-two">
+            <div class="atom-copy-wrap"><p class="text">Made a whole UI system that was build all interfaces around it, lots of concepts that produced a unique look&amp;feel, main page widgets, HMX, animations, ilutstrarions etc.</p><div class="media-sm atom-kamaz"><img src="https://www.figma.com/api/mcp/asset/716448e6-c0fd-49c1-8cba-b79a35816f2a" alt="" /></div></div>
+            <div class="media atom-steering"><img src="https://www.figma.com/api/mcp/asset/808c926b-2dbe-4dd9-aecb-69f93a1c7dd2" alt="ATOM steering interface" /></div>
+          </div>
+          <div class="atom-three">
+            <div class="atom-left"><div class="media atom-cards"><img src="https://www.figma.com/api/mcp/asset/5d9734c7-af0c-4239-9a38-2200bab82b0f" alt="ATOM cards" /></div><div class="atom-small-copy"><p class="text">Made a whole UI system that was biuld all interfaces around it, lots of concepts that produced a unique look&amp;feel, main page widgets, HMX, animations, ilutstrarions etc.</p><div class="media-sm atom-small-photo"><img src="https://www.figma.com/api/mcp/asset/5fa6e2e8-0c8a-4f74-bfa2-6abd712e705f" alt="" /></div></div></div>
+            <div class="atom-right"><div class="media-sm atom-thin"><img src="https://www.figma.com/api/mcp/asset/c9a42c4c-4ab3-42ee-8ad8-2a9e7bd6acc9" alt="" /></div><div class="media atom-radar"><img src="https://www.figma.com/api/mcp/asset/e9cc08c8-e3a4-41ea-a3ff-94972e558c4f" alt="ATOM radar interface" /></div></div>
+          </div>
+          <div class="media atom-last"><img src="https://www.figma.com/api/mcp/asset/267bff48-a073-4c36-85cb-892ef538b8ac" alt="ATOM final visual" /></div>
+        </section>
+
+        <section class="section">
+          <div class="section__header">
+            <div class="logo-box wide-logo"><img src="https://www.figma.com/api/mcp/asset/1c0f426d-00e2-43a4-88a6-60a1931253cb" alt="OBJ" /></div>
+            <div class="section__intro">
+              <div class="meta"><p class="text">Another automotive</p><p class="text status">art-d • designer</p></div>
+              <div class="media-sm obu-desc-image"><img src="https://www.figma.com/api/mcp/asset/52809f74-aaad-4fcd-b017-945cc4fe7349" alt="" /></div>
+            </div>
+          </div>
+          <div class="media" style="aspect-ratio:1240/620"><img src="https://www.figma.com/api/mcp/asset/d5469697-d3d8-4598-8d33-dabb21322080" alt="Covered concept car" /></div>
+          <p class="text obu-copy">Defined look &amp; feel, created service and main screens such as widgets, climate-control, media and music, all apps page, calls, cameras etc.</p>
+          <div class="media" style="aspect-ratio:3840/2160; border-radius: 8px"><img src="https://www.figma.com/api/mcp/asset/438c532c-96cf-4e04-b547-d631a76ea793" alt="OBJ music interface" /></div>
+        </section>
+
+        <section class="section">
+          <div class="section__header">
+            <div class="logo-box pb-logo"><img src="https://www.figma.com/api/mcp/asset/2f26f37f-5ffc-4700-8159-2f43b4bb9b44" alt="Почта Банк" /></div>
+            <div class="pb-intro">
+              <div class="pb-meta">
+                <p class="pb-name">POCHTA BANK APP</p>
+                <p class="pb-status">art-d • designer</p>
+                <a class="more" href="./case-pochtabank.html">More</a>
+              </div>
+              <p class="pb-tag">redesign</p>
+            </div>
+          </div>
+          <div class="pb-content">
+            <div class="pb-left">
+              <div class="media pb-phone"><img src="https://www.figma.com/api/mcp/asset/49065225-6136-42bb-bd00-0d0d87ffb84c" alt="Pochta bank app phone screen" /></div>
+              <p class="pb-copy">Made a whole new app.<br>All of the sections and tabs redisgned, most of the UX is remade, including fast-paymant features and highers CTR to bank needed metrics, targeting pensioners and new young audience to prevent (привлечь)<br>Reworked illutstrations, created a design-system, guidelines, animations, profiles and banners</p>
+              <div class="media pb-desc-card"><img src="https://www.figma.com/api/mcp/asset/06aee186-2a91-4446-a3f9-847c3ae640e4" alt="Pochta bank lower cards" /></div>
+            </div>
+            <div class="pb-right">
+              <p class="pb-description">Pochta Bank is one of the largest retail banks in Russia, with the broadest network: over 30,000 service points in 83 regions and a customer base of over 21 million.</p>
+              <div class="media pb-card"><img src="https://www.figma.com/api/mcp/asset/e30d6c4d-6ffd-48da-abb3-b89e3562d5dd" alt="Pochta bank eagle card" /></div>
+              <div class="media pb-msc"><img src="https://www.figma.com/api/mcp/asset/26c3ee53-24c3-4378-b40a-ade3d252501e" alt="Pochta bank red circle illustration" /></div>
+              <div class="media-sm pb-pills"><img src="https://www.figma.com/api/mcp/asset/1a140014-29b9-47d3-b40b-07a163a07e3f" alt="Pochta bank payments list" /></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="b24-case">
+          <div class="b24-logo"><img src="https://www.figma.com/api/mcp/asset/2ad4e250-e0c5-4e73-8208-9040a09cda4b" alt="Битрикс24" /></div>
+          <div class="b24-intro">
+            <div class="b24-meta">
+              <p class="text">BITRIX 24</p>
+              <p class="text status">lead-designer</p>
+              <a class="more" href="./case-bitrix24.html">More</a>
+            </div>
+            <p class="text b24-tag">redesign</p>
+          </div>
+          <div class="b24-story">
+            <div class="b24-faces">
+              <div class="b24-faces-left">
+                <div class="b24-face b24-face--left-one"><img src="https://www.figma.com/api/mcp/asset/394d125c-7236-4d3e-a748-2481d32bf650" alt="" /></div>
+                <div class="b24-face b24-face--left-two"><img src="https://www.figma.com/api/mcp/asset/57273156-9736-4c23-93b4-7df224278bfc" alt="" /></div>
+                <div class="b24-badge b24-badge--file"><img src="https://www.figma.com/api/mcp/asset/3c832ea2-15ab-4a17-99fd-fc0a88e373aa" alt="" /></div>
+              </div>
+              <div class="b24-faces-right">
+                <div class="b24-face b24-face--right-one"><img src="https://www.figma.com/api/mcp/asset/631a61ee-f398-436a-ac3b-1c74cd4a44a0" alt="" /></div>
+                <div class="b24-badge b24-badge--like"><img src="https://www.figma.com/api/mcp/asset/0b596dc4-e185-4955-9efa-409475084185" alt="" /></div>
+                <div class="b24-face b24-face--right-two"><img src="https://www.figma.com/api/mcp/asset/650cb457-c364-4673-9ee2-f45639167bca" alt="" /></div>
+                <div class="b24-face b24-face--right-three"><img src="https://www.figma.com/api/mcp/asset/7ddc3bbe-70ea-4462-8800-7b3ce5e10120" alt="" /></div>
+                <div class="b24-badge b24-badge--brush"><img src="https://www.figma.com/api/mcp/asset/3c5126d9-fa4c-4ade-9b4e-2b1d7c0ab0e8" alt="" /></div>
+              </div>
+            </div>
+            <div class="b24-copy-row">
+              <p class="text b24-description">Bitrix24 is one of the largest business ecosystems, trusted by over 15 million companies in over 150 countries.</p>
+              <p class="text b24-description">Created a whole new UI for a web-site with it's own philosophy and big idea</p>
+            </div>
+          </div>
+          <div class="media b24-block"><img src="https://www.figma.com/api/mcp/asset/25a333d1-3228-4844-a846-971d2bf69c51" alt="Bitrix24 main block" /></div>
+          <div class="b24-bottom">
+            <div class="b24-bottom-copy">
+              <div class="text b24-bottom-copy-left"><p>But not only website</p><p>I also made a proposal to redisgn a inner system to create a much friendly, connectivity design to work with joy</p></div>
+              <div class="text b24-bottom-copy-right"><p>But it didn't go to prod,</p><p>so let it rest here in peace</p></div>
+            </div>
+            <div class="media b24-last"><img src="https://www.figma.com/api/mcp/asset/8382c4c6-917d-4a81-8b05-a6e52d6b2b1f" alt="Bitrix24 lower screen" /></div>
+          </div>
+        </section>
+
+        <section class="stoloto-case">
+          <div class="logo-box stoloto-logo"><img src="https://www.figma.com/api/mcp/asset/acf63cc8-6b7b-4aba-a13a-85f0a6c6c457" alt="Столото" /></div>
+          <div class="stoloto-intro">
+            <div class="stoloto-meta">
+              <p class="text">STOLOTO</p>
+              <p class="text status">lead-designer</p>
+              <a class="more" href="./case-stoloto.html">More</a>
+            </div>
+            <p class="text stoloto-tag">redesign</p>
+          </div>
+          <div class="media stoloto-block"><img src="https://www.figma.com/api/mcp/asset/7601696c-7533-499e-a04a-18622afbcf7a" alt="Stoloto dark screens" /></div>
+          <div class="stoloto-feature">
+            <p class="text stoloto-description">Pochta Bank is one of the largest retail banks in Russia, with the broadest network: over 30,000 service points in 83 regions and a customer base of over 21 million.</p>
+            <div class="stoloto-matryoshka"><img src="https://www.figma.com/api/mcp/asset/a4889c59-0b12-4512-8e32-2b364c6976d7" alt="Stoloto mascots" /></div>
+          </div>
+          <div class="stoloto-lower">
+            <div class="stoloto-lower-left">
+              <div class="text stoloto-copy">
+                <p>Made a whole new app.<br>All of the sections and tabs redisgned, most of the UX is remade, including fast-paymant features and highers CTR to bank needed metrics, targeting pensioners and new young audience to prevent (привлечь)</p>
+                <p>Reworked illutstrations, created a design-system, guidelines, animations, profiles and banners</p>
+              </div>
+              <div class="media stoloto-lotteries"><img src="https://www.figma.com/api/mcp/asset/20b1e654-32df-4f9e-9023-c9c20e09aa91" alt="Stoloto lotteries logos" /></div>
+            </div>
+            <div class="stoloto-lower-right"><img src="https://www.figma.com/api/mcp/asset/0496b4e9-c65c-4f0a-b8ca-a2b0f38b24ad" alt="Stoloto phone interface" /></div>
+          </div>
+        </section>
+
+        <section class="additional-cases">
+          <div class="additional-cases__heading">
+            <h2 class="additional-cases__title">Etc.</h2>
+            <p class="additional-cases__subtitle">Last, but not least</p>
+          </div>
+          <div class="additional-cases__list">
+            <div class="additional-cases__item">
+              <div class="additional-cases__row">
+                <div class="additional-cases__meta">
+                  <div class="additional-cases__logo additional-cases__logo--moskvich"><img src="https://www.figma.com/api/mcp/asset/448e6edb-4644-48c9-93b3-234e3096d914" alt="" /></div>
+                  <div class="additional-cases__copy"><p>M-series web redesign</p><p>art-d, designer</p></div>
+                  <p class="additional-cases__year">2024</p>
+                </div>
+                <div class="additional-cases__image additional-cases__image--moskvich"><img src="https://www.figma.com/api/mcp/asset/e2593ff6-024a-40d8-bc2d-4f2d00847920" alt="Moskvich redesign preview" /></div>
+              </div>
+              <div class="additional-cases__divider"></div>
+            </div>
+            <div class="additional-cases__item">
+              <div class="additional-cases__row">
+                <div class="additional-cases__meta">
+                  <div class="additional-cases__logo additional-cases__logo--kultura"><img src="https://www.figma.com/api/mcp/asset/829e9447-ccb7-4378-9e21-26645e1015be" alt="" /></div>
+                  <div class="additional-cases__copy"><p>Web concept</p><p>designer</p></div>
+                  <p class="additional-cases__year">2024</p>
+                </div>
+                <div class="additional-cases__image additional-cases__image--kultura"><img src="https://www.figma.com/api/mcp/asset/e6a608a0-a73e-4f58-88e9-d25980406bb6" alt="Культура Москвы preview" /></div>
+              </div>
+              <div class="additional-cases__divider"></div>
+            </div>
+            <div class="additional-cases__item">
+              <div class="additional-cases__row">
+                <div class="additional-cases__meta">
+                  <div class="additional-cases__logo additional-cases__logo--stoloto"><img src="https://www.figma.com/api/mcp/asset/150d6a6b-af72-4fa0-b373-15d587fa72e3" alt="" /></div>
+                  <div class="additional-cases__copy"><p>Game machines interface</p><p>art-d, designer</p></div>
+                  <p class="additional-cases__year">2024</p>
+                </div>
+                <div class="additional-cases__image additional-cases__image--stoloto"><img src="https://www.figma.com/api/mcp/asset/f0c7de3e-538f-4f1d-b30a-233b6dbf5e65" alt="Stoloto game machines preview" /></div>
+              </div>
+              <div class="additional-cases__divider"></div>
+            </div>
+            <div class="additional-cases__item">
+              <div class="additional-cases__row">
+                <div class="additional-cases__meta">
+                  <div class="additional-cases__logo additional-cases__logo--postamat"><img src="https://www.figma.com/api/mcp/asset/c8277692-3a34-49e4-904f-f63b3077c855" alt="" /></div>
+                  <div class="additional-cases__copy"><p>Interface for postamat</p><p>art-d, designer</p></div>
+                  <p class="additional-cases__year">2024</p>
+                </div>
+                <div class="additional-cases__image additional-cases__image--postamat"><img src="https://www.figma.com/api/mcp/asset/cb0663b7-7359-4c33-aca6-5d8dbbc31c6e" alt="Postamat interface preview" /></div>
+              </div>
+              <div class="additional-cases__divider"></div>
+            </div>
+            <div class="additional-cases__item">
+              <div class="additional-cases__row">
+                <div class="additional-cases__meta">
+                  <div class="additional-cases__logo additional-cases__logo--auchan"><img src="https://www.figma.com/api/mcp/asset/7b2cba0e-3a26-4800-b06f-e25e7a5317a9" alt="" /></div>
+                  <div class="additional-cases__copy"><p>Interface for postamat</p><p>art-d, designer</p></div>
+                  <p class="additional-cases__year">2024</p>
+                </div>
+                <div class="additional-cases__image additional-cases__image--auchan"><img src="https://www.figma.com/api/mcp/asset/56a99440-66ac-4a8b-85bb-4017cee66528" alt="Auchan interface preview" /></div>
+              </div>
+              <div class="additional-cases__divider"></div>
+            </div>
+            <div class="additional-cases__item">
+              <div class="additional-cases__row">
+                <div class="additional-cases__meta">
+                  <div class="additional-cases__logo additional-cases__logo--haier"><img src="https://www.figma.com/api/mcp/asset/be7d8974-0775-405f-9dff-4516b2e8a4f5" alt="" /></div>
+                  <div class="additional-cases__copy"><p>Web redesign</p><p>designer</p></div>
+                  <p class="additional-cases__year">2024</p>
+                </div>
+                <div class="additional-cases__image additional-cases__image--haier"><img src="https://www.figma.com/api/mcp/asset/6136d7eb-5f8a-4797-87cb-1df8ccda7bb5" alt="Haier redesign preview" /></div>
+              </div>
+              <div class="additional-cases__divider"></div>
+            </div>
+            <div class="additional-cases__item">
+              <div class="additional-cases__row">
+                <div class="additional-cases__meta">
+                  <div class="additional-cases__logo additional-cases__logo--borishoff"><img src="https://www.figma.com/api/mcp/asset/9d883174-e8d9-4fc2-8dee-e7957ae8010f" alt="" /></div>
+                  <div class="additional-cases__copy"><p>App design</p><p>art-d</p></div>
+                  <p class="additional-cases__year">2025</p>
+                </div>
+                <div class="additional-cases__image additional-cases__image--borishoff"><img src="https://www.figma.com/api/mcp/asset/2fbaedfe-1cf0-4bd4-9088-e8122c5862c7" alt="Borishoff app preview" /></div>
+              </div>
+              <div class="additional-cases__divider"></div>
+            </div>
+            <div class="additional-cases__row">
+              <div class="additional-cases__meta">
+                <div class="additional-cases__finance-logo"><img src="https://www.figma.com/api/mcp/asset/44ab1b75-61a9-4193-954a-b99b1fcb5ba5" alt="" /></div>
+                <div class="additional-cases__copy"><p>Web redesign</p><p>designer</p></div>
+                <p class="additional-cases__year">2023</p>
+              </div>
+              <div class="additional-cases__image additional-cases__image--finance"><img src="https://www.figma.com/api/mcp/asset/3e2a0736-d485-4d4c-b36c-dba23a2c1775" alt="Финансовая культура preview" /></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page-end" aria-label="Page end">
+          <a class="back-to-top" href="#top" aria-label="Вернуться наверх страницы">
+            <span class="back-to-top__label">UP</span>
+          </a>
+
+          <footer class="portfolio-footer">
+            <div class="portfolio-footer__left">
+              <p class="portfolio-footer__name">Tsarёv Andrey</p>
+              <div class="portfolio-footer__portrait">
+                <img src="https://www.figma.com/api/mcp/asset/8d4117fc-f2ec-4ac2-96c5-9e0215170649" alt="" />
+              </div>
+            </div>
+
+            <div class="portfolio-footer__center">
+              <div class="portfolio-footer__role">
+                <p>Digital design team-lead</p>
+                <p>art-d</p>
+                <p>designer</p>
+              </div>
+              <div class="portfolio-footer__divider"></div>
+              <div class="portfolio-footer__projects-block">
+                <p class="portfolio-footer__projects-label">Projects</p>
+                <a class="portfolio-footer__cv" href="./cv.html">CV</a>
+                <div class="portfolio-footer__projects-grid">
+                  <div class="portfolio-footer__projects-list">
+                    <p>ATOM auto</p>
+                    <p>Pochta bank,</p>
+                    <p>Bitrix24,</p>
+                    <p>Stoloto,</p>
+                    <p>Auchan,</p>
+                    <p>Moskvich,</p>
+                    <p>Haier,</p>
+                    <p>Borishoff</p>
+                    <p>Moscow Postamat</p>
+                    <p>Culture of MSC</p>
+                    <p>and more</p>
+                  </div>
+                  <div class="portfolio-footer__statuses">
+                    <p>art-d, designer</p>
+                    <p>art-d, designer</p>
+                    <p>lead-d, designer</p>
+                    <p>lead-d, designer</p>
+                    <p>designer</p>
+                    <p>designer</p>
+                    <p>designer</p>
+                    <p>designer</p>
+                    <p>art-d, designer</p>
+                    <p>lead-d, designer</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <nav class="portfolio-footer__contacts" aria-label="Footer links">
+              <a class="portfolio-footer__contact-button" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Telegram</a>
+              <a class="portfolio-footer__contact-button" href="mailto:eggy0510@gmail.com">Mail</a>
+            </nav>
+          </footer>
+        </section>
+      </div>
+    </div>
+
+    <div class="bottom-signs" aria-hidden="true"><span class="bottom-signs__name">Tsarёv Andrey</span><span class="bottom-signs__year">2026</span></div>
+  </body>
+</html>
