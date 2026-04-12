@@ -180,8 +180,9 @@ button {
   position: absolute;
   right: 0;
   top: 24px;
-  min-width: 98px;
+  min-width: 170px;
   justify-content: flex-end;
+  gap: 16px;
 }
 
 .site-header__text-link,
@@ -196,6 +197,16 @@ button {
   text-underline-offset: 3px;
   transition: opacity 160ms ease;
   cursor: pointer;
+  color: var(--foreground);
+}
+
+.lang-switcher {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+  margin-right: 40px;
 }
 
 .site-header__text-link--left {
@@ -204,7 +215,8 @@ button {
 }
 
 .site-header__text-link--right {
-  width: 98px;
+  width: auto;
+  min-width: 24px;
   justify-content: flex-end;
   text-align: right;
 }
@@ -235,11 +247,13 @@ button {
 }
 
 .site-header__button--small {
-  width: 48px;
+  min-width: 48px;
+  padding-inline: 12px;
 }
 
 .site-header__button--wide {
-  width: 80px;
+  min-width: 80px;
+  padding-inline: 12px;
 }
 
 .site-header__button:hover,
@@ -759,9 +773,11 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
+  justify-self: start;
+  width: fit-content;
+  min-width: 0;
   height: 40px;
-  padding: 8px;
+  padding: 8px 24px;
   border-radius: 2px;
   background: #fff;
   color: #000;
@@ -769,10 +785,26 @@ button {
   line-height: 17px;
   font-weight: 500;
   transition: opacity 160ms ease;
+  white-space: nowrap;
 }
 
 .atom-case__more:hover {
   opacity: 0.8;
+}
+
+.hero-figma__role p,
+.atom-case__title,
+.atom-case__status,
+.obu-case__title,
+.obu-case__status,
+.pb-case__name,
+.pb-case__status,
+.b24-case__name,
+.b24-case__status,
+.stoloto-case__name,
+.stoloto-case__status,
+.portfolio-footer__role p {
+  white-space: nowrap;
 }
 
 .atom-case__description {
@@ -1043,9 +1075,11 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
+  justify-self: start;
+  width: fit-content;
+  min-width: 0;
   height: 40px;
-  padding: 8px;
+  padding: 8px 24px;
   border-radius: 2px;
   background: #fff;
   color: #000;
@@ -1053,6 +1087,7 @@ button {
   line-height: 17px;
   font-weight: 500;
   transition: opacity 160ms ease;
+  white-space: nowrap;
 }
 
 .pb-case__more:hover {
@@ -1108,6 +1143,7 @@ button {
 
 .pb-case__copy {
   width: 259px;
+  white-space: pre-line;
 }
 
 .pb-case__description {
@@ -1712,12 +1748,12 @@ button {
 
 .page-end {
   display: grid;
-  gap: 200px;
+  gap: 260px;
   width: 1020px;
   max-width: 1020px;
   margin-left: -200px;
   padding-top: 200px;
-  padding-bottom: 120px;
+  padding-bottom: 60px;
 }
 
 .back-to-top {
@@ -1883,6 +1919,7 @@ button {
   justify-content: center;
   height: 40px;
   padding: 8px 12px;
+  min-width: 48px;
   border-radius: 2px;
   background: #fff;
   color: #000;
@@ -1894,6 +1931,78 @@ button {
 
 .portfolio-footer__contact-button:hover {
   opacity: 0.8;
+}
+
+.site-header[data-language="ru"] .site-header__center {
+  gap: 12px;
+}
+
+.site-header[data-language="ru"] .site-header__side {
+  min-width: 212px;
+}
+
+.site-header[data-language="ru"] .site-header__button--wide {
+  min-width: 96px;
+}
+
+.site-header[data-language="ru"] .site-header__button--small {
+  min-width: 72px;
+}
+
+.page-shell--ru .hero-figma__project-names,
+.page-shell--ru .portfolio-footer__projects-list {
+  width: 132px;
+}
+
+.page-shell--ru .hero-figma__identity {
+  width: 236px;
+}
+
+.page-shell--ru .hero-figma__promo {
+  left: 396px;
+  width: 224px;
+  padding-top: 40px;
+}
+
+.page-shell--ru .atom-case__meta,
+.page-shell--ru .pb-case__meta,
+.page-shell--ru .b24-case__meta,
+.page-shell--ru .stoloto-case__meta,
+.page-shell--ru .obu-case__meta {
+  width: 220px;
+  flex: 0 0 220px;
+}
+
+.page-shell--ru .atom-case__intro,
+.page-shell--ru .pb-case__intro,
+.page-shell--ru .b24-case__intro,
+.page-shell--ru .stoloto-case__intro,
+.page-shell--ru .obu-case__intro {
+  gap: 16px;
+}
+
+.page-shell--ru .pb-case__left {
+  gap: 56px;
+}
+
+.page-shell--ru .pb-case__description {
+  min-height: 264px;
+}
+
+.page-shell--ru .pb-case__card {
+  margin-top: 24px;
+}
+
+.page-shell--ru .stoloto-case__copy {
+  min-height: 214px;
+}
+
+.page-shell--ru .stoloto-case__lotteries {
+  margin-top: 64px;
+}
+
+.page-shell--ru .additional-cases__meta {
+  gap: 16px;
 }
 
 .pb-case__phone img {
@@ -2149,7 +2258,7 @@ button {
   }
 
   .page-end {
-    gap: 120px;
+    gap: 156px;
     padding-top: 120px;
     padding-bottom: 96px;
     width: 100%;

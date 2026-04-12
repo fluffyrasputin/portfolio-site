@@ -11,10 +11,19 @@ type LanguageContextValue = {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>("ru");
+  const [language, setLanguage] = useState<Language>(() => {
+    if (typeof window === "undefined") {
+      return "ru";
+    }
+
+    const savedLanguage = window.localStorage.getItem("portfolio-language");
+
+    return savedLanguage === "ru" || savedLanguage === "en" ? savedLanguage : "ru";
+  });
 
   useEffect(() => {
     document.documentElement.lang = language;
+    window.localStorage.setItem("portfolio-language", language);
   }, [language]);
 
   const value = useMemo(

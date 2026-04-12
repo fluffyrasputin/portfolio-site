@@ -15,6 +15,7 @@ export function SiteHeader() {
     <header
       className="site-header"
       style={{ "--top-menu-background": `url(${heroAssets.topMenuBackground})` } as CSSProperties}
+      data-language={language}
     >
       <div className="site-header__inner">
         <nav className="site-header__nav site-header__nav--left" aria-label="Main navigation">

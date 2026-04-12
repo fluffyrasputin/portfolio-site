@@ -13,7 +13,7 @@ export function LanguageSwitcher() {
       aria-label={`Switch language to ${nextLanguage.toUpperCase()}`}
       onClick={() => setLanguage(nextLanguage)}
     >
-      {language === "ru" ? "Ru" : "En"}
+      {language === "ru" ? "En" : "Ru"}
     </button>
   );
 }

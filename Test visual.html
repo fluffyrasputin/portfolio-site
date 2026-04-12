@@ -25,13 +25,13 @@
         z-index: 20;
         min-height: 64px;
         padding-top: 24px;
-        background: url("https://www.figma.com/api/mcp/asset/f1a87b44-4b1a-4236-8aa4-d308133efa6f") top center / 100% 64px no-repeat;
+        background: url("public/media/figma/top-menu-background.png") top center / 100% 64px no-repeat;
       }
 
       .topbar__inner { position: relative; min-height: 64px; }
       .topbar__side, .topbar__controls { position: absolute; top: 0; display: flex; align-items: center; }
       .topbar__side--left { left: 0; }
-      .topbar__side--right { right: 0; gap: 8px; }
+      .topbar__side--right { right: 0; gap: 16px; min-width: 170px; justify-content: flex-end; }
       .topbar__controls { left: 50%; transform: translateX(-50%); gap: 8px; }
 
       .link, .button, .more { transition: opacity 160ms ease; }
@@ -43,7 +43,20 @@
         text-decoration: underline; text-underline-offset: 3px;
       }
 
-      .link--left, .link--right { width: 98px; }
+      button.link {
+        border: 0;
+        background: transparent;
+        padding: 0;
+        cursor: pointer;
+        appearance: none;
+        color: var(--text);
+        position: relative;
+        z-index: 1;
+        margin-right: 40px;
+      }
+
+      .link--left { width: 98px; }
+      .link--right { width: auto; min-width: 24px; }
       .link--right { justify-content: flex-end; text-align: right; }
 
       .button, .more {
@@ -58,9 +71,9 @@
           0 10px 30px rgba(0,0,0,.12);
         color: #000; font-size: 13px; line-height: 17px; font-weight: 500;
       }
-      .button--small { width: 48px; }
-      .button--wide { width: 80px; }
-      .more { width: 56px; }
+      .button--small { min-width: 48px; padding-inline: 12px; }
+      .button--wide { min-width: 80px; padding-inline: 12px; }
+      .more { min-width: 0; width: fit-content; justify-self: start; padding-inline: 24px; white-space: nowrap; }
 
       .loader {
         position: fixed;
@@ -150,6 +163,11 @@
       .meta--button { gap: 16px; }
       .title-block { display: grid; gap: 8px; }
       .status { color: var(--muted); }
+      .hero__role p,
+      .pb-name,
+      .pb-status,
+      .text.status,
+      .portfolio-footer__role p { white-space: nowrap; }
       .desc { width: 201px; }
 
       .media, .media-sm, .logo-box { position: relative; overflow: hidden; }
@@ -186,7 +204,7 @@
       .pb-left { gap: 40px; }
       .pb-right { gap: 0; }
       .pb-phone { width: 306px; height: 620px; }
-      .pb-copy { width: 259px; }
+      .pb-copy { width: 259px; white-space: pre-line; }
       .pb-description { width: 201px; min-height: 197px; padding-top: 72px; }
       .pb-card { width: 306px; height: 465px; }
       .pb-msc { width: 306px; height: 306px; margin-top: 40px; }
@@ -294,7 +312,7 @@
       .bottom-signs {
         position: fixed; left: 16px; right: 16px; bottom: 0; z-index: 18;
         height: 64px; padding-bottom: 12px;
-        background: url("https://www.figma.com/api/mcp/asset/3b7635fe-826f-4e5f-9096-8a9a542162c1") bottom center / 100% 64px no-repeat;
+        background: url("public/media/figma/bottom-signs-background.png") bottom center / 100% 64px no-repeat;
       }
       .bottom-signs__name, .bottom-signs__year {
         position: absolute; bottom: 12px;
@@ -305,12 +323,12 @@
 
       .page-end {
         display: grid;
-        gap: 200px;
+        gap: 260px;
         width: 1020px;
         max-width: 1020px;
         margin-left: -200px;
         padding-top: 200px;
-        padding-bottom: 120px;
+        padding-bottom: 60px;
       }
 
       .back-to-top {
@@ -465,6 +483,7 @@
         justify-content: center;
         height: 40px;
         padding: 8px 12px;
+        min-width: 48px;
         border-radius: 2px;
         background: #fff;
         color: #000;
@@ -477,6 +496,29 @@
       .portfolio-footer__contact-button:hover {
         opacity: 0.8;
       }
+
+      body[data-language="ru"] .topbar__controls { gap: 12px; }
+      body[data-language="ru"] .topbar__side--right { min-width: 212px; }
+      body[data-language="ru"] .button--wide { min-width: 96px; }
+      body[data-language="ru"] .button--small { min-width: 72px; }
+      body[data-language="ru"] .hero__identity { width: 236px; }
+      body[data-language="ru"] .hero__project-names,
+      body[data-language="ru"] .portfolio-footer__projects-list { width: 132px; }
+      body[data-language="ru"] .hero__promo { left: 396px; width: 224px; padding-top: 40px; }
+      body[data-language="ru"] .meta,
+      body[data-language="ru"] .pb-meta,
+      body[data-language="ru"] .b24-meta,
+      body[data-language="ru"] .stoloto-meta { width: 220px; }
+      body[data-language="ru"] .section__intro,
+      body[data-language="ru"] .pb-intro,
+      body[data-language="ru"] .b24-intro,
+      body[data-language="ru"] .stoloto-intro { gap: 16px; }
+      body[data-language="ru"] .pb-left { gap: 56px; }
+      body[data-language="ru"] .pb-description { min-height: 264px; }
+      body[data-language="ru"] .pb-card { margin-top: 24px; }
+      body[data-language="ru"] .stoloto-copy { min-height: 214px; }
+      body[data-language="ru"] .stoloto-lotteries { margin-top: 64px; }
+      body[data-language="ru"] .additional-cases__meta { gap: 16px; }
 
       @media (max-width: 700px) {
         .page { padding-top: 96px; }
@@ -492,7 +534,7 @@
         .stoloto-copy > * { width: 100%; }
         .stoloto-lotteries { margin-top: 40px; }
         .bottom-signs { left: 8px; right: 8px; }
-        .page-end { width: 100%; max-width: 100%; margin-left: 0; gap: 120px; padding-top: 120px; }
+        .page-end { width: 100%; max-width: 100%; margin-left: 0; gap: 156px; padding-top: 120px; }
         .portfolio-footer { width: 100%; height: 469px; }
       }
 
@@ -520,321 +562,321 @@
     <div class="page" id="top">
       <header class="topbar">
         <div class="topbar__inner">
-          <div class="topbar__side topbar__side--left"><a class="link link--left" href="#top">Main page</a></div>
-          <div class="topbar__controls"><a class="button button--small" href="./cv.html">CV</a><a class="button button--wide" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Telegram</a><a class="button button--small" href="mailto:eggy0510@gmail.com">Mail</a></div>
-          <div class="topbar__side topbar__side--right"><span class="link link--right">Ru</span><a class="link link--right" href="./wall.html">The wall</a></div>
+          <div class="topbar__side topbar__side--left"><a class="link link--left" id="tv-home-link" href="#top">Главная</a></div>
+          <div class="topbar__controls"><a class="button button--small" href="./cv.html">CV</a><a class="button button--wide" id="tv-telegram-button" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Телеграм</a><a class="button button--small" id="tv-mail-button" href="mailto:eggy0510@gmail.com">Почта</a></div>
+          <div class="topbar__side topbar__side--right"><button class="link link--right" id="tv-language-toggle" type="button">En</button><a class="link link--right" id="tv-wall-link" href="./wall.html">Стена</a></div>
         </div>
       </header>
 
       <section class="hero">
         <div class="hero__identity">
           <h1 class="hero__name">Tsarёv Andrey</h1>
-          <div class="hero__role"><p>Digital design team-lead</p><p>art-d</p><p>designer</p></div>
+          <div class="hero__role" id="tv-hero-role"><p>Руководитель digital-дизайна</p><p>арт-директор</p><p>дизайнер</p></div>
         </div>
-        <div class="hero__wolf"><img src="https://www.figma.com/api/mcp/asset/0bb4983b-f8ec-4606-a08b-a2f2121b6ee5" alt="" /></div>
-        <img class="hero__portrait" src="https://www.figma.com/api/mcp/asset/320b6c0e-2286-4992-b93d-90ff3e9f8575" alt="Portrait of Andrey" />
+        <div class="hero__wolf"><img src="public/media/figma/wolf.png" alt="" /></div>
+        <img class="hero__portrait" src="public/media/figma/portrait.png" alt="Portrait of Andrey" />
         <div class="hero__projects">
-          <p class="hero__projects-list">Projects</p>
+          <p class="hero__projects-list" id="tv-hero-projects-label">Проекты</p>
           <div class="hero__project-list">
             <div class="hero__project-logos">
-              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/976a41e8-393f-4f4c-8b89-4fb508dc2436" alt="" /></div>
-              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/f8f0979b-19a6-41a8-8a1c-3630c22ebe07" alt="" /></div>
-              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/f09ff26a-872d-4109-9a04-a5e603ad5aa8" alt="" /></div>
-              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/85724a96-d0fe-4008-82ed-4ef7eee5780b" alt="" /></div>
-              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/996fd9c6-09e3-48da-973e-b2df96def475" alt="" /></div>
-              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/2d72d8d3-9326-4600-bee5-3d1e466bf0bb" alt="" /></div>
-              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/46524196-da26-4f02-b3ab-434ae7614d7c" alt="" /></div>
-              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/fa5e1e80-db7c-4666-a675-5895f0c730ab" alt="" /></div>
-              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/a6813c64-acfd-4f69-8262-2d7da53e7ebf" alt="" /></div>
-              <div class="hero__project-logo"><img src="https://www.figma.com/api/mcp/asset/0bc209e1-45b7-4bcb-8688-bdc95027c5b1" alt="" /></div>
+              <div class="hero__project-logo"><img src="public/media/figma/hero-project-logo1.png" alt="" /></div>
+              <div class="hero__project-logo"><img src="public/media/figma/hero-project-logo2.png" alt="" /></div>
+              <div class="hero__project-logo"><img src="public/media/figma/hero-project-logo3.png" alt="" /></div>
+              <div class="hero__project-logo"><img src="public/media/figma/hero-project-logo4.png" alt="" /></div>
+              <div class="hero__project-logo"><img src="public/media/figma/hero-project-logo5.png" alt="" /></div>
+              <div class="hero__project-logo"><img src="public/media/figma/hero-project-logo6.png" alt="" /></div>
+              <div class="hero__project-logo"><img src="public/media/figma/hero-project-logo7.png" alt="" /></div>
+              <div class="hero__project-logo"><img src="public/media/figma/hero-project-logo8.png" alt="" /></div>
+              <div class="hero__project-logo"><img src="public/media/figma/hero-project-logo9.png" alt="" /></div>
+              <div class="hero__project-logo"><img src="public/media/figma/hero-project-logo10.png" alt="" /></div>
             </div>
-            <div class="hero__projects-list"><p>ATOM auto</p><p>Pochta bank,</p><p>Bitrix24,</p><p>Stoloto,</p><p>Auchan,</p><p>Moskvich,</p><p>Haier,</p><p>Borishoff</p><p>Moscow Postamat</p><p>Culture of MSC</p><p>and more</p></div>
+            <div class="hero__projects-list" id="tv-hero-projects-list"><p>ATOM auto</p><p>Почта Банк,</p><p>Bitrix24,</p><p>Stoloto,</p><p>Auchan,</p><p>Москвич,</p><p>Haier,</p><p>Borishoff</p><p>Мой Постамат</p><p>Культура МСК</p><p>и другое</p></div>
           </div>
         </div>
         <div class="hero__promo">
-          <img src="https://www.figma.com/api/mcp/asset/18ccd54a-039b-46ca-8662-546690a2dadf" alt="" />
-          <div class="hero__promo-text"><p>Creating beautiful visuals,</p><p>making companies' design unique,</p><p>working with never known devices,</p><p>delievering teams growth</p></div>
+          <img src="public/media/figma/soul.png" alt="" />
+          <div class="hero__promo-text" id="tv-hero-promo"><p>Создаю уникальные визуальные образы, делаю дизайн компаний узнаваемым, работаю с новыми устройствами, и помогаю командам расти</p></div>
         </div>
       </section>
 
       <div class="flow">
         <section class="section">
           <div class="section__header">
-            <div class="logo-box wide-logo"><img src="https://www.figma.com/api/mcp/asset/0823ce35-bfb1-48fb-86dd-6c69827a1d5d" alt="ATOM" /></div>
+            <div class="logo-box wide-logo"><img src="public/media/figma/atom-logo.svg" alt="ATOM" /></div>
             <div class="section__intro">
-              <div class="meta meta--button"><div class="title-block"><p class="text">ATOM AUTOMOTIVE</p><p class="text status">art-d • designer • 24-26</p></div><a class="more" href="./case-atom.html">More</a></div>
-              <p class="text desc">This legendary company managed to revolutionize the automotive market, becoming the rock star of the industry, but it met its end just as dramatically and prematurely</p>
+              <div class="meta meta--button"><div class="title-block"><p class="text">ATOM AUTOMOTIVE</p><p class="text status" id="tv-atom-status">арт-директор • дизайнер • 24-26</p></div><a class="more" id="tv-atom-more" href="./case-atom.html">Подробнее</a></div>
+              <p class="text desc" id="tv-atom-description">Эта легендарная компания успела перевернуть автомобильный рынок, стать настоящей рок-звездой индустрии, но закончила так же драматично и преждевременно</p>
             </div>
           </div>
-          <div class="media" style="aspect-ratio:620/300"><img src="https://www.figma.com/api/mcp/asset/fe7ea884-77d8-4160-b520-a2b167f2d7f8" alt="ATOM car side view" /></div>
+          <div class="media" style="aspect-ratio:620/300"><img src="public/media/figma/atom-car-side.png" alt="ATOM car side view" /></div>
           <div class="atom-two">
-            <div class="atom-copy-wrap"><p class="text">Made a whole UI system that was build all interfaces around it, lots of concepts that produced a unique look&amp;feel, main page widgets, HMX, animations, ilutstrarions etc.</p><div class="media-sm atom-kamaz"><img src="https://www.figma.com/api/mcp/asset/716448e6-c0fd-49c1-8cba-b79a35816f2a" alt="" /></div></div>
-            <div class="media atom-steering"><img src="https://www.figma.com/api/mcp/asset/808c926b-2dbe-4dd9-aecb-69f93a1c7dd2" alt="ATOM steering interface" /></div>
+            <div class="atom-copy-wrap"><p class="text" id="tv-atom-copy-one">Сделал целую UI-систему, на которой были построены все интерфейсы вокруг проекта: множество концептов, уникальный look&amp;feel, виджеты главной страницы, HMX, анимации, иллюстрации и многое другое.</p><div class="media-sm atom-kamaz"><img src="public/media/figma/atom-kamaz.svg" alt="" /></div></div>
+            <div class="media atom-steering"><img src="public/media/figma/atom-main-steering.png" alt="ATOM steering interface" /></div>
           </div>
           <div class="atom-three">
-            <div class="atom-left"><div class="media atom-cards"><img src="https://www.figma.com/api/mcp/asset/5d9734c7-af0c-4239-9a38-2200bab82b0f" alt="ATOM cards" /></div><div class="atom-small-copy"><p class="text">Made a whole UI system that was biuld all interfaces around it, lots of concepts that produced a unique look&amp;feel, main page widgets, HMX, animations, ilutstrarions etc.</p><div class="media-sm atom-small-photo"><img src="https://www.figma.com/api/mcp/asset/5fa6e2e8-0c8a-4f74-bfa2-6abd712e705f" alt="" /></div></div></div>
-            <div class="atom-right"><div class="media-sm atom-thin"><img src="https://www.figma.com/api/mcp/asset/c9a42c4c-4ab3-42ee-8ad8-2a9e7bd6acc9" alt="" /></div><div class="media atom-radar"><img src="https://www.figma.com/api/mcp/asset/e9cc08c8-e3a4-41ea-a3ff-94972e558c4f" alt="ATOM radar interface" /></div></div>
+            <div class="atom-left"><div class="media atom-cards"><img src="public/media/figma/atom-cards.png" alt="ATOM cards" /></div><div class="atom-small-copy"><p class="text" id="tv-atom-copy-two">Сделал целую UI-систему, на которой были собраны все интерфейсы вокруг проекта: много концептов, уникальный look&amp;feel, виджеты главной, HMX, анимации, иллюстрации и многое другое.</p><div class="media-sm atom-small-photo"><img src="public/media/figma/atom-small-photo.jpg" alt="" /></div></div></div>
+            <div class="atom-right"><div class="media-sm atom-thin"><img src="public/media/figma/atom-thin.png" alt="" /></div><div class="media atom-radar"><img src="public/media/figma/atom-radar.png" alt="ATOM radar interface" /></div></div>
           </div>
-          <div class="media atom-last"><img src="https://www.figma.com/api/mcp/asset/267bff48-a073-4c36-85cb-892ef538b8ac" alt="ATOM final visual" /></div>
+          <div class="media atom-last"><img src="public/media/figma/atom-final.png" alt="ATOM final visual" /></div>
         </section>
 
         <section class="section">
           <div class="section__header">
-            <div class="logo-box wide-logo"><img src="https://www.figma.com/api/mcp/asset/1c0f426d-00e2-43a4-88a6-60a1931253cb" alt="OBJ" /></div>
+            <div class="logo-box wide-logo"><img src="public/media/figma/obu-logo.svg" alt="OBJ" /></div>
             <div class="section__intro">
-              <div class="meta"><p class="text">Another automotive</p><p class="text status">art-d • designer</p></div>
-              <div class="media-sm obu-desc-image"><img src="https://www.figma.com/api/mcp/asset/52809f74-aaad-4fcd-b017-945cc4fe7349" alt="" /></div>
+              <div class="meta"><p class="text" id="tv-obj-title">Ещё один автомобильный проект</p><p class="text status" id="tv-obj-status">арт-директор • дизайнер</p></div>
+              <div class="media-sm obu-desc-image"><img src="public/media/figma/obu-description.svg" alt="" /></div>
             </div>
           </div>
-          <div class="media" style="aspect-ratio:1240/620"><img src="https://www.figma.com/api/mcp/asset/d5469697-d3d8-4598-8d33-dabb21322080" alt="Covered concept car" /></div>
-          <p class="text obu-copy">Defined look &amp; feel, created service and main screens such as widgets, climate-control, media and music, all apps page, calls, cameras etc.</p>
-          <div class="media" style="aspect-ratio:3840/2160; border-radius: 8px"><img src="https://www.figma.com/api/mcp/asset/438c532c-96cf-4e04-b547-d631a76ea793" alt="OBJ music interface" /></div>
+          <div class="media" style="aspect-ratio:1240/620"><img src="public/media/figma/obu-car.png" alt="Covered concept car" /></div>
+          <p class="text obu-copy" id="tv-obj-copy">Определил look &amp; feel, сделал сервисные и главные экраны: виджеты, климат-контроль, медиа и музыку, экран всех приложений, звонки, камеры и другое.</p>
+          <div class="media" style="aspect-ratio:3840/2160; border-radius: 8px"><img src="public/media/figma/obu-music.png" alt="OBJ music interface" /></div>
         </section>
 
         <section class="section">
           <div class="section__header">
-            <div class="logo-box pb-logo"><img src="https://www.figma.com/api/mcp/asset/2f26f37f-5ffc-4700-8159-2f43b4bb9b44" alt="Почта Банк" /></div>
+            <div class="logo-box pb-logo"><img src="public/media/figma/pochta-logo.svg" alt="Почта Банк" /></div>
             <div class="pb-intro">
               <div class="pb-meta">
-                <p class="pb-name">POCHTA BANK APP</p>
-                <p class="pb-status">art-d • designer</p>
-                <a class="more" href="./case-pochtabank.html">More</a>
+                <p class="pb-name" id="tv-pb-name">ПРИЛОЖЕНИЕ ПОЧТА БАНКА</p>
+                <p class="pb-status" id="tv-pb-status">арт-директор • дизайнер</p>
+                <a class="more" id="tv-pb-more" href="./case-pochtabank.html">Подробнее</a>
               </div>
-              <p class="pb-tag">redesign</p>
+              <p class="pb-tag" id="tv-pb-tag">редизайн</p>
             </div>
           </div>
           <div class="pb-content">
             <div class="pb-left">
-              <div class="media pb-phone"><img src="https://www.figma.com/api/mcp/asset/49065225-6136-42bb-bd00-0d0d87ffb84c" alt="Pochta bank app phone screen" /></div>
-              <p class="pb-copy">Made a whole new app.<br>All of the sections and tabs redisgned, most of the UX is remade, including fast-paymant features and highers CTR to bank needed metrics, targeting pensioners and new young audience to prevent (привлечь)<br>Reworked illutstrations, created a design-system, guidelines, animations, profiles and banners</p>
-              <div class="media pb-desc-card"><img src="https://www.figma.com/api/mcp/asset/06aee186-2a91-4446-a3f9-847c3ae640e4" alt="Pochta bank lower cards" /></div>
+              <div class="media pb-phone"><img src="public/media/figma/pochta-phone.png" alt="Pochta bank app phone screen" /></div>
+              <p class="pb-copy" id="tv-pb-copy">Сделал полностью новое приложение.<br>Все разделы и вкладки были переработаны, большая часть UX собрана заново, включая быстрые платежи и решения для роста нужных банковских метрик. Продукт стал лучше работать и на пенсионную аудиторию, и на более молодую.<br>Переработал иллюстрации, собрал дизайн-систему, гайдлайны, анимации, профили и баннеры.</p>
+              <div class="media pb-desc-card"><img src="public/media/figma/pochta-description-card.png" alt="Pochta bank lower cards" /></div>
             </div>
             <div class="pb-right">
-              <p class="pb-description">Pochta Bank is one of the largest retail banks in Russia, with the broadest network: over 30,000 service points in 83 regions and a customer base of over 21 million.</p>
-              <div class="media pb-card"><img src="https://www.figma.com/api/mcp/asset/e30d6c4d-6ffd-48da-abb3-b89e3562d5dd" alt="Pochta bank eagle card" /></div>
-              <div class="media pb-msc"><img src="https://www.figma.com/api/mcp/asset/26c3ee53-24c3-4378-b40a-ade3d252501e" alt="Pochta bank red circle illustration" /></div>
-              <div class="media-sm pb-pills"><img src="https://www.figma.com/api/mcp/asset/1a140014-29b9-47d3-b40b-07a163a07e3f" alt="Pochta bank payments list" /></div>
+              <p class="pb-description" id="tv-pb-description">Почта Банк — один из крупнейших розничных банков России с самой широкой сетью: более 30 000 точек обслуживания в 83 регионах и клиентской базой более 21 миллиона человек.</p>
+              <div class="media pb-card"><img src="public/media/figma/pochta-card.png" alt="Pochta bank eagle card" /></div>
+              <div class="media pb-msc"><img src="public/media/figma/pochta-msc-logo.png" alt="Pochta bank red circle illustration" /></div>
+              <div class="media-sm pb-pills"><img src="public/media/figma/pochta-pills.png" alt="Pochta bank payments list" /></div>
             </div>
           </div>
         </section>
 
         <section class="b24-case">
-          <div class="b24-logo"><img src="https://www.figma.com/api/mcp/asset/2ad4e250-e0c5-4e73-8208-9040a09cda4b" alt="Битрикс24" /></div>
+          <div class="b24-logo"><img src="public/media/figma/bitrix-logo.svg" alt="Битрикс24" /></div>
           <div class="b24-intro">
             <div class="b24-meta">
               <p class="text">BITRIX 24</p>
-              <p class="text status">lead-designer</p>
-              <a class="more" href="./case-bitrix24.html">More</a>
+              <p class="text status" id="tv-b24-status">ведущий дизайнер</p>
+              <a class="more" id="tv-b24-more" href="./case-bitrix24.html">Подробнее</a>
             </div>
-            <p class="text b24-tag">redesign</p>
+            <p class="text b24-tag" id="tv-b24-tag">редизайн</p>
           </div>
           <div class="b24-story">
             <div class="b24-faces">
               <div class="b24-faces-left">
-                <div class="b24-face b24-face--left-one"><img src="https://www.figma.com/api/mcp/asset/394d125c-7236-4d3e-a748-2481d32bf650" alt="" /></div>
-                <div class="b24-face b24-face--left-two"><img src="https://www.figma.com/api/mcp/asset/57273156-9736-4c23-93b4-7df224278bfc" alt="" /></div>
-                <div class="b24-badge b24-badge--file"><img src="https://www.figma.com/api/mcp/asset/3c832ea2-15ab-4a17-99fd-fc0a88e373aa" alt="" /></div>
+                <div class="b24-face b24-face--left-one"><img src="public/media/figma/bitrix-face-one.png" alt="" /></div>
+                <div class="b24-face b24-face--left-two"><img src="public/media/figma/bitrix-face-two.jpg" alt="" /></div>
+                <div class="b24-badge b24-badge--file"><img src="public/media/figma/bitrix-file-icon.svg" alt="" /></div>
               </div>
               <div class="b24-faces-right">
-                <div class="b24-face b24-face--right-one"><img src="https://www.figma.com/api/mcp/asset/631a61ee-f398-436a-ac3b-1c74cd4a44a0" alt="" /></div>
-                <div class="b24-badge b24-badge--like"><img src="https://www.figma.com/api/mcp/asset/0b596dc4-e185-4955-9efa-409475084185" alt="" /></div>
-                <div class="b24-face b24-face--right-two"><img src="https://www.figma.com/api/mcp/asset/650cb457-c364-4673-9ee2-f45639167bca" alt="" /></div>
-                <div class="b24-face b24-face--right-three"><img src="https://www.figma.com/api/mcp/asset/7ddc3bbe-70ea-4462-8800-7b3ce5e10120" alt="" /></div>
-                <div class="b24-badge b24-badge--brush"><img src="https://www.figma.com/api/mcp/asset/3c5126d9-fa4c-4ade-9b4e-2b1d7c0ab0e8" alt="" /></div>
+                <div class="b24-face b24-face--right-one"><img src="public/media/figma/bitrix-face-three.png" alt="" /></div>
+                <div class="b24-badge b24-badge--like"><img src="public/media/figma/bitrix-like-icon.svg" alt="" /></div>
+                <div class="b24-face b24-face--right-two"><img src="public/media/figma/bitrix-face-four.png" alt="" /></div>
+                <div class="b24-face b24-face--right-three"><img src="public/media/figma/bitrix-face-five.png" alt="" /></div>
+                <div class="b24-badge b24-badge--brush"><img src="public/media/figma/bitrix-brush-icon.svg" alt="" /></div>
               </div>
             </div>
             <div class="b24-copy-row">
-              <p class="text b24-description">Bitrix24 is one of the largest business ecosystems, trusted by over 15 million companies in over 150 countries.</p>
-              <p class="text b24-description">Created a whole new UI for a web-site with it's own philosophy and big idea</p>
+              <p class="text b24-description" id="tv-b24-description-one">Битрикс24 — одна из крупнейших бизнес-экосистем, которой доверяют более 15 миллионов компаний в более чем 150 странах.</p>
+              <p class="text b24-description" id="tv-b24-description-two">Сделал полностью новый UI для сайта с собственной философией и сильной центральной идеей.</p>
             </div>
           </div>
-          <div class="media b24-block"><img src="https://www.figma.com/api/mcp/asset/25a333d1-3228-4844-a846-971d2bf69c51" alt="Bitrix24 main block" /></div>
+          <div class="media b24-block"><img src="public/media/figma/bitrix-block.png" alt="Bitrix24 main block" /></div>
           <div class="b24-bottom">
             <div class="b24-bottom-copy">
-              <div class="text b24-bottom-copy-left"><p>But not only website</p><p>I also made a proposal to redisgn a inner system to create a much friendly, connectivity design to work with joy</p></div>
-              <div class="text b24-bottom-copy-right"><p>But it didn't go to prod,</p><p>so let it rest here in peace</p></div>
+              <div class="text b24-bottom-copy-left"><p id="tv-b24-bottom-left-one">Но не только сайт</p><p id="tv-b24-bottom-left-two">Я также сделал предложение по редизайну внутренней системы, чтобы сделать её гораздо дружелюбнее и приятнее в ежедневной работе.</p></div>
+              <div class="text b24-bottom-copy-right"><p id="tv-b24-bottom-right-one">Но в прод это не пошло,</p><p id="tv-b24-bottom-right-two">поэтому пусть спокойно живёт здесь</p></div>
             </div>
-            <div class="media b24-last"><img src="https://www.figma.com/api/mcp/asset/8382c4c6-917d-4a81-8b05-a6e52d6b2b1f" alt="Bitrix24 lower screen" /></div>
+            <div class="media b24-last"><img src="public/media/figma/bitrix-last.png" alt="Bitrix24 lower screen" /></div>
           </div>
         </section>
 
         <section class="stoloto-case">
-          <div class="logo-box stoloto-logo"><img src="https://www.figma.com/api/mcp/asset/acf63cc8-6b7b-4aba-a13a-85f0a6c6c457" alt="Столото" /></div>
+          <div class="logo-box stoloto-logo"><img src="public/media/figma/stoloto-logo.svg" alt="Столото" /></div>
           <div class="stoloto-intro">
             <div class="stoloto-meta">
-              <p class="text">STOLOTO</p>
-              <p class="text status">lead-designer</p>
-              <a class="more" href="./case-stoloto.html">More</a>
+              <p class="text" id="tv-stoloto-name">СТОЛОТО</p>
+              <p class="text status" id="tv-stoloto-status">ведущий дизайнер</p>
+              <a class="more" id="tv-stoloto-more" href="./case-stoloto.html">Подробнее</a>
             </div>
-            <p class="text stoloto-tag">redesign</p>
+            <p class="text stoloto-tag" id="tv-stoloto-tag">редизайн</p>
           </div>
-          <div class="media stoloto-block"><img src="https://www.figma.com/api/mcp/asset/7601696c-7533-499e-a04a-18622afbcf7a" alt="Stoloto dark screens" /></div>
+          <div class="media stoloto-block"><img src="public/media/figma/stoloto-block.png" alt="Stoloto dark screens" /></div>
           <div class="stoloto-feature">
-            <p class="text stoloto-description">Pochta Bank is one of the largest retail banks in Russia, with the broadest network: over 30,000 service points in 83 regions and a customer base of over 21 million.</p>
-            <div class="stoloto-matryoshka"><img src="https://www.figma.com/api/mcp/asset/a4889c59-0b12-4512-8e32-2b364c6976d7" alt="Stoloto mascots" /></div>
+            <p class="text stoloto-description" id="tv-stoloto-description">Один из самых заметных лотерейных продуктов в России. Для него был собран новый визуальный язык, обновлены сценарии покупки и акцентирован сам продукт.</p>
+            <div class="stoloto-matryoshka"><img src="public/media/figma/stoloto-matryoshka.png" alt="Stoloto mascots" /></div>
           </div>
           <div class="stoloto-lower">
             <div class="stoloto-lower-left">
-              <div class="text stoloto-copy">
-                <p>Made a whole new app.<br>All of the sections and tabs redisgned, most of the UX is remade, including fast-paymant features and highers CTR to bank needed metrics, targeting pensioners and new young audience to prevent (привлечь)</p>
-                <p>Reworked illutstrations, created a design-system, guidelines, animations, profiles and banners</p>
+              <div class="text stoloto-copy" id="tv-stoloto-copy">
+                <p>Сделал новое приложение. Все разделы и вкладки были переработаны, большая часть UX собрана заново, включая быстрые платежи и решения для роста продуктовых метрик.</p>
+                <p>Переработал иллюстрации, собрал дизайн-систему, гайдлайны, анимации, профили и баннеры.</p>
               </div>
-              <div class="media stoloto-lotteries"><img src="https://www.figma.com/api/mcp/asset/20b1e654-32df-4f9e-9023-c9c20e09aa91" alt="Stoloto lotteries logos" /></div>
+              <div class="media stoloto-lotteries"><img src="public/media/figma/stoloto-lotteries.png" alt="Stoloto lotteries logos" /></div>
             </div>
-            <div class="stoloto-lower-right"><img src="https://www.figma.com/api/mcp/asset/0496b4e9-c65c-4f0a-b8ca-a2b0f38b24ad" alt="Stoloto phone interface" /></div>
+            <div class="stoloto-lower-right"><img src="public/media/figma/stoloto-right.png" alt="Stoloto phone interface" /></div>
           </div>
         </section>
 
         <section class="additional-cases">
           <div class="additional-cases__heading">
-            <h2 class="additional-cases__title">Etc.</h2>
-            <p class="additional-cases__subtitle">Last, but not least</p>
+            <h2 class="additional-cases__title" id="tv-additional-title">Ещё</h2>
+            <p class="additional-cases__subtitle" id="tv-additional-subtitle">Последние, но не менее важные</p>
           </div>
           <div class="additional-cases__list">
             <div class="additional-cases__item">
               <div class="additional-cases__row">
                 <div class="additional-cases__meta">
-                  <div class="additional-cases__logo additional-cases__logo--moskvich"><img src="https://www.figma.com/api/mcp/asset/448e6edb-4644-48c9-93b3-234e3096d914" alt="" /></div>
-                  <div class="additional-cases__copy"><p>M-series web redesign</p><p>art-d, designer</p></div>
+                  <div class="additional-cases__logo additional-cases__logo--moskvich"><img src="public/media/figma/additional-moskvich-logo.svg" alt="" /></div>
+                  <div class="additional-cases__copy"><p id="tv-case-moskvich-title">Редизайн M-series</p><p id="tv-case-moskvich-role">арт-д, дизайнер</p></div>
                   <p class="additional-cases__year">2024</p>
                 </div>
-                <div class="additional-cases__image additional-cases__image--moskvich"><img src="https://www.figma.com/api/mcp/asset/e2593ff6-024a-40d8-bc2d-4f2d00847920" alt="Moskvich redesign preview" /></div>
+                <div class="additional-cases__image additional-cases__image--moskvich"><img src="public/media/figma/additional-moskvich-image.png" alt="Moskvich redesign preview" /></div>
               </div>
               <div class="additional-cases__divider"></div>
             </div>
             <div class="additional-cases__item">
               <div class="additional-cases__row">
                 <div class="additional-cases__meta">
-                  <div class="additional-cases__logo additional-cases__logo--kultura"><img src="https://www.figma.com/api/mcp/asset/829e9447-ccb7-4378-9e21-26645e1015be" alt="" /></div>
-                  <div class="additional-cases__copy"><p>Web concept</p><p>designer</p></div>
+                  <div class="additional-cases__logo additional-cases__logo--kultura"><img src="public/media/figma/additional-kultura-logo.svg" alt="" /></div>
+                  <div class="additional-cases__copy"><p id="tv-case-kultura-title">Веб-концепт</p><p id="tv-case-kultura-role">дизайнер</p></div>
                   <p class="additional-cases__year">2024</p>
                 </div>
-                <div class="additional-cases__image additional-cases__image--kultura"><img src="https://www.figma.com/api/mcp/asset/e6a608a0-a73e-4f58-88e9-d25980406bb6" alt="Культура Москвы preview" /></div>
+                <div class="additional-cases__image additional-cases__image--kultura"><img src="public/media/figma/additional-kultura-image.png" alt="Культура Москвы preview" /></div>
               </div>
               <div class="additional-cases__divider"></div>
             </div>
             <div class="additional-cases__item">
               <div class="additional-cases__row">
                 <div class="additional-cases__meta">
-                  <div class="additional-cases__logo additional-cases__logo--stoloto"><img src="https://www.figma.com/api/mcp/asset/150d6a6b-af72-4fa0-b373-15d587fa72e3" alt="" /></div>
-                  <div class="additional-cases__copy"><p>Game machines interface</p><p>art-d, designer</p></div>
+                  <div class="additional-cases__logo additional-cases__logo--stoloto"><img src="public/media/figma/additional-stoloto-dots-logo.svg" alt="" /></div>
+                  <div class="additional-cases__copy"><p id="tv-case-stoloto-dots-title">Интерфейс игровых автоматов</p><p id="tv-case-stoloto-dots-role">арт-д, дизайнер</p></div>
                   <p class="additional-cases__year">2024</p>
                 </div>
-                <div class="additional-cases__image additional-cases__image--stoloto"><img src="https://www.figma.com/api/mcp/asset/f0c7de3e-538f-4f1d-b30a-233b6dbf5e65" alt="Stoloto game machines preview" /></div>
+                <div class="additional-cases__image additional-cases__image--stoloto"><img src="public/media/figma/additional-stoloto-dots-image.png" alt="Stoloto game machines preview" /></div>
               </div>
               <div class="additional-cases__divider"></div>
             </div>
             <div class="additional-cases__item">
               <div class="additional-cases__row">
                 <div class="additional-cases__meta">
-                  <div class="additional-cases__logo additional-cases__logo--postamat"><img src="https://www.figma.com/api/mcp/asset/c8277692-3a34-49e4-904f-f63b3077c855" alt="" /></div>
-                  <div class="additional-cases__copy"><p>Interface for postamat</p><p>art-d, designer</p></div>
+                  <div class="additional-cases__logo additional-cases__logo--postamat"><img src="public/media/figma/additional-postamat-logo.png" alt="" /></div>
+                  <div class="additional-cases__copy"><p id="tv-case-postamat-title">Интерфейс постамата</p><p id="tv-case-postamat-role">арт-д, дизайнер</p></div>
                   <p class="additional-cases__year">2024</p>
                 </div>
-                <div class="additional-cases__image additional-cases__image--postamat"><img src="https://www.figma.com/api/mcp/asset/cb0663b7-7359-4c33-aca6-5d8dbbc31c6e" alt="Postamat interface preview" /></div>
+                <div class="additional-cases__image additional-cases__image--postamat"><img src="public/media/figma/additional-postamat-image.png" alt="Postamat interface preview" /></div>
               </div>
               <div class="additional-cases__divider"></div>
             </div>
             <div class="additional-cases__item">
               <div class="additional-cases__row">
                 <div class="additional-cases__meta">
-                  <div class="additional-cases__logo additional-cases__logo--auchan"><img src="https://www.figma.com/api/mcp/asset/7b2cba0e-3a26-4800-b06f-e25e7a5317a9" alt="" /></div>
-                  <div class="additional-cases__copy"><p>Interface for postamat</p><p>art-d, designer</p></div>
+                  <div class="additional-cases__logo additional-cases__logo--auchan"><img src="public/media/figma/additional-auchan-logo.svg" alt="" /></div>
+                  <div class="additional-cases__copy"><p id="tv-case-auchan-title">Интерфейс постамата</p><p id="tv-case-auchan-role">арт-д, дизайнер</p></div>
                   <p class="additional-cases__year">2024</p>
                 </div>
-                <div class="additional-cases__image additional-cases__image--auchan"><img src="https://www.figma.com/api/mcp/asset/56a99440-66ac-4a8b-85bb-4017cee66528" alt="Auchan interface preview" /></div>
+                <div class="additional-cases__image additional-cases__image--auchan"><img src="public/media/figma/additional-auchan-image.png" alt="Auchan interface preview" /></div>
               </div>
               <div class="additional-cases__divider"></div>
             </div>
             <div class="additional-cases__item">
               <div class="additional-cases__row">
                 <div class="additional-cases__meta">
-                  <div class="additional-cases__logo additional-cases__logo--haier"><img src="https://www.figma.com/api/mcp/asset/be7d8974-0775-405f-9dff-4516b2e8a4f5" alt="" /></div>
-                  <div class="additional-cases__copy"><p>Web redesign</p><p>designer</p></div>
+                  <div class="additional-cases__logo additional-cases__logo--haier"><img src="public/media/figma/additional-haier-logo.png" alt="" /></div>
+                  <div class="additional-cases__copy"><p id="tv-case-haier-title">Редизайн сайта</p><p id="tv-case-haier-role">дизайнер</p></div>
                   <p class="additional-cases__year">2024</p>
                 </div>
-                <div class="additional-cases__image additional-cases__image--haier"><img src="https://www.figma.com/api/mcp/asset/6136d7eb-5f8a-4797-87cb-1df8ccda7bb5" alt="Haier redesign preview" /></div>
+                <div class="additional-cases__image additional-cases__image--haier"><img src="public/media/figma/additional-haier-image.png" alt="Haier redesign preview" /></div>
               </div>
               <div class="additional-cases__divider"></div>
             </div>
             <div class="additional-cases__item">
               <div class="additional-cases__row">
                 <div class="additional-cases__meta">
-                  <div class="additional-cases__logo additional-cases__logo--borishoff"><img src="https://www.figma.com/api/mcp/asset/9d883174-e8d9-4fc2-8dee-e7957ae8010f" alt="" /></div>
-                  <div class="additional-cases__copy"><p>App design</p><p>art-d</p></div>
+                  <div class="additional-cases__logo additional-cases__logo--borishoff"><img src="public/media/figma/additional-borishoff-logo.svg" alt="" /></div>
+                  <div class="additional-cases__copy"><p id="tv-case-borishoff-title">Дизайн приложения</p><p id="tv-case-borishoff-role">арт-д</p></div>
                   <p class="additional-cases__year">2025</p>
                 </div>
-                <div class="additional-cases__image additional-cases__image--borishoff"><img src="https://www.figma.com/api/mcp/asset/2fbaedfe-1cf0-4bd4-9088-e8122c5862c7" alt="Borishoff app preview" /></div>
+                <div class="additional-cases__image additional-cases__image--borishoff"><img src="public/media/figma/additional-borishoff-image.png" alt="Borishoff app preview" /></div>
               </div>
               <div class="additional-cases__divider"></div>
             </div>
             <div class="additional-cases__row">
               <div class="additional-cases__meta">
-                <div class="additional-cases__finance-logo"><img src="https://www.figma.com/api/mcp/asset/44ab1b75-61a9-4193-954a-b99b1fcb5ba5" alt="" /></div>
-                <div class="additional-cases__copy"><p>Web redesign</p><p>designer</p></div>
+                <div class="additional-cases__finance-logo"><img src="public/media/figma/additional-finance-logo.png" alt="" /></div>
+                <div class="additional-cases__copy"><p id="tv-case-finance-title">Редизайн сайта</p><p id="tv-case-finance-role">дизайнер</p></div>
                 <p class="additional-cases__year">2023</p>
               </div>
-              <div class="additional-cases__image additional-cases__image--finance"><img src="https://www.figma.com/api/mcp/asset/3e2a0736-d485-4d4c-b36c-dba23a2c1775" alt="Финансовая культура preview" /></div>
+              <div class="additional-cases__image additional-cases__image--finance"><img src="public/media/figma/additional-finance-image.png" alt="Финансовая культура preview" /></div>
             </div>
           </div>
         </section>
 
         <section class="page-end" aria-label="Page end">
           <a class="back-to-top" href="#top" aria-label="Вернуться наверх страницы">
-            <span class="back-to-top__label">UP</span>
+            <span class="back-to-top__label" id="tv-up-label">Наверх</span>
           </a>
 
           <footer class="portfolio-footer">
             <div class="portfolio-footer__left">
               <p class="portfolio-footer__name">Tsarёv Andrey</p>
               <div class="portfolio-footer__portrait">
-                <img src="https://www.figma.com/api/mcp/asset/8d4117fc-f2ec-4ac2-96c5-9e0215170649" alt="" />
+                <img src="public/media/figma/footer-portrait.png" alt="" />
               </div>
             </div>
 
             <div class="portfolio-footer__center">
-              <div class="portfolio-footer__role">
-                <p>Digital design team-lead</p>
-                <p>art-d</p>
-                <p>designer</p>
+              <div class="portfolio-footer__role" id="tv-footer-role">
+                <p>Руководитель digital-дизайна</p>
+                <p>арт-директор</p>
+                <p>дизайнер</p>
               </div>
               <div class="portfolio-footer__divider"></div>
               <div class="portfolio-footer__projects-block">
-                <p class="portfolio-footer__projects-label">Projects</p>
+                <p class="portfolio-footer__projects-label" id="tv-footer-projects-label">Проекты</p>
                 <a class="portfolio-footer__cv" href="./cv.html">CV</a>
                 <div class="portfolio-footer__projects-grid">
-                  <div class="portfolio-footer__projects-list">
+                  <div class="portfolio-footer__projects-list" id="tv-footer-projects-list">
                     <p>ATOM auto</p>
-                    <p>Pochta bank,</p>
+                    <p>Почта Банк,</p>
                     <p>Bitrix24,</p>
                     <p>Stoloto,</p>
                     <p>Auchan,</p>
-                    <p>Moskvich,</p>
+                    <p>Москвич,</p>
                     <p>Haier,</p>
                     <p>Borishoff</p>
-                    <p>Moscow Postamat</p>
-                    <p>Culture of MSC</p>
-                    <p>and more</p>
+                    <p>Мой Постамат</p>
+                    <p>Культура МСК</p>
+                    <p>и другое</p>
                   </div>
                   <div class="portfolio-footer__statuses">
-                    <p>art-d, designer</p>
-                    <p>art-d, designer</p>
-                    <p>lead-d, designer</p>
-                    <p>lead-d, designer</p>
-                    <p>designer</p>
-                    <p>designer</p>
-                    <p>designer</p>
-                    <p>designer</p>
-                    <p>art-d, designer</p>
-                    <p>lead-d, designer</p>
+                    <p>арт-д, дизайнер</p>
+                    <p>арт-д, дизайнер</p>
+                    <p>вед-д, дизайнер</p>
+                    <p>вед-д, дизайнер</p>
+                    <p>дизайнер</p>
+                    <p>дизайнер</p>
+                    <p>дизайнер</p>
+                    <p>дизайнер</p>
+                    <p>арт-д, дизайнер</p>
+                    <p>вед-д, дизайнер</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <nav class="portfolio-footer__contacts" aria-label="Footer links">
-              <a class="portfolio-footer__contact-button" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Telegram</a>
-              <a class="portfolio-footer__contact-button" href="mailto:eggy0510@gmail.com">Mail</a>
+              <a class="portfolio-footer__contact-button" id="tv-footer-telegram" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Телеграм</a>
+              <a class="portfolio-footer__contact-button" id="tv-footer-mail" href="mailto:eggy0510@gmail.com">Почта</a>
             </nav>
           </footer>
         </section>
@@ -842,5 +884,244 @@
     </div>
 
     <div class="bottom-signs" aria-hidden="true"><span class="bottom-signs__name">Tsarёv Andrey</span><span class="bottom-signs__year">2026</span></div>
+    <script>
+      const tvTranslations = {
+        ru: {
+          toggle: "En",
+          home: "Главная",
+          telegram: "Телеграм",
+          mail: "Почта",
+          wall: "Стена",
+          heroRole: ["Руководитель digital-дизайна", "арт-директор", "дизайнер"],
+          heroProjectsLabel: "Проекты",
+          heroProjects: ["ATOM auto", "Почта Банк,", "Bitrix24,", "Stoloto,", "Auchan,", "Москвич,", "Haier,", "Borishoff", "Мой Постамат", "Культура МСК", "и другое"],
+          heroPromo: "Создаю уникальные визуальные образы, делаю дизайн компаний узнаваемым, работаю с новыми устройствами, и помогаю командам расти",
+          atomStatus: "арт-директор • дизайнер • 24-26",
+          atomMore: "Подробнее",
+          atomDescription: "Эта легендарная компания успела перевернуть автомобильный рынок, стать настоящей рок-звездой индустрии, но закончила так же драматично и преждевременно",
+          atomCopyOne: "Сделал целую UI-систему, на которой были построены все интерфейсы вокруг проекта: множество концептов, уникальный look&feel, виджеты главной страницы, HMX, анимации, иллюстрации и многое другое.",
+          atomCopyTwo: "Сделал целую UI-систему, на которой были собраны все интерфейсы вокруг проекта: много концептов, уникальный look&feel, виджеты главной, HMX, анимации, иллюстрации и многое другое.",
+          objTitle: "Ещё один автомобильный проект",
+          objStatus: "арт-директор • дизайнер",
+          objCopy: "Определил look & feel, сделал сервисные и главные экраны: виджеты, климат-контроль, медиа и музыку, экран всех приложений, звонки, камеры и другое.",
+          pbName: "ПРИЛОЖЕНИЕ ПОЧТА БАНКА",
+          pbStatus: "арт-директор • дизайнер",
+          pbMore: "Подробнее",
+          pbTag: "редизайн",
+          pbCopy: "Сделал полностью новое приложение.<br>Все разделы и вкладки были переработаны, большая часть UX собрана заново, включая быстрые платежи и решения для роста нужных банковских метрик. Продукт стал лучше работать и на пенсионную аудиторию, и на более молодую.<br>Переработал иллюстрации, собрал дизайн-систему, гайдлайны, анимации, профили и баннеры.",
+          pbDescription: "Почта Банк — один из крупнейших розничных банков России с самой широкой сетью: более 30 000 точек обслуживания в 83 регионах и клиентской базой более 21 миллиона человек.",
+          b24Status: "ведущий дизайнер",
+          b24More: "Подробнее",
+          b24Tag: "редизайн",
+          b24DescriptionOne: "Битрикс24 — одна из крупнейших бизнес-экосистем, которой доверяют более 15 миллионов компаний в более чем 150 странах.",
+          b24DescriptionTwo: "Сделал полностью новый UI для сайта с собственной философией и сильной центральной идеей.",
+          b24BottomLeftOne: "Но не только сайт",
+          b24BottomLeftTwo: "Я также сделал предложение по редизайну внутренней системы, чтобы сделать её гораздо дружелюбнее и приятнее в ежедневной работе.",
+          b24BottomRightOne: "Но в прод это не пошло,",
+          b24BottomRightTwo: "поэтому пусть спокойно живёт здесь",
+          stolotoName: "СТОЛОТО",
+          stolotoStatus: "ведущий дизайнер",
+          stolotoMore: "Подробнее",
+          stolotoTag: "редизайн",
+          stolotoDescription: "Один из самых заметных лотерейных продуктов в России. Для него был собран новый визуальный язык, обновлены сценарии покупки и акцентирован сам продукт.",
+          stolotoCopy: ["Сделал новое приложение. Все разделы и вкладки были переработаны, большая часть UX собрана заново, включая быстрые платежи и решения для роста продуктовых метрик.", "Переработал иллюстрации, собрал дизайн-систему, гайдлайны, анимации, профили и баннеры."],
+          additionalTitle: "Ещё",
+          additionalSubtitle: "Последние, но не менее важные",
+          moskvichTitle: "Редизайн M-series",
+          moskvichRole: "арт-д, дизайнер",
+          kulturaTitle: "Веб-концепт",
+          kulturaRole: "дизайнер",
+          stolotoDotsTitle: "Интерфейс игровых автоматов",
+          stolotoDotsRole: "арт-д, дизайнер",
+          postamatTitle: "Интерфейс постамата",
+          postamatRole: "арт-д, дизайнер",
+          auchanTitle: "Интерфейс постамата",
+          auchanRole: "арт-д, дизайнер",
+          haierTitle: "Редизайн сайта",
+          haierRole: "дизайнер",
+          borishoffTitle: "Дизайн приложения",
+          borishoffRole: "арт-д",
+          financeTitle: "Редизайн сайта",
+          financeRole: "дизайнер",
+          up: "Наверх",
+          footerRole: ["Руководитель digital-дизайна", "арт-директор", "дизайнер"],
+          footerProjects: "Проекты",
+          footerProjectList: ["ATOM auto", "Почта Банк,", "Bitrix24,", "Stoloto,", "Auchan,", "Москвич,", "Haier,", "Borishoff", "Мой Постамат", "Культура МСК", "и другое"],
+          footerStatuses: ["арт-д, дизайнер", "арт-д, дизайнер", "вед-д, дизайнер", "вед-д, дизайнер", "дизайнер", "дизайнер", "дизайнер", "дизайнер", "арт-д, дизайнер", "вед-д, дизайнер"],
+          footerTelegram: "Телеграм",
+          footerMail: "Почта"
+        },
+        en: {
+          toggle: "Ru",
+          home: "Main page",
+          telegram: "Telegram",
+          mail: "Mail",
+          wall: "The wall",
+          heroRole: ["Digital design team-lead", "art-d", "designer"],
+          heroProjectsLabel: "Projects",
+          heroProjects: ["ATOM auto", "Pochta bank,", "Bitrix24,", "Stoloto,", "Auchan,", "Moskvich,", "Haier,", "Borishoff", "Moscow Postamat", "Culture of MSC", "and more"],
+          heroPromo: "Creating beautiful visuals, making companies' design unique, working with never known devices, delivering teams growth",
+          atomStatus: "art-d • designer • 24-26",
+          atomMore: "More",
+          atomDescription: "This legendary company managed to revolutionize the automotive market, becoming the rock star of the industry, but it met its end just as dramatically and prematurely",
+          atomCopyOne: "Made a whole UI system that was build all interfaces around it, lots of concepts that produced a unique look&feel, main page widgets, HMX, animations, ilutstrarions etc.",
+          atomCopyTwo: "Made a whole UI system that was biuld all interfaces around it, lots of concepts that produced a unique look&feel, main page widgets, HMX, animations, ilutstrarions etc.",
+          objTitle: "Another automotive",
+          objStatus: "art-d • designer",
+          objCopy: "Defined look & feel, created service and main screens such as widgets, climate-control, media and music, all apps page, calls, cameras etc.",
+          pbName: "POCHTA BANK APP",
+          pbStatus: "art-d • designer",
+          pbMore: "More",
+          pbTag: "redesign",
+          pbCopy: "Made a whole new app.<br>All of the sections and tabs redisgned, most of the UX is remade, including fast-paymant features and highers CTR to bank needed metrics, targeting pensioners and new young audience to prevent (привлечь)<br>Reworked illutstrations, created a design-system, guidelines, animations, profiles and banners",
+          pbDescription: "Pochta Bank is one of the largest retail banks in Russia, with the broadest network: over 30,000 service points in 83 regions and a customer base of over 21 million.",
+          b24Status: "lead-designer",
+          b24More: "More",
+          b24Tag: "redesign",
+          b24DescriptionOne: "Bitrix24 is one of the largest business ecosystems, trusted by over 15 million companies in over 150 countries.",
+          b24DescriptionTwo: "Created a whole new UI for a web-site with it's own philosophy and big idea",
+          b24BottomLeftOne: "But not only website",
+          b24BottomLeftTwo: "I also made a proposal to redisgn a inner system to create a much friendly, connectivity design to work with joy",
+          b24BottomRightOne: "But it didn't go to prod,",
+          b24BottomRightTwo: "so let it rest here in peace",
+          stolotoName: "STOLOTO",
+          stolotoStatus: "lead-designer",
+          stolotoMore: "More",
+          stolotoTag: "redesign",
+          stolotoDescription: "One of the most visible lottery products in Russia. The work included a new visual language, updated purchase scenarios, and a stronger focus on the core product.",
+          stolotoCopy: ["Made a whole new app. All of the sections and tabs redisgned, most of the UX is remade, including fast-paymant features and highers CTR to bank needed metrics.", "Reworked illutstrations, created a design-system, guidelines, animations, profiles and banners."],
+          additionalTitle: "Etc.",
+          additionalSubtitle: "Last, but not least",
+          moskvichTitle: "M-series web redesign",
+          moskvichRole: "art-d, designer",
+          kulturaTitle: "Web concept",
+          kulturaRole: "designer",
+          stolotoDotsTitle: "Game machines interface",
+          stolotoDotsRole: "art-d, designer",
+          postamatTitle: "Interface for postamat",
+          postamatRole: "art-d, designer",
+          auchanTitle: "Interface for postamat",
+          auchanRole: "art-d, designer",
+          haierTitle: "Web redesign",
+          haierRole: "designer",
+          borishoffTitle: "App design",
+          borishoffRole: "art-d",
+          financeTitle: "Web redesign",
+          financeRole: "designer",
+          up: "UP",
+          footerRole: ["Digital design team-lead", "art-d", "designer"],
+          footerProjects: "Projects",
+          footerProjectList: ["ATOM auto", "Pochta bank,", "Bitrix24,", "Stoloto,", "Auchan,", "Moskvich,", "Haier,", "Borishoff", "Moscow Postamat", "Culture of MSC", "and more"],
+          footerStatuses: ["art-d, designer", "art-d, designer", "lead-d, designer", "lead-d, designer", "designer", "designer", "designer", "designer", "art-d, designer", "lead-d, designer"],
+          footerTelegram: "Telegram",
+          footerMail: "Mail"
+        }
+      };
+
+      const tvState = { language: localStorage.getItem("test-visual-language") === "en" ? "en" : "ru" };
+
+      function setLines(id, lines) {
+        const node = document.getElementById(id);
+        if (!node) return;
+        if (typeof lines === "string") {
+          node.innerHTML = `<p>${lines}</p>`;
+          return;
+        }
+        node.innerHTML = lines.map((line) => `<p>${line}</p>`).join("");
+      }
+
+      function setHtml(id, value) {
+        const node = document.getElementById(id);
+        if (!node) return;
+        node.innerHTML = value;
+      }
+
+      function setText(id, value) {
+        const node = document.getElementById(id);
+        if (!node) return;
+        node.textContent = value;
+      }
+
+      function applyLanguage(language) {
+        const t = tvTranslations[language];
+        document.documentElement.lang = language;
+        document.body.dataset.language = language;
+        localStorage.setItem("test-visual-language", language);
+        setText("tv-language-toggle", t.toggle);
+        setText("tv-home-link", t.home);
+        setText("tv-wall-link", t.wall);
+        setText("tv-telegram-button", t.telegram);
+        setText("tv-mail-button", t.mail);
+        setLines("tv-hero-role", t.heroRole);
+        setText("tv-hero-projects-label", t.heroProjectsLabel);
+        setLines("tv-hero-projects-list", t.heroProjects);
+        setLines("tv-hero-promo", t.heroPromo);
+        setText("tv-atom-status", t.atomStatus);
+        setText("tv-atom-more", t.atomMore);
+        setText("tv-atom-description", t.atomDescription);
+        setText("tv-atom-copy-one", t.atomCopyOne);
+        setText("tv-atom-copy-two", t.atomCopyTwo);
+        setText("tv-obj-title", t.objTitle);
+        setText("tv-obj-status", t.objStatus);
+        setText("tv-obj-copy", t.objCopy);
+        setText("tv-pb-name", t.pbName);
+        setText("tv-pb-status", t.pbStatus);
+        setText("tv-pb-more", t.pbMore);
+        setText("tv-pb-tag", t.pbTag);
+        setHtml("tv-pb-copy", t.pbCopy);
+        setText("tv-pb-description", t.pbDescription);
+        setText("tv-b24-status", t.b24Status);
+        setText("tv-b24-more", t.b24More);
+        setText("tv-b24-tag", t.b24Tag);
+        setText("tv-b24-description-one", t.b24DescriptionOne);
+        setText("tv-b24-description-two", t.b24DescriptionTwo);
+        setText("tv-b24-bottom-left-one", t.b24BottomLeftOne);
+        setText("tv-b24-bottom-left-two", t.b24BottomLeftTwo);
+        setText("tv-b24-bottom-right-one", t.b24BottomRightOne);
+        setText("tv-b24-bottom-right-two", t.b24BottomRightTwo);
+        setText("tv-stoloto-name", t.stolotoName);
+        setText("tv-stoloto-status", t.stolotoStatus);
+        setText("tv-stoloto-more", t.stolotoMore);
+        setText("tv-stoloto-tag", t.stolotoTag);
+        setText("tv-stoloto-description", t.stolotoDescription);
+        setLines("tv-stoloto-copy", t.stolotoCopy);
+        setText("tv-additional-title", t.additionalTitle);
+        setText("tv-additional-subtitle", t.additionalSubtitle);
+        setText("tv-case-moskvich-title", t.moskvichTitle);
+        setText("tv-case-moskvich-role", t.moskvichRole);
+        setText("tv-case-kultura-title", t.kulturaTitle);
+        setText("tv-case-kultura-role", t.kulturaRole);
+        setText("tv-case-stoloto-dots-title", t.stolotoDotsTitle);
+        setText("tv-case-stoloto-dots-role", t.stolotoDotsRole);
+        setText("tv-case-postamat-title", t.postamatTitle);
+        setText("tv-case-postamat-role", t.postamatRole);
+        setText("tv-case-auchan-title", t.auchanTitle);
+        setText("tv-case-auchan-role", t.auchanRole);
+        setText("tv-case-haier-title", t.haierTitle);
+        setText("tv-case-haier-role", t.haierRole);
+        setText("tv-case-borishoff-title", t.borishoffTitle);
+        setText("tv-case-borishoff-role", t.borishoffRole);
+        setText("tv-case-finance-title", t.financeTitle);
+        setText("tv-case-finance-role", t.financeRole);
+        setText("tv-up-label", t.up);
+        setLines("tv-footer-role", t.footerRole);
+        setText("tv-footer-projects-label", t.footerProjects);
+        setLines("tv-footer-projects-list", t.footerProjectList);
+        setText("tv-footer-telegram", t.footerTelegram);
+        setText("tv-footer-mail", t.footerMail);
+
+        const footerStatuses = document.querySelectorAll(".portfolio-footer__statuses p");
+        footerStatuses.forEach((node, index) => {
+          if (t.footerStatuses[index]) node.textContent = t.footerStatuses[index];
+        });
+      }
+
+      document.getElementById("tv-language-toggle").addEventListener("click", function () {
+        tvState.language = tvState.language === "ru" ? "en" : "ru";
+        applyLanguage(tvState.language);
+      });
+
+      applyLanguage(tvState.language);
+    </script>
   </body>
 </html>
