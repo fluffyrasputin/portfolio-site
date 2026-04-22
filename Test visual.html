@@ -15,24 +15,31 @@
       * { box-sizing: border-box; margin: 0; padding: 0; }
       body { background: var(--bg); color: var(--text); font-family: "Suisse Intl", "Helvetica Neue", Arial, sans-serif; }
       img { display: block; max-width: 100%; }
+      body img { cursor: pointer; }
       a { color: inherit; text-decoration: none; }
 
       .page { width: min(620px, calc(100vw - 32px)); margin: 0 auto; padding: 120px 0 120px; }
 
-      .topbar {
+      .tv-desktop-menu {
         position: fixed;
         top: 0; left: 16px; right: 16px;
         z-index: 20;
-        min-height: 64px;
-        padding-top: 24px;
+        height: 64px;
         background: url("public/media/figma/top-menu-background.png") top center / 100% 64px no-repeat;
       }
 
-      .topbar__inner { position: relative; min-height: 64px; }
-      .topbar__side, .topbar__controls { position: absolute; top: 0; display: flex; align-items: center; }
-      .topbar__side--left { left: 0; }
-      .topbar__side--right { right: 0; gap: 16px; min-width: 170px; justify-content: flex-end; }
-      .topbar__controls { left: 50%; transform: translateX(-50%); gap: 8px; }
+      .tv-desktop-menu__inner { position: relative; height: 64px; }
+      .tv-desktop-menu__home,
+      .tv-desktop-menu__contacts,
+      .tv-desktop-menu__side {
+        position: absolute;
+        top: 24px;
+        display: flex;
+        align-items: center;
+      }
+      .tv-desktop-menu__home { left: 0; width: 98px; }
+      .tv-desktop-menu__contacts { left: 50%; width: 192px; transform: translateX(-50%); gap: 8px; }
+      .tv-desktop-menu__side { right: 0; width: 203px; justify-content: space-between; flex-wrap: nowrap; }
 
       .link, .button, .more { transition: opacity 160ms ease; }
       .link:hover, .button:hover, .more:hover { opacity: 0.8; }
@@ -52,7 +59,6 @@
         color: var(--text);
         position: relative;
         z-index: 1;
-        margin-right: 40px;
       }
 
       .link--left { width: 98px; }
@@ -75,64 +81,290 @@
       .button--wide { min-width: 80px; padding-inline: 12px; }
       .more { min-width: 0; width: fit-content; justify-self: start; padding-inline: 24px; white-space: nowrap; }
 
+      .tv-desktop-link,
+      .tv-desktop-button,
+      .tv-mobile-link,
+      .tv-mobile-button {
+        white-space: nowrap;
+      }
+
+      .tv-desktop-link,
+      .tv-mobile-link {
+        min-height: 0;
+      }
+
+      .tv-desktop-link--home,
+      .tv-desktop-link--language,
+      .tv-desktop-link--wall {
+        height: 33px;
+      }
+
+      .tv-desktop-link--home,
+      .tv-desktop-link--language {
+        width: 98px;
+      }
+
+      .tv-desktop-link--language,
+      .tv-desktop-link--wall {
+        justify-content: flex-end;
+        text-align: right;
+      }
+
+      .tv-desktop-link--wall {
+        width: 98px;
+      }
+
+      .tv-mobile-menu {
+        display: none;
+      }
+
+      .tv-mobile-menu__inner {
+        position: relative;
+        width: 100%;
+        height: 90px;
+        margin: 0;
+      }
+
+      .tv-mobile-menu__home,
+      .tv-mobile-menu__contacts,
+      .tv-mobile-menu__side {
+        position: absolute;
+      }
+
+      .tv-mobile-menu__home {
+        top: 24px;
+        left: 16px;
+        width: 72px;
+      }
+
+      .tv-mobile-menu__contacts {
+        top: 24px;
+        left: 50%;
+        display: flex;
+        gap: 8px;
+        width: 160px;
+        transform: translateX(-50%);
+      }
+
+      .tv-mobile-menu__side {
+        top: 24px;
+        right: 16px;
+        display: grid;
+        width: 72px;
+        justify-items: end;
+        gap: 0;
+      }
+
+      .tv-mobile-link--home,
+      .tv-mobile-link--wall,
+      .tv-mobile-link--language {
+        width: 72px;
+        height: 33px;
+      }
+
+      .tv-mobile-link--wall,
+      .tv-mobile-link--language {
+        justify-content: flex-end;
+        text-align: right;
+      }
+
+      .tv-mobile-button {
+        border: 0;
+        background: #fff;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+
+      .tv-mobile-button--cv,
+      .tv-mobile-button--tg,
+      .tv-mobile-button--mail {
+        width: 48px;
+        min-width: 48px;
+        padding-inline: 8px;
+      }
+
+      .tv-desktop-button {
+        border: 0;
+        background: #fff;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+
       .loader {
         position: fixed;
         inset: 0;
         z-index: 120;
-        display: grid;
-        place-items: center;
-        background:
-          radial-gradient(circle at top, rgba(255,255,255,.05), transparent 36%),
-          rgba(5,5,5,.92);
-        animation: loader-fade 1.25s ease forwards;
+        overflow: hidden;
+        background: #050505;
         pointer-events: none;
+        opacity: 1;
+        visibility: visible;
+        transition:
+          opacity 360ms ease,
+          visibility 360ms ease;
       }
 
-      .loader__glass {
+      .loader--closing {
+        opacity: 1;
+        visibility: hidden;
+      }
+
+      .loader__identity {
+        position: absolute;
+        bottom: calc(5px + 48px);
+        left: 50%;
+        display: grid;
+        gap: 12px;
+        transform: translateX(-50%);
+        text-align: center;
+      }
+
+      .loader__name {
+        font-size: clamp(20.7px, 2.76vw, 27.6px);
+        line-height: 1;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+      }
+
+      .loader__role {
+        font-size: 14.95px;
+        line-height: 19.55px;
+        font-weight: 400;
+        color: rgba(255,255,255,.8);
+        white-space: nowrap;
+      }
+
+      .loader__logo-stage {
+        position: absolute;
+        inset: 0;
         display: grid;
         place-items: center;
-        width: 112px;
-        height: 112px;
-        border: 1px solid rgba(255,255,255,.18);
-        border-radius: 32px;
-        background: rgba(255,255,255,.08);
-        backdrop-filter: blur(26px) saturate(140%);
-        -webkit-backdrop-filter: blur(26px) saturate(140%);
-        box-shadow:
-          inset 0 1px 0 rgba(255,255,255,.18),
-          0 18px 48px rgba(0,0,0,.28);
+        padding:
+          clamp(72px, 14vh, 96px)
+          clamp(20px, 4vw, 32px)
+          clamp(40px, 10vh, 72px);
+      }
+
+      .loader__logo {
+        display: block;
+        width: auto;
+        max-width: min(72vw, 620px);
+        height: min(144px, 19.2vh, 33.6vw);
+        object-fit: contain;
+        animation: loader-logo-blink .2s step-end infinite;
+      }
+
+      @media (max-width: 767px) {
+        .loader__logo {
+          height: min(108px, 14.4vh, 25.2vw);
+        }
       }
 
       .loader__track {
-        position: relative;
-        width: 54px;
-        height: 10px;
-        overflow: hidden;
-        border-radius: 999px;
-        background: rgba(255,255,255,.12);
-      }
-
-      .loader__pulse {
         position: absolute;
-        top: 1px;
-        left: -16px;
-        width: 26px;
-        height: 8px;
-        border-radius: 999px;
-        background: linear-gradient(90deg, rgba(255,255,255,.24), rgba(255,255,255,.92));
-        box-shadow: 0 0 18px rgba(255,255,255,.32);
-        animation: loader-slide 1s cubic-bezier(.45,0,.2,1) infinite;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 5px;
+        overflow: hidden;
+        background: rgba(255,255,255,.14);
       }
 
-      @keyframes loader-slide {
-        0% { transform: translateX(0); opacity: .2; }
-        45% { opacity: 1; }
-        100% { transform: translateX(60px); opacity: .2; }
+      .loader__progress {
+        display: block;
+        width: 100%;
+        height: 100%;
+        transform-origin: left center;
+        background: #fff;
       }
 
-      @keyframes loader-fade {
-        0%, 68% { opacity: 1; visibility: visible; }
-        100% { opacity: 0; visibility: hidden; }
+      .language-toast {
+        position: fixed;
+        top: 32px;
+        left: 50%;
+        z-index: 130;
+        display: grid;
+        grid-template-columns: 48px minmax(0,1fr);
+        column-gap: 16px;
+        align-items: center;
+        width: min(420px, calc(100vw - 32px));
+        padding: 12px;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 18px;
+        background: rgba(16,16,16,.88);
+        color: var(--foreground);
+        box-shadow: 0 16px 48px rgba(0,0,0,.28);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+        transform: translate(-50%, -16px);
+        transition:
+          opacity 300ms ease,
+          transform 300ms ease,
+          visibility 0s linear 300ms;
+      }
+
+      .language-toast--open {
+        visibility: visible;
+        opacity: 1;
+        transform: translate(-50%, 0);
+        transition-delay: 0s;
+      }
+
+      .language-toast--closing {
+        visibility: visible;
+        opacity: 0;
+        transform: translate(-50%, 8px);
+        transition-delay: 0s;
+      }
+
+      .language-toast__icon-wrap {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at top, rgba(245,196,81,.22), transparent 48%),
+          linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.04));
+      }
+
+      .language-toast__icon-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transform: scale(1.08);
+        filter: saturate(.9) brightness(.92);
+      }
+
+      .language-toast__copy {
+        display: grid;
+        gap: 2px;
+      }
+
+      .language-toast__title {
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 500;
+      }
+
+      .language-toast__description {
+        font-size: 13px;
+        line-height: 17px;
+        color: var(--muted);
+      }
+
+      @keyframes loader-logo-blink {
+        0% { opacity: 1; }
+        50% { opacity: .92; }
+        100% { opacity: 1; }
       }
 
       .hero { position: relative; min-height: 389px; padding-top: 48px; }
@@ -149,6 +381,27 @@
       .hero__project-logo img { width: 100%; height: 100%; object-fit: cover; }
       .hero__promo { position: absolute; left: 413px; top: 0; width: 207px; display: grid; gap: 10px; padding-top: 80px; }
       .hero__promo img { width: 24px; height: 24px; }
+      .loader img,
+      .language-toast img,
+      .desktop-player img,
+      .hero__project-logo img,
+      .atom-logo img,
+      .obu-logo img,
+      .pb-logo img,
+      .b24-logo img,
+      .stoloto-logo img,
+      .additional-cases__logo img,
+      .additional-cases__finance-logo img,
+      .tv-mobile-hero__project-logo img,
+      .tv-mobile-case-atom__logo img,
+      .tv-mobile-case-obj__logo img,
+      .tv-mobile-case-pochta__logo img,
+      .tv-mobile-case-bitrix__logo img,
+      .tv-mobile-case-stoloto__logo img,
+      .tv-mobile-additional-cases__logo img,
+      .hero__promo img {
+        cursor: default;
+      }
 
       .flow { display: grid; gap: 120px; padding-top: 155px; justify-items: start; }
       .section { display: grid; gap: 40px; }
@@ -190,6 +443,8 @@
       .atom-radar { width: 306px; aspect-ratio: 1971 / 2050; }
       .atom-last { width: 100%; aspect-ratio: 3731 / 2094; }
 
+      .obu-meta { width: 306px; flex: 0 0 306px; }
+      #tv-obj-title { white-space: nowrap; }
       .obu-desc-image { width: 201px; height: 64px; }
       .obu-copy { width: 364px; }
 
@@ -198,6 +453,8 @@
       .pb-intro { display: flex; align-items: flex-start; justify-content: space-between; width: 620px; max-width: 100%; }
       .pb-meta { width: 143px; display: grid; gap: 8px; }
       .pb-meta .more, .b24-meta .more, .stoloto-meta .more { margin-top: 8px; }
+      .more,
+      .tv-mobile-case__more { display: none !important; }
       .pb-name, .pb-status, .pb-tag, .pb-description, .pb-copy { font-size: 13px; line-height: 17px; font-weight: 400; }
       .pb-status, .pb-tag { color: var(--muted); }
       .pb-left, .pb-right { width: 306px; display: grid; }
@@ -219,29 +476,8 @@
       .b24-meta, .stoloto-meta { width: 143px; display: grid; gap: 8px; }
       .b24-tag, .stoloto-tag { padding-top: 25px; color: var(--muted); }
       .b24-story { width: 620px; max-width: 100%; display: grid; gap: 24px; }
-      .b24-faces { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
-      .b24-faces-left { position: relative; width: 201px; height: 113px; flex: 0 0 201px; }
-      .b24-faces-right { position: relative; width: 305px; height: 136px; flex: 0 0 305px; }
-      .b24-face { position: absolute; overflow: hidden; background: #fff; }
-      .b24-faces-left .b24-face { width: 97px; height: 97px; border-radius: 28.218px; }
-      .b24-faces-right .b24-face { width: 96px; height: 96px; border-radius: 50px; }
-      .b24-face--left-one { left: 0; top: 16px; }
-      .b24-face--left-two { left: 104px; top: 0; }
-      .b24-face--right-one { left: 0; top: 16px; }
-      .b24-face--right-two { left: 105px; top: 40px; }
-      .b24-face--right-three { left: 209px; top: 16px; }
-      .b24-face img { position: absolute; max-width: none; object-fit: cover; }
-      .b24-face--left-one img { left: calc(50% - 9.35px); top: -29.1px; width: 257.05px; height: 196.08px; transform: translateX(-50%); }
-      .b24-face--left-two img { left: calc(50% - 6.93px); top: -97.69px; width: 339.5px; transform: translateX(-50%); }
-      .b24-face--right-one img { left: calc(50% - 13.71px); top: calc(50% + 25.71px); width: 300.34px; height: 195.43px; transform: translate(-50%, -50%); }
-      .b24-face--right-two img { inset: -4.75px -28.5px -15.61px -29.18px; width: auto; height: auto; transform: scaleX(-1); }
-      .b24-face--right-three img { left: 0; top: 5.79%; width: 100%; height: 102.55%; }
-      .b24-badge { position: absolute; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9.6px; background: #19aef9; }
-      .b24-badge img { width: 19.2px; height: 19.2px; object-fit: contain; }
-      .b24-badge--file { left: 82px; top: 61px; }
-      .b24-badge--like { left: 72px; top: 12px; }
-      .b24-badge--brush { left: 189px; top: 64px; }
-      .b24-badge--brush img { width: 18.6px; height: 18.6px; }
+      .b24-faces { position: relative; width: 620px; max-width: 100%; aspect-ratio: 1037 / 229; overflow: hidden; }
+      .b24-faces img { width: 100%; height: 100%; object-fit: cover; }
       .b24-copy-row { width: 515px; max-width: 100%; display: flex; justify-content: space-between; gap: 32px; }
       .b24-description { width: 201px; }
       .b24-block { width: 620px; max-width: 100%; height: 474px; }
@@ -277,6 +513,23 @@
       .additional-cases__row { display: flex; align-items: start; justify-content: space-between; width: 620px; max-width: 100%; }
       .additional-cases__meta { display: grid; gap: 12px; width: 264px; }
       .additional-cases__copy, .additional-cases__year { font-size: 13px; line-height: 17px; font-weight: 400; }
+      .additional-cases__meta-footer { display: grid; gap: 24px; justify-items: start; }
+      .additional-cases__link, .tv-mobile-additional-cases__link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        min-width: 0;
+        height: 40px;
+        padding: 8px 24px;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
       .additional-cases__logo, .additional-cases__image, .additional-cases__finance-logo { position: relative; overflow: hidden; }
       .additional-cases__logo--moskvich { width: 144px; height: 40px; }
       .additional-cases__logo--kultura { width: 223px; height: 32px; }
@@ -303,16 +556,17 @@
         object-fit: contain;
       }
 
-      .stoloto-block img { position: absolute; left: -1.97%; top: -0.02%; width: 101.97%; height: 103.09%; max-width: none; object-fit: cover; }
+      .stoloto-block img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; max-width: none; object-fit: contain; object-position: left center; }
 
       .pb-phone img { object-fit: fill; }
       .pb-card img { position: absolute; left: -34.77%; top: -6.66%; width: 169.55%; height: 111.68%; max-width: none; object-fit: cover; }
       .pb-pills img { position: absolute; left: -9.84%; top: -0.01%; width: 119.74%; height: 119.41%; max-width: none; object-fit: cover; }
 
       .bottom-signs {
-        position: fixed; left: 16px; right: 16px; bottom: 0; z-index: 18;
-        height: 64px; padding-bottom: 12px;
-        background: url("public/media/figma/bottom-signs-background.png") bottom center / 100% 64px no-repeat;
+        position: fixed; left: 16px; right: 16px; bottom: -1px; z-index: 18;
+        height: 65px; padding-bottom: 12px;
+        pointer-events: none;
+        background: url("public/media/figma/bottom-signs-background.png") bottom center / 100% 65px no-repeat;
       }
       .bottom-signs__name, .bottom-signs__year {
         position: absolute; bottom: 12px;
@@ -320,6 +574,279 @@
       }
       .bottom-signs__name { left: 85px; transform: translateX(-100%); text-align: right; }
       .bottom-signs__year { right: 0; text-align: right; }
+
+      .desktop-player {
+        position: fixed;
+        right: 16px;
+        bottom: 81px;
+        z-index: 19;
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: 18px;
+        width: 260px;
+        min-height: 94px;
+        padding: 10px 10px 14px;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 22px;
+        background: rgba(16,16,16,.88);
+        box-shadow: 0 16px 48px rgba(0,0,0,.28);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        overflow: hidden;
+      }
+
+      .desktop-player__cover {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 72px;
+        height: 72px;
+        padding: 0;
+        border: 0;
+        border-radius: 12px;
+        background:
+          radial-gradient(circle at top, rgba(245,196,81,.22), transparent 48%),
+          linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.04));
+        overflow: hidden;
+      }
+
+      .desktop-player__cover img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .desktop-player__cover:hover {
+        opacity: 1;
+      }
+
+      .desktop-player__body {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: 1fr;
+        column-gap: 10px;
+        min-width: 0;
+        align-items: center;
+        min-height: 72px;
+      }
+
+      .desktop-player__info {
+        grid-column: 1 / 2;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        min-width: 0;
+      }
+
+      .desktop-player__title,
+      .desktop-player__artist {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: left;
+        margin: 0;
+      }
+
+      .desktop-player__title {
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 500;
+      }
+
+      .desktop-player__artist {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 17px;
+      }
+
+      .desktop-player__toggle {
+        grid-column: 2 / 3;
+        grid-row: 1;
+        align-self: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border: 0;
+        border-radius: 999px;
+        background: #fff;
+        color: #000;
+        cursor: pointer;
+        transition: opacity 160ms ease, transform 160ms ease;
+      }
+
+      .desktop-player__toggle:hover {
+        opacity: .84;
+        transform: scale(.98);
+      }
+
+      .desktop-player__icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      .desktop-player__progress {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        margin: 0;
+        padding: 0;
+        display: block;
+        appearance: none;
+        border-radius: 0;
+        background:
+          linear-gradient(
+            90deg,
+            #fff 0,
+            #fff var(--desktop-player-progress, 0%),
+            rgba(255,255,255,.14) var(--desktop-player-progress, 0%),
+            rgba(255,255,255,.14) 100%
+          )
+          bottom / 100% 3px no-repeat;
+        cursor: pointer;
+      }
+
+      .desktop-player__progress::-webkit-slider-runnable-track {
+        height: 3px;
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .desktop-player__progress::-webkit-slider-thumb {
+        appearance: none;
+        width: 0;
+        height: 0;
+        margin-top: 5px;
+      }
+
+      .desktop-player__progress::-moz-range-track {
+        height: 3px;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .desktop-player__progress::-moz-range-progress {
+        height: 3px;
+        border-radius: 0;
+        background: #fff;
+      }
+
+      .desktop-player__progress::-moz-range-thumb {
+        width: 0;
+        height: 0;
+        border: 0;
+      }
+
+      @media (max-width: 767px) {
+        .desktop-player,
+        .desktop-floating-up {
+          display: none !important;
+        }
+
+        .desktop-player {
+          right: 16px;
+          transition:
+            width 220ms ease,
+            height 220ms ease,
+            min-height 220ms ease,
+            bottom 220ms ease,
+            padding 220ms ease,
+            gap 220ms ease,
+            border-color 220ms ease,
+            background-color 220ms ease,
+            box-shadow 220ms ease,
+            backdrop-filter 220ms ease,
+            -webkit-backdrop-filter 220ms ease;
+        }
+
+        .desktop-player--mobile-collapsed {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          grid-template-columns: none;
+          gap: 0;
+          bottom: 81px;
+          width: 104px;
+          height: 104px;
+          min-height: 104px;
+          padding: 12px;
+          border-color: rgba(255,255,255,.12);
+          border-radius: 20px;
+          background: rgba(16,16,16,.92);
+          box-shadow: 0 16px 48px rgba(0,0,0,.28);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+        }
+
+        .desktop-player--mobile-collapsed .desktop-player__cover {
+          width: 80px;
+          height: 80px;
+          flex: 0 0 80px;
+        }
+
+        .desktop-player--mobile-collapsed .desktop-player__body,
+        .desktop-player--mobile-collapsed .desktop-player__progress {
+          display: none !important;
+        }
+
+        .desktop-player--mobile-expanded {
+          grid-template-columns: 80px 1fr;
+          gap: 20px;
+          bottom: 81px;
+          width: 288px;
+          min-height: 104px;
+          padding: 12px 12px 16px;
+        }
+      }
+
+      .desktop-floating-up {
+        position: fixed;
+        left: 16px;
+        bottom: 89px;
+        z-index: 19;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 12px;
+        background: #fff;
+        color: #000;
+        box-shadow: 0 16px 48px rgba(0,0,0,.28);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(8px);
+        transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+      }
+
+      .desktop-floating-up--visible {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .desktop-floating-up:hover {
+        opacity: .84;
+      }
+
+      .desktop-floating-up__icon {
+        width: 24px;
+        height: 24px;
+      }
 
       .page-end {
         display: grid;
@@ -381,7 +908,20 @@
         height: 180px;
         overflow: hidden;
         border-radius: 999px;
-        transform: scaleY(-1);
+      }
+
+      .portfolio-footer__portrait video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .portfolio-footer__portrait img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
 
       .portfolio-footer__center {
@@ -497,15 +1037,11 @@
         opacity: 0.8;
       }
 
-      body[data-language="ru"] .topbar__controls { gap: 12px; }
-      body[data-language="ru"] .topbar__side--right { min-width: 212px; }
-      body[data-language="ru"] .button--wide { min-width: 96px; }
-      body[data-language="ru"] .button--small { min-width: 72px; }
       body[data-language="ru"] .hero__identity { width: 236px; }
       body[data-language="ru"] .hero__project-names,
       body[data-language="ru"] .portfolio-footer__projects-list { width: 132px; }
-      body[data-language="ru"] .hero__promo { left: 396px; width: 224px; padding-top: 40px; }
-      body[data-language="ru"] .meta,
+      body[data-language="ru"] .hero__promo { top: -8px; }
+    body[data-language="ru"] .meta,
       body[data-language="ru"] .pb-meta,
       body[data-language="ru"] .b24-meta,
       body[data-language="ru"] .stoloto-meta { width: 220px; }
@@ -520,58 +1056,1316 @@
       body[data-language="ru"] .stoloto-lotteries { margin-top: 64px; }
       body[data-language="ru"] .additional-cases__meta { gap: 16px; }
 
-      @media (max-width: 700px) {
-        .page { padding-top: 96px; }
-        .topbar { left: 8px; right: 8px; }
-        .hero { min-height: auto; display: grid; gap: 20px; }
-        .hero__wolf, .hero__portrait, .hero__projects, .hero__promo {
-          position: relative; left: auto; right: auto; top: auto; bottom: auto; transform: none;
-        }
-        .hero__wolf { justify-self: center; }
-        .hero__projects, .atom-two, .atom-three, .section__intro, .pb-intro, .pb-content, .b24-intro, .b24-faces, .b24-copy-row, .b24-bottom-copy, .stoloto-intro, .stoloto-lower, .additional-cases__heading, .additional-cases__row { flex-direction: column; }
-        .desc, .atom-steering, .atom-left, .atom-right, .atom-cards, .atom-radar, .obu-copy, .obu-desc-image, .pb-logo, .pb-left, .pb-right, .pb-phone, .pb-card, .pb-msc, .pb-desc-card, .b24-story, .b24-faces-left, .b24-faces-right, .b24-description, .b24-block, .b24-last, .stoloto-block, .stoloto-matryoshka, .stoloto-lower-left, .stoloto-lower-right, .stoloto-lotteries, .stoloto-copy, .additional-cases, .additional-cases__heading, .additional-cases__row, .additional-cases__image, .additional-cases__meta, .additional-cases__divider { width: 100%; }
-        .atom-steering { height: auto; aspect-ratio: 411 / 300; }
-        .stoloto-copy > * { width: 100%; }
-        .stoloto-lotteries { margin-top: 40px; }
-        .bottom-signs { left: 8px; right: 8px; }
-        .page-end { width: 100%; max-width: 100%; margin-left: 0; gap: 156px; padding-top: 120px; }
-        .portfolio-footer { width: 100%; height: 469px; }
+      .tv-mobile-preview {
+        display: none;
       }
 
-      @media (max-width: 640px) {
-        .portfolio-footer { height: auto; min-height: 0; }
-        .portfolio-footer__left,
-        .portfolio-footer__center,
-        .portfolio-footer__contacts { position: static; width: 100%; }
-        .portfolio-footer__divider { display: none; }
-        .portfolio-footer__projects-block { position: static; grid-template-columns: 55px 55px 1fr; row-gap: 16px; }
-        .portfolio-footer__projects-grid { display: grid; grid-template-columns: 1fr; gap: 12px; grid-column: 1 / -1; }
-        .portfolio-footer__cv { margin-top: 0; }
-        .portfolio-footer__contacts { margin-top: 24px; }
+      .tv-mobile-topbar {
+        display: none;
+      }
+
+      .tv-mobile-preview__page {
+        width: 100%;
+        max-width: 390px;
+        margin: 0 auto;
+        padding: 120px 0 96px;
+        display: grid;
+        gap: 120px;
+        justify-items: center;
+      }
+
+      .tv-mobile-hero,
+      .tv-mobile-case {
+        width: 358px;
+        margin: 0 auto;
+      }
+
+      .tv-mobile-hero {
+        position: relative;
+        min-height: 490px;
+      }
+
+      .tv-mobile-hero__photo {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 56px;
+        height: 56px;
+        overflow: hidden;
+        border-radius: 999px;
+      }
+
+      .tv-mobile-hero__identity {
+        position: absolute;
+        top: 88px;
+        left: 0;
+        display: grid;
+        gap: 20px;
+        width: 182px;
+      }
+
+      .tv-mobile-hero__name {
+        font-size: 28px;
+        line-height: 28px;
+        font-weight: 400;
+        white-space: nowrap;
+      }
+
+      .tv-mobile-hero__role,
+      .tv-mobile-hero__project-list,
+      .tv-mobile-hero__title,
+      .tv-mobile-case-atom__meta,
+      .tv-mobile-case-atom__description,
+      .tv-mobile-case-atom__copy,
+      .tv-mobile-case-obj__meta,
+      .tv-mobile-case-obj__copy,
+      .tv-mobile-case__more {
+        font-size: 13px;
+        line-height: 17px;
+      }
+
+      .tv-mobile-hero__photo img,
+      .tv-mobile-hero__project-logo img,
+      .tv-mobile-case-atom__logo img,
+      .tv-mobile-case-atom__car img,
+      .tv-mobile-case-atom__steering img,
+      .tv-mobile-case-atom__kamaz img,
+      .tv-mobile-case-atom__cards img,
+      .tv-mobile-case-atom__small-photo img,
+      .tv-mobile-case-atom__thin img,
+      .tv-mobile-case-atom__radar img,
+      .tv-mobile-case-atom__last img,
+      .tv-mobile-case-obj__logo img,
+      .tv-mobile-case-obj__description img,
+      .tv-mobile-case-obj__car img,
+      .tv-mobile-case-obj__music img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .tv-mobile-hero__title {
+        position: absolute;
+        top: 266px;
+        left: 0;
+      }
+
+      .tv-mobile-hero__projects {
+        position: absolute;
+        top: 303px;
+        left: 0;
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+      }
+
+      .tv-mobile-hero__project-logos {
+        display: grid;
+        gap: 4px;
+        padding-top: 2px;
+      }
+
+      .tv-mobile-hero__project-logo {
+        position: relative;
+        width: 13px;
+        height: 13px;
+      }
+
+      .tv-mobile-hero__project-list {
+        width: 113px;
+      }
+
+      .tv-mobile-hero__wolf {
+        position: absolute;
+        top: 150px;
+        right: 0;
+        width: 238px;
+        height: 340px;
+        overflow: hidden;
+      }
+
+      .tv-mobile-hero__wolf img {
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .tv-mobile-case__status {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 17px;
+      }
+
+      .tv-mobile-case__more {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        min-width: 0;
+        height: 40px;
+        padding: 0 16px;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .tv-mobile-case-atom__logo,
+      .tv-mobile-case-atom__car,
+      .tv-mobile-case-atom__steering,
+      .tv-mobile-case-atom__cards,
+      .tv-mobile-case-atom__radar,
+      .tv-mobile-case-atom__last,
+      .tv-mobile-case-obj__logo,
+      .tv-mobile-case-obj__car,
+      .tv-mobile-case-obj__music {
+        position: relative;
+        width: 358px;
+        max-width: 100%;
+      }
+
+      .tv-mobile-case-atom__logo {
+        height: 55px;
+        margin-bottom: 32px;
+      }
+
+      .tv-mobile-case-atom__intro {
+        display: grid;
+        grid-template-columns: 143px 177px;
+        column-gap: 38px;
+        row-gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .tv-mobile-case-atom__meta {
+        display: grid;
+        gap: 0;
+        width: 143px;
+        font-size: 13px;
+        line-height: 17px;
+        align-content: start;
+      }
+
+      .tv-mobile-case-atom__title-block {
+        display: grid;
+        gap: 8px;
+        align-content: start;
+      }
+
+      .tv-mobile-case-obj__title {
+        text-transform: uppercase;
+      }
+
+      .tv-mobile-case-atom__description {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        width: 177px;
+      }
+
+      .tv-mobile-case-atom__car { height: 173px; margin-bottom: 32px; }
+      .tv-mobile-case-atom__steering { height: 261px; margin-bottom: 32px; }
+      .tv-mobile-case-atom__cards { height: 193px; margin-bottom: 32px; }
+      .tv-mobile-case-atom__radar { height: 320px; margin-bottom: 32px; }
+      .tv-mobile-case-atom__last { height: 201px; }
+
+      .tv-mobile-case-atom__car img,
+      .tv-mobile-case-atom__steering img,
+      .tv-mobile-case-atom__cards img,
+      .tv-mobile-case-atom__last img,
+      .tv-mobile-case-obj__car img,
+      .tv-mobile-case-obj__music img {
+        object-fit: cover;
+      }
+
+      .tv-mobile-case-atom__text-kamaz,
+      .tv-mobile-case-atom__photo-copy,
+      .tv-mobile-case-obj__intro {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 32px;
+      }
+
+      .tv-mobile-case-atom__copy { width: 201px; }
+
+      .tv-mobile-case-atom__kamaz {
+        position: relative;
+        width: 105px;
+        height: 150px;
+      }
+
+      .tv-mobile-case-atom__small-photo {
+        position: relative;
+        width: 128px;
+        height: 75px;
+      }
+
+      .tv-mobile-case-atom__small-photo img,
+      .tv-mobile-case-atom__thin img {
+        object-fit: cover;
+      }
+
+      .tv-mobile-case-atom__thin {
+        position: relative;
+        width: 177px;
+        height: 86px;
+        margin-left: auto;
+        margin-bottom: 16px;
+      }
+
+      .tv-mobile-case-atom__radar img,
+      .tv-mobile-case-atom__logo img,
+      .tv-mobile-case-atom__kamaz img,
+      .tv-mobile-case-obj__logo img,
+      .tv-mobile-case-obj__description img {
+        object-fit: contain;
+      }
+
+      .tv-mobile-case-obj__logo {
+        height: 53px;
+        margin-bottom: 32px;
+      }
+
+      .tv-mobile-case-obj__meta {
+        display: grid;
+        gap: 0;
+        width: 143px;
+        align-content: start;
+      }
+
+      .tv-mobile-case-obj__title-block {
+        display: grid;
+        gap: 8px;
+        align-content: start;
+      }
+
+      .tv-mobile-case-obj__description {
+        position: relative;
+        width: 201px;
+        height: 64px;
+      }
+
+      .tv-mobile-case-obj__car {
+        height: 179px;
+        margin-bottom: 32px;
+      }
+
+      .tv-mobile-case-obj__copy {
+        width: 358px;
+        max-width: 100%;
+        margin-bottom: 32px;
+        font-size: 13px;
+        line-height: 17px;
+      }
+
+      .tv-mobile-case-obj__music {
+        height: 201px;
+        overflow: hidden;
+        border-radius: 8px;
+      }
+
+      .tv-mobile-case--pochta,
+      .tv-mobile-case--bitrix,
+      .tv-mobile-case--stoloto {
+        display: grid;
+        gap: 32px;
+      }
+
+      .tv-mobile-case-pochta__logo,
+      .tv-mobile-case-bitrix__logo,
+      .tv-mobile-case-stoloto__logo,
+      .tv-mobile-case-pochta__phone,
+      .tv-mobile-case-pochta__card,
+      .tv-mobile-case-pochta__plashki,
+      .tv-mobile-case-bitrix__block,
+      .tv-mobile-case-bitrix__last,
+      .tv-mobile-case-stoloto__block,
+      .tv-mobile-case-stoloto__matryoshka,
+      .tv-mobile-case-stoloto__right,
+      .tv-mobile-case-stoloto__end,
+      .tv-mobile-case-stoloto__lotteries {
+        position: relative;
+        width: 358px;
+        max-width: 100%;
+      }
+
+      .tv-mobile-case-pochta__logo,
+      .tv-mobile-case-stoloto__logo {
+        height: 55px;
+      }
+
+      .tv-mobile-case-bitrix__logo {
+        height: 64px;
+      }
+
+      .tv-mobile-case-pochta__logo img,
+      .tv-mobile-case-bitrix__logo img,
+      .tv-mobile-case-stoloto__logo img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .tv-mobile-case-pochta__intro,
+      .tv-mobile-case-bitrix__intro,
+      .tv-mobile-case-stoloto__intro {
+        display: grid;
+        grid-template-columns: 143px 177px;
+        column-gap: 38px;
+        row-gap: 16px;
+      }
+
+      .tv-mobile-case-pochta__meta,
+      .tv-mobile-case-bitrix__meta,
+      .tv-mobile-case-stoloto__meta {
+        display: grid;
+        gap: 0;
+        width: 143px;
+        font-size: 13px;
+        line-height: 17px;
+        align-content: start;
+      }
+
+      .tv-mobile-case-pochta__title-block,
+      .tv-mobile-case-bitrix__title-block,
+      .tv-mobile-case-stoloto__title-block {
+        display: grid;
+        gap: 8px;
+        align-content: start;
+      }
+
+      .tv-mobile-case-pochta__description,
+      .tv-mobile-case-bitrix__description,
+      .tv-mobile-case-stoloto__description {
+        width: 177px;
+        font-size: 13px;
+        line-height: 17px;
+      }
+
+      .tv-mobile-case-pochta__phone {
+        height: 725px;
+      }
+
+      .tv-mobile-case-pochta__phone img,
+      .tv-mobile-case-pochta__card img,
+      .tv-mobile-case-pochta__fast-pay img,
+      .tv-mobile-case-pochta__msc img,
+      .tv-mobile-case-pochta__plashki img,
+      .tv-mobile-case-bitrix__block img,
+      .tv-mobile-case-bitrix__last img,
+      .tv-mobile-case-stoloto__block img,
+      .tv-mobile-case-stoloto__matryoshka img,
+      .tv-mobile-case-stoloto__lotteries img,
+      .tv-mobile-case-stoloto__right img,
+      .tv-mobile-case-stoloto__end img {
+        display: block;
+        width: 358px;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .tv-mobile-case-pochta__copy,
+      .tv-mobile-case-bitrix__copy-top,
+      .tv-mobile-case-stoloto__copy {
+        display: grid;
+        gap: 17px;
+        width: 100%;
+        max-width: 100%;
+        font-size: 13px;
+        line-height: 17px;
+      }
+
+      .tv-mobile-case-pochta__card {
+        height: 236px;
+      }
+
+      .tv-mobile-case-pochta__lower {
+        display: grid;
+        grid-template-columns: 165px 177px;
+        column-gap: 16px;
+        row-gap: 30px;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .tv-mobile-case-pochta__fast-pay {
+        position: relative;
+        width: 165px;
+        height: 265px;
+      }
+
+      .tv-mobile-case-pochta__msc {
+        position: relative;
+        width: 177px;
+        height: 177px;
+      }
+
+      .tv-mobile-case-pochta__plashki {
+        position: relative;
+        width: 100%;
+        height: 198px;
+        grid-column: 1 / -1;
+      }
+
+      .tv-mobile-case-pochta__plashki img {
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .tv-mobile-case-bitrix__faces {
+        position: relative;
+        width: 358px;
+        max-width: 100%;
+        height: 160px;
+      }
+      .tv-mobile-case-bitrix__faces img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .tv-mobile-case-bitrix__copy-bottom {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 34px;
+        width: 183px;
+        margin-left: auto;
+        font-size: 13px;
+        line-height: 17px;
+      }
+
+      .tv-mobile-case-bitrix__block {
+        height: 275px;
+      }
+
+      .tv-mobile-case-bitrix__last {
+        height: 221px;
+      }
+
+      .tv-mobile-case-stoloto__block {
+        height: 371px;
+      }
+
+      .tv-mobile-case-stoloto__mid-description {
+        width: 177px;
+        margin-left: auto;
+        font-size: 13px;
+        line-height: 17px;
+      }
+
+      .tv-mobile-case-stoloto__mascots-top {
+        position: relative;
+        width: 358px;
+        max-width: 100%;
+        height: 277px;
+      }
+
+      .tv-mobile-case-stoloto__mascots-top img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: left center;
+      }
+
+      .tv-mobile-case-stoloto__copy-row {
+        display: grid;
+        grid-template-columns: 177px 177px;
+        column-gap: 4px;
+        align-items: start;
+        width: 358px;
+        max-width: 100%;
+      }
+
+      .tv-mobile-case-stoloto__copy {
+        width: 177px;
+      }
+
+      .tv-mobile-case-stoloto__mascot-right {
+        position: relative;
+        width: 162px;
+        height: 301px;
+      }
+
+      .tv-mobile-case-stoloto__mascot-right img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: right center;
+      }
+
+      .tv-mobile-case-stoloto__right {
+        height: 735px;
+      }
+
+      .tv-mobile-case-stoloto__end {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        width: 358px;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 3396 / 4096;
+      }
+
+      .tv-mobile-case-stoloto__end img {
+        width: 100%;
+        height: auto;
+        object-fit: fill;
+      }
+
+      .tv-mobile-additional-cases {
+        display: grid;
+        gap: 32px;
+        width: 358px;
+      }
+
+      .tv-mobile-additional-cases__heading {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        width: 358px;
+      }
+
+      .tv-mobile-additional-cases__title {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 400;
+      }
+
+      .tv-mobile-additional-cases__subtitle {
+        padding-bottom: 2px;
+        font-size: 12px;
+        line-height: 12px;
+        color: var(--muted);
+        text-align: right;
+      }
+
+      .tv-mobile-additional-cases__list {
+        display: grid;
+      }
+
+      .tv-mobile-additional-cases__item {
+        padding-bottom: 32px;
+        border-bottom: 1px solid rgba(217, 217, 217, .2);
+      }
+
+      .tv-mobile-additional-cases__item + .tv-mobile-additional-cases__item {
+        margin-top: 32px;
+      }
+
+      .tv-mobile-additional-cases__item--last {
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+
+      .tv-mobile-additional-cases__row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        width: 358px;
+      }
+
+      .tv-mobile-additional-cases__meta {
+        display: grid;
+        gap: 16px;
+        width: 177px;
+      }
+
+      .tv-mobile-additional-cases__copy,
+      .tv-mobile-additional-cases__year {
+        font-size: 13px;
+        line-height: 17px;
+      }
+      .tv-mobile-additional-cases__meta-footer { display: grid; gap: 24px; justify-items: start; }
+
+      .tv-mobile-additional-cases__logo,
+      .tv-mobile-additional-cases__image {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tv-mobile-additional-cases__logo img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: left center;
+      }
+
+      .tv-mobile-additional-cases__image {
+        width: 176px;
+      }
+
+      .tv-mobile-additional-cases__image img {
+        display: block;
+        width: 390px;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .tv-mobile-additional-cases__image--borishoff img,
+      .tv-mobile-additional-cases__image--finance img {
+        object-fit: contain;
+      }
+
+      .tv-mobile-additional-cases__logo--moskvich { width: 144px; height: 40px; }
+      .tv-mobile-additional-cases__logo--kultura { width: 144px; height: 22px; }
+      .tv-mobile-additional-cases__logo--stoloto { width: 144px; height: 23px; }
+      .tv-mobile-additional-cases__logo--postamat { width: 144px; height: 24px; }
+      .tv-mobile-additional-cases__logo--auchan { width: 116px; height: 35px; }
+      .tv-mobile-additional-cases__logo--haier { width: 118px; height: 34px; }
+      .tv-mobile-additional-cases__logo--borishoff { width: 177px; height: 31px; }
+      .tv-mobile-additional-cases__logo--finance { width: 120px; height: 38px; }
+
+      .tv-mobile-additional-cases__image--moskvich { height: 99px; border-radius: 4px; }
+      .tv-mobile-additional-cases__image--kultura,
+      .tv-mobile-additional-cases__image--stoloto,
+      .tv-mobile-additional-cases__image--postamat,
+      .tv-mobile-additional-cases__image--auchan,
+      .tv-mobile-additional-cases__image--haier,
+      .tv-mobile-additional-cases__image--finance { height: 107px; border-radius: 4px; }
+      .tv-mobile-additional-cases__image--borishoff { display: flex; justify-content: flex-end; align-items: flex-start; width: 117px; height: 222px; margin-left: auto; }
+      .tv-mobile-additional-cases__image--borishoff img { object-position: right center; }
+
+      .tv-mobile-page-end {
+        display: grid;
+        gap: 120px;
+        width: 390px;
+        margin: 0 auto;
+        padding-bottom: 60px;
+      }
+
+      .tv-mobile-page-end__up {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        justify-self: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+      }
+
+      .tv-mobile-footer {
+        position: relative;
+        width: 390px;
+        height: 660px;
+      }
+
+      .tv-mobile-footer__name {
+        position: absolute;
+        top: 32px;
+        left: 16px;
+        width: 156px;
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 400;
+        white-space: nowrap;
+      }
+
+      .tv-mobile-footer__portrait {
+        position: absolute;
+        top: 543px;
+        left: 257px;
+        width: 117px;
+        height: 117px;
+        overflow: hidden;
+        border-radius: 999px;
+      }
+
+      .tv-mobile-footer__portrait img,
+      .tv-mobile-footer__portrait video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .tv-mobile-footer__role,
+      .tv-mobile-footer__projects-label,
+      .tv-mobile-footer__projects-list,
+      .tv-mobile-footer__statuses {
+        font-size: 13px;
+        line-height: 17px;
+      }
+
+      .tv-mobile-footer__role {
+        display: grid;
+        position: absolute;
+        top: 88px;
+        left: 16px;
+        width: 147px;
+      }
+
+      .tv-mobile-footer__projects-block {
+        display: grid;
+        position: absolute;
+        top: 323px;
+        left: 16px;
+        width: 358px;
+        grid-template-columns: 55px 120px 105px;
+        column-gap: 39px;
+        align-items: start;
+      }
+
+      .tv-mobile-footer__cv,
+      .tv-mobile-footer__contact-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        min-width: 48px;
+        padding: 8px 12px;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+      }
+
+      .tv-mobile-footer__contact-button--telegram {
+        width: 81px;
+        min-width: 81px;
+      }
+
+      .tv-mobile-footer__contact-button--mail {
+        width: 50px;
+        min-width: 50px;
+      }
+
+      .tv-mobile-footer__projects-label {
+        width: 55px;
+      }
+
+      .tv-mobile-footer__rail {
+        position: absolute;
+        left: 0;
+        top: -144px;
+        width: 1px;
+        height: 104px;
+        background: rgba(217, 217, 217, .6);
+      }
+
+      .tv-mobile-footer__cv {
+        grid-column: 1;
+        grid-row: 2;
+        width: 50px;
+        min-width: 50px;
+        justify-self: start;
+        margin-top: 92px;
+      }
+
+      .tv-mobile-footer__projects-grid {
+        display: grid;
+        grid-template-columns: 120px 105px;
+        column-gap: 39px;
+        grid-column: 2 / 4;
+        grid-row: 1 / span 2;
+      }
+
+      .tv-mobile-footer__projects-list,
+      .tv-mobile-footer__statuses {
+        display: grid;
+      }
+
+      .tv-mobile-footer__statuses {
+        color: var(--muted);
+      }
+
+      .tv-mobile-footer__contacts {
+        position: absolute;
+        top: 84px;
+        left: 235px;
+        display: flex;
+        gap: 8px;
+      }
+
+      @media (max-width: 767px) {
+        .page {
+          display: none !important;
+        }
+
+        .tv-desktop-menu {
+          display: none;
+        }
+
+        .tv-mobile-menu {
+          position: fixed;
+          top: 0;
+          display: block;
+          left: 0;
+          right: 0;
+          width: 100%;
+          height: 90px;
+          z-index: 40;
+          background: url("public/media/figma/top-menu-background.png") top center / 100% 90px no-repeat;
+        }
+
+        .bottom-signs {
+          display: block !important;
+          left: 0;
+          right: 0;
+          width: 100%;
+          transform: none;
+        }
+
+        .bottom-signs__name {
+          left: 101px;
+        }
+
+        .bottom-signs__year {
+          right: 16px;
+        }
+
+        .tv-mobile-preview {
+          display: block;
+        }
+      }
+
+      .tv-lightbox-open {
+        overflow: hidden;
+      }
+
+      .tv-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: none;
+        place-items: center;
+        padding: 24px 16px 112px;
+        background: rgba(5, 5, 5, 0.56);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      }
+
+      .tv-lightbox--visible {
+        display: grid;
+      }
+
+      .tv-lightbox__stage {
+        display: grid;
+        place-items: center;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+      }
+
+      .tv-lightbox__image {
+        max-width: none;
+        max-height: none;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        cursor: pointer;
+        transition: width 200ms ease, height 200ms ease;
+      }
+
+      .tv-lightbox__close {
+        position: fixed;
+        left: 50%;
+        bottom: 32px;
+        z-index: 201;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        padding: 0;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(255,255,255,.9);
+        color: #000;
+        box-shadow: 0 18px 48px rgba(0,0,0,.32);
+        transform: translateX(-50%);
+        appearance: none;
+        -webkit-appearance: none;
+        overflow: hidden;
+        outline: none;
+        background-clip: padding-box;
+      }
+
+      .tv-lightbox__close-icon {
+        display: block;
+        font-size: 34px;
+        line-height: 1;
+        font-weight: 300;
+      }
+
+      @media (max-width: 767px) {
+        .tv-lightbox {
+          padding: 16px 12px 72px;
+        }
+
+        .tv-lightbox__image {
+          border-radius: 0;
+        }
+
+        .tv-lightbox__close {
+          bottom: 20px;
+          width: 64px;
+          height: 64px;
+        }
+
+        .tv-lightbox__close-icon {
+          font-size: 34px;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="loader" aria-hidden="true">
-      <div class="loader__glass">
-        <div class="loader__track">
-          <span class="loader__pulse"></span>
-        </div>
+    <div id="top"></div>
+    <div class="loader" id="tv-loader" aria-hidden="true">
+      <div class="loader__identity">
+        <p class="loader__name">Andrey Tsarёv</p>
+        <p class="loader__role">designer, art-d</p>
+      </div>
+      <div class="loader__logo-stage">
+        <img class="loader__logo" id="tv-loader-logo" src="public/media/figma/hero-project-logo1.png" alt="" />
+      </div>
+      <div class="loader__track"><span class="loader__progress" id="tv-loader-progress"></span></div>
+    </div>
+    <div class="language-toast" id="tv-language-toast" aria-live="polite" aria-atomic="true">
+      <div class="language-toast__icon-wrap" aria-hidden="true"><video class="language-toast__icon-image" src="public/media/figma/sticker.webm" autoplay loop muted playsinline preload="auto"></video></div>
+      <div class="language-toast__copy">
+        <p class="language-toast__title">Родной, лучше оставь английский</p>
+        <p class="language-toast__description">Тексты могут перевестись некорректно, я тебя предупредил</p>
       </div>
     </div>
-    <div class="page" id="top">
-      <header class="topbar">
-        <div class="topbar__inner">
-          <div class="topbar__side topbar__side--left"><a class="link link--left" id="tv-home-link" href="#top">Главная</a></div>
-          <div class="topbar__controls"><a class="button button--small" href="./cv.html">CV</a><a class="button button--wide" id="tv-telegram-button" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Телеграм</a><a class="button button--small" id="tv-mail-button" href="mailto:eggy0510@gmail.com">Почта</a></div>
-          <div class="topbar__side topbar__side--right"><button class="link link--right" id="tv-language-toggle" type="button">En</button><a class="link link--right" id="tv-wall-link" href="./wall.html">Стена</a></div>
+    <header class="tv-mobile-menu">
+      <div class="tv-mobile-menu__inner">
+        <div class="tv-mobile-menu__home"><a class="link tv-mobile-link tv-mobile-link--home" id="tv-home-link-mobile" href="#top">Главная</a></div>
+        <div class="tv-mobile-menu__contacts"><a class="button tv-mobile-button tv-mobile-button--cv" href="./cv.html">CV</a><a class="button tv-mobile-button tv-mobile-button--tg" id="tv-telegram-button-mobile" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">TG</a><a class="button tv-mobile-button tv-mobile-button--mail" id="tv-mail-button-mobile" href="mailto:eggy0510@gmail.com">Mail</a></div>
+        <div class="tv-mobile-menu__side"><a class="link tv-mobile-link tv-mobile-link--wall" id="tv-wall-link-mobile" href="./Test visual wall.html">Стена</a><button class="link tv-mobile-link tv-mobile-link--language" id="tv-language-toggle-mobile" type="button">En</button></div>
+      </div>
+    </header>
+    <section class="tv-mobile-preview" aria-label="Mobile preview">
+      <div class="tv-mobile-preview__page">
+        <section class="tv-mobile-hero">
+          <div class="tv-mobile-hero__photo">
+            <img src="public/media/figma/portrait.png" alt="Portrait of Andrey" />
+          </div>
+          <div class="tv-mobile-hero__identity">
+            <h1 class="tv-mobile-hero__name" id="tv-mobile-hero-name">Tsarёv Andrey</h1>
+            <div class="tv-mobile-hero__role" id="tv-mobile-hero-role">
+              <p>Digital design team-lead</p>
+              <p>art-d</p>
+              <p>designer</p>
+            </div>
+          </div>
+          <p class="tv-mobile-hero__title" id="tv-mobile-hero-projects-label">Projects</p>
+          <div class="tv-mobile-hero__projects">
+            <div class="tv-mobile-hero__project-logos">
+              <div class="tv-mobile-hero__project-logo"><img src="public/media/figma/hero-project-logo1.png" alt="" /></div>
+              <div class="tv-mobile-hero__project-logo"><img src="public/media/figma/hero-project-logo2.png" alt="" /></div>
+              <div class="tv-mobile-hero__project-logo"><img src="public/media/figma/hero-project-logo3.png" alt="" /></div>
+              <div class="tv-mobile-hero__project-logo"><img src="public/media/figma/hero-project-logo4.png" alt="" /></div>
+              <div class="tv-mobile-hero__project-logo"><img src="public/media/figma/hero-project-logo5.png" alt="" /></div>
+              <div class="tv-mobile-hero__project-logo"><img src="public/media/figma/hero-project-logo6.png" alt="" /></div>
+              <div class="tv-mobile-hero__project-logo"><img src="public/media/figma/hero-project-logo7.png" alt="" /></div>
+              <div class="tv-mobile-hero__project-logo"><img src="public/media/figma/hero-project-logo8.png" alt="" /></div>
+              <div class="tv-mobile-hero__project-logo"><img src="public/media/figma/hero-project-logo9.png" alt="" /></div>
+              <div class="tv-mobile-hero__project-logo"><img src="public/media/figma/hero-project-logo10.png" alt="" /></div>
+            </div>
+            <div class="tv-mobile-hero__project-list" id="tv-mobile-hero-projects-list">
+              <p>ATOM auto</p>
+              <p>Pochta bank,</p>
+              <p>Bitrix24,</p>
+              <p>Stoloto,</p>
+              <p>Auchan,</p>
+              <p>Moskvich,</p>
+              <p>Haier,</p>
+              <p>Borishoff,</p>
+              <p>Moscow Postamat</p>
+              <p>Culture of MSC</p>
+              <p>and more</p>
+            </div>
+          </div>
+          <div class="tv-mobile-hero__wolf">
+            <img src="public/media/mobile/mobile-hero-wolf.png" alt="" />
+          </div>
+        </section>
+
+        <section class="tv-mobile-case tv-mobile-case--atom">
+          <div class="tv-mobile-case-atom__logo"><img src="public/media/figma/atom-logo.svg" alt="ATOM" /></div>
+          <div class="tv-mobile-case-atom__intro">
+            <div class="tv-mobile-case-atom__meta">
+              <div class="tv-mobile-case-atom__title-block">
+                <p id="tv-mobile-atom-title">ATOM AUTOMOTIVE</p>
+                <p class="tv-mobile-case__status" id="tv-mobile-atom-status">art-d • designer • 24-26</p>
+              </div>
+              <a class="tv-mobile-case__more" id="tv-mobile-atom-more" href="./case-atom.html">More</a>
+            </div>
+            <p class="tv-mobile-case-atom__description" id="tv-mobile-atom-description">This legendary company managed to revolutionize the automotive market, becoming the rock star of the industry, but it met its end just as dramatically and prematurely</p>
+          </div>
+          <div class="tv-mobile-case-atom__car"><img src="public/media/figma/atom-car-side.png" alt="ATOM car side view" /></div>
+          <div class="tv-mobile-case-atom__steering"><img src="public/media/figma/atom-main-steering.png" alt="ATOM steering interface" /></div>
+          <div class="tv-mobile-case-atom__text-kamaz">
+            <p class="tv-mobile-case-atom__copy" id="tv-mobile-atom-copy-one">Made a whole UI system that was build all interfaces around it, lots of concepts that produced a unique look&amp;feel, main page widgets, HMX, animations, ilutstrarions etc.</p>
+            <div class="tv-mobile-case-atom__kamaz"><img src="public/media/figma/atom-kamaz.svg" alt="" /></div>
+          </div>
+          <div class="tv-mobile-case-atom__cards"><img src="public/media/figma/atom-cards.png" alt="ATOM cards" /></div>
+          <div class="tv-mobile-case-atom__photo-copy">
+            <div class="tv-mobile-case-atom__small-photo"><img src="public/media/figma/atom-small-photo.jpg" alt="" /></div>
+            <p class="tv-mobile-case-atom__copy" id="tv-mobile-atom-copy-two">The project was not just about interfaces — it was a full experience of working with a car as a digital product, from the first interactions to everyday use. In the end, it gave me a unique HMI/HMX expertise for Russia and became one of the most complex and exciting challenges in my practice.</p>
+          </div>
+          <div class="tv-mobile-case-atom__thin"><img src="public/media/figma/atom-thin.png" alt="" /></div>
+          <div class="tv-mobile-case-atom__radar"><img src="public/media/figma/atom-radar.png" alt="ATOM radar interface" /></div>
+          <div class="tv-mobile-case-atom__last"><img src="public/media/figma/atom-final.png" alt="ATOM final visual" /></div>
+        </section>
+
+        <section class="tv-mobile-case tv-mobile-case--obj">
+          <div class="tv-mobile-case-obj__logo"><img src="public/media/figma/obu-logo.svg" alt="OBJ" /></div>
+          <div class="tv-mobile-case-obj__intro">
+            <div class="tv-mobile-case-obj__meta">
+              <div class="tv-mobile-case-obj__title-block">
+                <p class="tv-mobile-case-obj__title" id="tv-mobile-obj-title">Another automotive</p>
+                <p class="tv-mobile-case__status" id="tv-mobile-obj-status">art-d • designer</p>
+              </div>
+            </div>
+            <div class="tv-mobile-case-obj__description"><img src="public/media/figma/obu-description.svg" alt="" /></div>
+          </div>
+          <div class="tv-mobile-case-obj__car"><img src="public/media/figma/obu-car.png" alt="Covered concept car" /></div>
+          <p class="tv-mobile-case-obj__copy" id="tv-mobile-obj-copy">Defined look &amp; feel, created service and main screens such as widgets, climate-control, media and music, all apps page, calls, cameras etc.</p>
+          <div class="tv-mobile-case-obj__music"><img src="public/media/figma/obu-music.png" alt="OBJ music interface" /></div>
+        </section>
+
+        <section class="tv-mobile-case tv-mobile-case--pochta">
+          <div class="tv-mobile-case-pochta__logo"><img src="public/media/mobile/mobile-pochta-logo.svg" alt="Pochta Bank" /></div>
+          <div class="tv-mobile-case-pochta__intro">
+            <div class="tv-mobile-case-pochta__meta">
+              <div class="tv-mobile-case-pochta__title-block">
+                <p id="tv-mobile-pb-name">POCHTA BANK APP</p>
+                <p class="tv-mobile-case__status" id="tv-mobile-pb-status">art-d • designer</p>
+              </div>
+              <a class="tv-mobile-case__more" id="tv-mobile-pb-more" href="./case-pochtabank.html">More</a>
+            </div>
+            <p class="tv-mobile-case-pochta__description" id="tv-mobile-pb-description">Pochta Bank is one of the largest retail banks in Russia, with the broadest network: over 30,000 service points in 83 regions and a customer base of over 21 million.</p>
+          </div>
+          <div class="tv-mobile-case-pochta__phone"><img src="public/media/mobile/mobile-pochta-phone.png" alt="Pochta Bank app phone" /></div>
+          <div class="tv-mobile-case-pochta__copy">
+            <p id="tv-mobile-pb-copy-one">Made a whole new app. All of the sections and tabs redisgned, most of the UX is remade, including fast-paymant features and highers CTR to bank needed metrics, targeting pensioners and new young audience to prevent (привлечь)</p>
+            <p id="tv-mobile-pb-copy-two">Reworked illutstrations, created a design-system, guidelines, animations, profiles and banners</p>
+          </div>
+          <div class="tv-mobile-case-pochta__card"><img src="public/media/mobile/mobile-pochta-card.png" alt="Pochta Bank card" /></div>
+          <div class="tv-mobile-case-pochta__lower">
+            <div class="tv-mobile-case-pochta__fast-pay"><img src="public/media/mobile/mobile-pochta-fast-pay.png" alt="Pochta Bank payments" /></div>
+            <div class="tv-mobile-case-pochta__msc"><img src="public/media/mobile/mobile-pochta-msc.png" alt="Pochta Bank emblem" /></div>
+            <div class="tv-mobile-case-pochta__plashki"><img src="public/media/mobile/mobile-pochta-plashki.png" alt="Pochta Bank cards stack" /></div>
+          </div>
+        </section>
+
+        <section class="tv-mobile-case tv-mobile-case--bitrix">
+          <div class="tv-mobile-case-bitrix__logo"><img src="public/media/mobile/mobile-bitrix-logo.svg" alt="Bitrix24" /></div>
+          <div class="tv-mobile-case-bitrix__intro">
+            <div class="tv-mobile-case-bitrix__meta">
+              <div class="tv-mobile-case-bitrix__title-block">
+                <p id="tv-mobile-b24-title">BITRIX 24</p>
+                <p class="tv-mobile-case__status" id="tv-mobile-b24-status">lead-designer</p>
+              </div>
+              <a class="tv-mobile-case__more" id="tv-mobile-b24-more" href="./case-bitrix24.html">More</a>
+            </div>
+            <p class="tv-mobile-case-bitrix__description" id="tv-mobile-b24-description">Bitrix24 is one of the largest business ecosystems, trusted by over 15 million companies in over 150 countries.</p>
+          </div>
+          <div class="tv-mobile-case-bitrix__faces"><img src="public/media/mobile/mobile-bitrix-faces.png" alt="Bitrix24 faces" /></div>
+          <p class="tv-mobile-case-bitrix__copy-top" id="tv-mobile-b24-copy-top">Created a whole new UI for a web-site with it&apos;s own philosophy and big idea</p>
+          <div class="tv-mobile-case-bitrix__block"><img src="public/media/mobile/mobile-bitrix-block.png" alt="Bitrix24 main block" /></div>
+          <div class="tv-mobile-case-bitrix__copy-bottom">
+            <p id="tv-mobile-b24-copy-bottom-one">But not only website</p>
+            <p id="tv-mobile-b24-copy-bottom-two">I also made a proposal to redisgn a inner system to create a much friendly, connectivity design to work with joy</p>
+            <p id="tv-mobile-b24-copy-bottom-three">But it didn&apos;t go to prod, so let it rest here in peace</p>
+          </div>
+          <div class="tv-mobile-case-bitrix__last"><img src="public/media/mobile/mobile-bitrix-last.png" alt="Bitrix24 lower screen" /></div>
+        </section>
+
+        <section class="tv-mobile-case tv-mobile-case--stoloto">
+          <div class="tv-mobile-case-stoloto__logo"><img src="public/media/mobile/mobile-stoloto-logo.svg" alt="Stoloto" /></div>
+          <div class="tv-mobile-case-stoloto__intro">
+            <div class="tv-mobile-case-stoloto__meta">
+              <div class="tv-mobile-case-stoloto__title-block">
+                <p id="tv-mobile-stoloto-name">STOLOTO</p>
+                <p class="tv-mobile-case__status" id="tv-mobile-stoloto-status">lead-designer</p>
+              </div>
+              <a class="tv-mobile-case__more" id="tv-mobile-stoloto-more" href="./case-stoloto.html">More</a>
+            </div>
+            <p class="tv-mobile-case-stoloto__description" id="tv-mobile-stoloto-description">One of the most prominent lottery products in Russia, used by millions of people and generating billions in revenue. We developed a new visual language, redesigned the purchase flows, and put stronger emphasis on the core product.</p>
+          </div>
+          <div class="tv-mobile-case-stoloto__block"><img src="public/media/mobile/mobile-stoloto-block.png" alt="Stoloto dark screens" /></div>
+          <div class="tv-mobile-case-stoloto__mascots-top"><img src="public/media/mobile/mobile-stoloto-two-matryoshkas.png" alt="Stoloto top mascots" /></div>
+          <div class="tv-mobile-case-stoloto__copy-row">
+            <div class="tv-mobile-case-stoloto__copy">
+              <p id="tv-mobile-stoloto-copy-one">The key focus was balancing emotion and transparency: lotteries are about excitement, anticipation, and that “wow” feeling, but at the same time users need to clearly understand what’s happening with their money. We made the interface simpler, more honest, and easier to use—without losing the sense of play and engagement.</p>
+              <p id="tv-mobile-stoloto-copy-two"></p>
+            </div>
+            <div class="tv-mobile-case-stoloto__mascot-right"><img src="public/media/mobile/mobile-stoloto-single-matryoshka.png" alt="Stoloto right mascot" /></div>
+          </div>
+          <div class="tv-mobile-case-stoloto__right"><img src="public/media/mobile/mobile-stoloto-right.png" alt="Stoloto phone interface" /></div>
+          <div class="tv-mobile-case-stoloto__end"><img src="public/media/figma/stoloto-lotteries.png" alt="Stoloto end graphic" /></div>
+        </section>
+
+        <section class="tv-mobile-additional-cases">
+          <div class="tv-mobile-additional-cases__heading">
+            <h2 class="tv-mobile-additional-cases__title" id="tv-mobile-additional-title">Etc.</h2>
+            <p class="tv-mobile-additional-cases__subtitle" id="tv-mobile-additional-subtitle">Last, but not least</p>
+          </div>
+          <div class="tv-mobile-additional-cases__list">
+            <article class="tv-mobile-additional-cases__item">
+              <div class="tv-mobile-additional-cases__row">
+                <div class="tv-mobile-additional-cases__meta">
+                  <div class="tv-mobile-additional-cases__logo tv-mobile-additional-cases__logo--moskvich"><img src="public/media/figma/additional-moskvich-logo.svg" alt="Moskvich" /></div>
+                  <div class="tv-mobile-additional-cases__copy"><p>M-series web redesign</p><p>art-d, designer</p></div>
+                  <div class="tv-mobile-additional-cases__meta-footer"><p class="tv-mobile-additional-cases__year">2024</p><a class="tv-mobile-additional-cases__link" href="https://moskvich-m.ru/models/m70">Link</a></div>
+                </div>
+                <div class="tv-mobile-additional-cases__image tv-mobile-additional-cases__image--moskvich"><img src="public/media/figma/additional-moskvich-image.png" alt="Moskvich redesign preview" /></div>
+              </div>
+            </article>
+            <article class="tv-mobile-additional-cases__item">
+              <div class="tv-mobile-additional-cases__row">
+                <div class="tv-mobile-additional-cases__meta">
+                  <div class="tv-mobile-additional-cases__logo tv-mobile-additional-cases__logo--kultura"><img src="public/media/figma/additional-kultura-logo.svg" alt="Культура Москвы" /></div>
+                  <div class="tv-mobile-additional-cases__copy"><p>Web concept</p><p>designer</p></div>
+                  <div class="tv-mobile-additional-cases__meta-footer"><p class="tv-mobile-additional-cases__year">2024</p><a class="tv-mobile-additional-cases__link" href="https://kultura.mos.ru/">Link</a></div>
+                </div>
+                <div class="tv-mobile-additional-cases__image tv-mobile-additional-cases__image--kultura"><img src="public/media/figma/additional-kultura-image.png" alt="Культура Москвы preview" /></div>
+              </div>
+            </article>
+            <article class="tv-mobile-additional-cases__item">
+              <div class="tv-mobile-additional-cases__row">
+                <div class="tv-mobile-additional-cases__meta">
+                  <div class="tv-mobile-additional-cases__logo tv-mobile-additional-cases__logo--stoloto"><img src="public/media/figma/additional-stoloto-dots-logo.svg" alt="Stoloto" /></div>
+                  <div class="tv-mobile-additional-cases__copy"><p>Game machines interface</p><p>art-d, designer</p></div>
+                  <div class="tv-mobile-additional-cases__meta-footer"><p class="tv-mobile-additional-cases__year">2024</p><a class="tv-mobile-additional-cases__link" href="https://www.stoloto.ru/">Link</a></div>
+                </div>
+                <div class="tv-mobile-additional-cases__image tv-mobile-additional-cases__image--stoloto"><img src="public/media/figma/additional-stoloto-dots-image.png" alt="Stoloto game machines preview" /></div>
+              </div>
+            </article>
+            <article class="tv-mobile-additional-cases__item">
+              <div class="tv-mobile-additional-cases__row">
+                <div class="tv-mobile-additional-cases__meta">
+                  <div class="tv-mobile-additional-cases__logo tv-mobile-additional-cases__logo--postamat"><img src="public/media/figma/additional-postamat-logo.png" alt="Мой Постамат" /></div>
+                  <div class="tv-mobile-additional-cases__copy"><p>Web redesign</p><p>designer</p></div>
+                  <div class="tv-mobile-additional-cases__meta-footer"><p class="tv-mobile-additional-cases__year">2024</p><a class="tv-mobile-additional-cases__link" href="https://www.mos.ru/city/projects/postamat/">Link</a></div>
+                </div>
+                <div class="tv-mobile-additional-cases__image tv-mobile-additional-cases__image--postamat"><img src="public/media/figma/additional-postamat-image.png" alt="Postamat interface preview" /></div>
+              </div>
+            </article>
+            <article class="tv-mobile-additional-cases__item">
+              <div class="tv-mobile-additional-cases__row">
+                <div class="tv-mobile-additional-cases__meta">
+                  <div class="tv-mobile-additional-cases__logo tv-mobile-additional-cases__logo--auchan"><img src="public/media/figma/additional-auchan-logo.svg" alt="Auchan" /></div>
+                  <div class="tv-mobile-additional-cases__copy"><p>Web redesign</p><p>designer</p></div>
+                  <div class="tv-mobile-additional-cases__meta-footer"><p class="tv-mobile-additional-cases__year">2024</p><a class="tv-mobile-additional-cases__link" href="https://www.auchan.ru/">Link</a></div>
+                </div>
+                <div class="tv-mobile-additional-cases__image tv-mobile-additional-cases__image--auchan"><img src="public/media/figma/additional-auchan-image.png" alt="Auchan redesign preview" /></div>
+              </div>
+            </article>
+            <article class="tv-mobile-additional-cases__item">
+              <div class="tv-mobile-additional-cases__row">
+                <div class="tv-mobile-additional-cases__meta">
+                  <div class="tv-mobile-additional-cases__logo tv-mobile-additional-cases__logo--haier"><img src="public/media/figma/additional-haier-logo.png" alt="Haier" /></div>
+                  <div class="tv-mobile-additional-cases__copy"><p>Web redesign</p><p>designer</p></div>
+                  <div class="tv-mobile-additional-cases__meta-footer"><p class="tv-mobile-additional-cases__year">2024</p><a class="tv-mobile-additional-cases__link" href="https://haieronline.ru/">Link</a></div>
+                </div>
+                <div class="tv-mobile-additional-cases__image tv-mobile-additional-cases__image--haier"><img src="public/media/figma/additional-haier-image.png" alt="Haier redesign preview" /></div>
+              </div>
+            </article>
+            <article class="tv-mobile-additional-cases__item">
+              <div class="tv-mobile-additional-cases__row">
+                <div class="tv-mobile-additional-cases__meta">
+                  <div class="tv-mobile-additional-cases__logo tv-mobile-additional-cases__logo--borishoff"><img src="public/media/figma/additional-borishoff-logo.svg" alt="БорисХоф" /></div>
+                  <div class="tv-mobile-additional-cases__copy"><p>App design</p><p>art-d</p></div>
+                  <div class="tv-mobile-additional-cases__meta-footer"><p class="tv-mobile-additional-cases__year">2025</p><a class="tv-mobile-additional-cases__link" href="https://borishof.ru/">Link</a></div>
+                </div>
+                <div class="tv-mobile-additional-cases__image tv-mobile-additional-cases__image--borishoff"><img src="public/media/figma/additional-borishoff-image.png" alt="Borishoff app preview" /></div>
+              </div>
+            </article>
+            <article class="tv-mobile-additional-cases__item tv-mobile-additional-cases__item--last">
+              <div class="tv-mobile-additional-cases__row">
+                <div class="tv-mobile-additional-cases__meta">
+                  <div class="tv-mobile-additional-cases__logo tv-mobile-additional-cases__logo--finance"><img src="public/media/figma/additional-finance-logo.png" alt="Финансовая культура" /></div>
+                  <div class="tv-mobile-additional-cases__copy"><p>Web redesign</p><p>designer</p></div>
+                  <div class="tv-mobile-additional-cases__meta-footer"><p class="tv-mobile-additional-cases__year">2023</p><a class="tv-mobile-additional-cases__link" href="https://fincult.info/">Link</a></div>
+                </div>
+                <div class="tv-mobile-additional-cases__image tv-mobile-additional-cases__image--finance"><img src="public/media/figma/additional-finance-image.png" alt="Финансовая культура preview" /></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="tv-mobile-page-end">
+          <a class="tv-mobile-page-end__up" href="#top" id="tv-mobile-up-label">UP</a>
+          <footer class="tv-mobile-footer">
+            <p class="tv-mobile-footer__name" id="tv-mobile-footer-name">Tsarёv Andrey</p>
+            <nav class="tv-mobile-footer__contacts" aria-label="Mobile footer links">
+              <a class="tv-mobile-footer__contact-button tv-mobile-footer__contact-button--telegram" id="tv-mobile-footer-telegram" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Telegram</a>
+              <a class="tv-mobile-footer__contact-button tv-mobile-footer__contact-button--mail" id="tv-mobile-footer-mail" href="mailto:eggy0510@gmail.com">Mail</a>
+            </nav>
+            <div class="tv-mobile-footer__role" id="tv-mobile-footer-role">
+              <p>Digital design team-lead</p>
+              <p>art-d</p>
+              <p>designer</p>
+            </div>
+            <div class="tv-mobile-footer__projects-block">
+              <div class="tv-mobile-footer__rail" aria-hidden="true"></div>
+              <p class="tv-mobile-footer__projects-label" id="tv-mobile-footer-projects-label">Projects</p>
+              <a class="tv-mobile-footer__cv" href="./cv.html">CV</a>
+              <div class="tv-mobile-footer__projects-grid">
+                <div class="tv-mobile-footer__projects-list" id="tv-mobile-footer-projects-list">
+                  <p>ATOM auto</p>
+                  <p>Pochta bank,</p>
+                  <p>Bitrix24,</p>
+                  <p>Stoloto,</p>
+                  <p>Auchan,</p>
+                  <p>Moskvich,</p>
+                  <p>Haier,</p>
+                  <p>Borishoff</p>
+                  <p>Moscow Postamat</p>
+                  <p>Culture of MSC</p>
+                  <p>and more</p>
+                </div>
+                <div class="tv-mobile-footer__statuses" id="tv-mobile-footer-statuses">
+                  <p>art-d, designer</p>
+                  <p>art-d, designer</p>
+                  <p>lead-d, designer</p>
+                  <p>lead-d, designer</p>
+                  <p>designer</p>
+                  <p>designer</p>
+                  <p>designer</p>
+                  <p>designer</p>
+                  <p>art-d, designer</p>
+                  <p>lead-d, designer</p>
+                </div>
+              </div>
+            </div>
+            <div class="tv-mobile-footer__portrait"><video src="public/media/figma/Car Drive Video.mp4" autoplay loop muted playsinline preload="auto" aria-hidden="true"></video></div>
+          </footer>
+        </section>
+      </div>
+    </section>
+    <div class="page">
+      <header class="tv-desktop-menu">
+        <div class="tv-desktop-menu__inner">
+          <div class="tv-desktop-menu__home"><a class="link tv-desktop-link tv-desktop-link--home" id="tv-home-link" href="#top">Главная</a></div>
+          <div class="tv-desktop-menu__contacts"><a class="button tv-desktop-button button--small" href="./cv.html">CV</a><a class="button tv-desktop-button button--wide" id="tv-telegram-button" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Telegram</a><a class="button tv-desktop-button button--small" id="tv-mail-button" href="mailto:eggy0510@gmail.com">Mail</a></div>
+          <div class="tv-desktop-menu__side"><button class="link tv-desktop-link tv-desktop-link--language" id="tv-language-toggle" type="button">En</button><a class="link tv-desktop-link tv-desktop-link--wall" id="tv-wall-link" href="./Test visual wall.html">Стена</a></div>
         </div>
       </header>
 
       <section class="hero">
         <div class="hero__identity">
-          <h1 class="hero__name">Tsarёv Andrey</h1>
-          <div class="hero__role" id="tv-hero-role"><p>Руководитель digital-дизайна</p><p>арт-директор</p><p>дизайнер</p></div>
+          <h1 class="hero__name" id="tv-hero-name">Tsarёv Andrey</h1>
+          <div class="hero__role" id="tv-hero-role"><p>digital-дизайн тимлид</p><p>арт-директор</p><p>дизайнер</p></div>
         </div>
         <div class="hero__wolf"><img src="public/media/figma/wolf.png" alt="" /></div>
         <img class="hero__portrait" src="public/media/figma/portrait.png" alt="Portrait of Andrey" />
@@ -595,7 +2389,7 @@
         </div>
         <div class="hero__promo">
           <img src="public/media/figma/soul.png" alt="" />
-          <div class="hero__promo-text" id="tv-hero-promo"><p>Создаю уникальные визуальные образы, делаю дизайн компаний узнаваемым, работаю с новыми устройствами, и помогаю командам расти</p></div>
+          <div class="hero__promo-text" id="tv-hero-promo"><p>Создаю уникальный визуал, делаю бренд узнаваемым, работаю с новыми форматами и устройствами, помогаю командам расти</p></div>
         </div>
       </section>
 
@@ -614,7 +2408,7 @@
             <div class="media atom-steering"><img src="public/media/figma/atom-main-steering.png" alt="ATOM steering interface" /></div>
           </div>
           <div class="atom-three">
-            <div class="atom-left"><div class="media atom-cards"><img src="public/media/figma/atom-cards.png" alt="ATOM cards" /></div><div class="atom-small-copy"><p class="text" id="tv-atom-copy-two">Сделал целую UI-систему, на которой были собраны все интерфейсы вокруг проекта: много концептов, уникальный look&amp;feel, виджеты главной, HMX, анимации, иллюстрации и многое другое.</p><div class="media-sm atom-small-photo"><img src="public/media/figma/atom-small-photo.jpg" alt="" /></div></div></div>
+            <div class="atom-left"><div class="media atom-cards"><img src="public/media/figma/atom-cards.png" alt="ATOM cards" /></div><div class="atom-small-copy"><p class="text" id="tv-atom-copy-two">Проект не просто про интерфейсы, это полноценный опыт работы с автомобилем как цифровым продуктом, от первых касаний до повседневного использования. В итоге это дало уникальную для России экспертизу в HMI/HMX и стало одной из самых сложных и интересных задач в моей практике.</p><div class="media-sm atom-small-photo"><img src="public/media/figma/atom-small-photo.jpg" alt="" /></div></div></div>
             <div class="atom-right"><div class="media-sm atom-thin"><img src="public/media/figma/atom-thin.png" alt="" /></div><div class="media atom-radar"><img src="public/media/figma/atom-radar.png" alt="ATOM radar interface" /></div></div>
           </div>
           <div class="media atom-last"><img src="public/media/figma/atom-final.png" alt="ATOM final visual" /></div>
@@ -622,9 +2416,9 @@
 
         <section class="section">
           <div class="section__header">
-            <div class="logo-box wide-logo"><img src="public/media/figma/obu-logo.svg" alt="OBJ" /></div>
+          <div class="logo-box wide-logo obu-logo"><img src="public/media/figma/obu-logo.svg" alt="OBJ" /></div>
             <div class="section__intro">
-              <div class="meta"><p class="text" id="tv-obj-title">Ещё один автомобильный проект</p><p class="text status" id="tv-obj-status">арт-директор • дизайнер</p></div>
+              <div class="meta obu-meta"><p class="text" id="tv-obj-title">ANOTHER AUTOMOTIVE</p><p class="text status" id="tv-obj-status">арт-директор • дизайнер</p></div>
               <div class="media-sm obu-desc-image"><img src="public/media/figma/obu-description.svg" alt="" /></div>
             </div>
           </div>
@@ -671,20 +2465,7 @@
             <p class="text b24-tag" id="tv-b24-tag">редизайн</p>
           </div>
           <div class="b24-story">
-            <div class="b24-faces">
-              <div class="b24-faces-left">
-                <div class="b24-face b24-face--left-one"><img src="public/media/figma/bitrix-face-one.png" alt="" /></div>
-                <div class="b24-face b24-face--left-two"><img src="public/media/figma/bitrix-face-two.jpg" alt="" /></div>
-                <div class="b24-badge b24-badge--file"><img src="public/media/figma/bitrix-file-icon.svg" alt="" /></div>
-              </div>
-              <div class="b24-faces-right">
-                <div class="b24-face b24-face--right-one"><img src="public/media/figma/bitrix-face-three.png" alt="" /></div>
-                <div class="b24-badge b24-badge--like"><img src="public/media/figma/bitrix-like-icon.svg" alt="" /></div>
-                <div class="b24-face b24-face--right-two"><img src="public/media/figma/bitrix-face-four.png" alt="" /></div>
-                <div class="b24-face b24-face--right-three"><img src="public/media/figma/bitrix-face-five.png" alt="" /></div>
-                <div class="b24-badge b24-badge--brush"><img src="public/media/figma/bitrix-brush-icon.svg" alt="" /></div>
-              </div>
-            </div>
+            <div class="b24-faces"><img src="public/media/mobile/bitrix-faces-user.png" alt="Bitrix24 faces" /></div>
             <div class="b24-copy-row">
               <p class="text b24-description" id="tv-b24-description-one">Битрикс24 — одна из крупнейших бизнес-экосистем, которой доверяют более 15 миллионов компаний в более чем 150 странах.</p>
               <p class="text b24-description" id="tv-b24-description-two">Сделал полностью новый UI для сайта с собственной философией и сильной центральной идеей.</p>
@@ -712,14 +2493,13 @@
           </div>
           <div class="media stoloto-block"><img src="public/media/figma/stoloto-block.png" alt="Stoloto dark screens" /></div>
           <div class="stoloto-feature">
-            <p class="text stoloto-description" id="tv-stoloto-description">Один из самых заметных лотерейных продуктов в России. Для него был собран новый визуальный язык, обновлены сценарии покупки и акцентирован сам продукт.</p>
+            <p class="text stoloto-description" id="tv-stoloto-description">Один из самых заметных лотерейных продуктов в России с миллионами пользователей и оборотом в миллиарды рублей. Для него был собран новый визуальный язык, обновлены сценарии покупки и акцентирован сам продукт.</p>
             <div class="stoloto-matryoshka"><img src="public/media/figma/stoloto-matryoshka.png" alt="Stoloto mascots" /></div>
           </div>
           <div class="stoloto-lower">
             <div class="stoloto-lower-left">
               <div class="text stoloto-copy" id="tv-stoloto-copy">
-                <p>Сделал новое приложение. Все разделы и вкладки были переработаны, большая часть UX собрана заново, включая быстрые платежи и решения для роста продуктовых метрик.</p>
-                <p>Переработал иллюстрации, собрал дизайн-систему, гайдлайны, анимации, профили и баннеры.</p>
+                <p>Важно было сохранить баланс между эмоцией и прозрачностью: лотерея — это про азарт, ожидание и вау-эффект, но при этом пользователь должен чётко понимать, что происходит с его деньгами. Мы сделали интерфейс проще, честнее и понятнее, не теряя ощущения игры и вовлечённости.</p>
               </div>
               <div class="media stoloto-lotteries"><img src="public/media/figma/stoloto-lotteries.png" alt="Stoloto lotteries logos" /></div>
             </div>
@@ -738,7 +2518,7 @@
                 <div class="additional-cases__meta">
                   <div class="additional-cases__logo additional-cases__logo--moskvich"><img src="public/media/figma/additional-moskvich-logo.svg" alt="" /></div>
                   <div class="additional-cases__copy"><p id="tv-case-moskvich-title">Редизайн M-series</p><p id="tv-case-moskvich-role">арт-д, дизайнер</p></div>
-                  <p class="additional-cases__year">2024</p>
+                  <div class="additional-cases__meta-footer"><p class="additional-cases__year">2024</p><a class="additional-cases__link" href="https://moskvich-m.ru/models/m70">Ссылка</a></div>
                 </div>
                 <div class="additional-cases__image additional-cases__image--moskvich"><img src="public/media/figma/additional-moskvich-image.png" alt="Moskvich redesign preview" /></div>
               </div>
@@ -749,7 +2529,7 @@
                 <div class="additional-cases__meta">
                   <div class="additional-cases__logo additional-cases__logo--kultura"><img src="public/media/figma/additional-kultura-logo.svg" alt="" /></div>
                   <div class="additional-cases__copy"><p id="tv-case-kultura-title">Веб-концепт</p><p id="tv-case-kultura-role">дизайнер</p></div>
-                  <p class="additional-cases__year">2024</p>
+                  <div class="additional-cases__meta-footer"><p class="additional-cases__year">2024</p><a class="additional-cases__link" href="https://kultura.mos.ru/">Ссылка</a></div>
                 </div>
                 <div class="additional-cases__image additional-cases__image--kultura"><img src="public/media/figma/additional-kultura-image.png" alt="Культура Москвы preview" /></div>
               </div>
@@ -760,7 +2540,7 @@
                 <div class="additional-cases__meta">
                   <div class="additional-cases__logo additional-cases__logo--stoloto"><img src="public/media/figma/additional-stoloto-dots-logo.svg" alt="" /></div>
                   <div class="additional-cases__copy"><p id="tv-case-stoloto-dots-title">Интерфейс игровых автоматов</p><p id="tv-case-stoloto-dots-role">арт-д, дизайнер</p></div>
-                  <p class="additional-cases__year">2024</p>
+                  <div class="additional-cases__meta-footer"><p class="additional-cases__year">2024</p><a class="additional-cases__link" href="https://www.stoloto.ru/">Ссылка</a></div>
                 </div>
                 <div class="additional-cases__image additional-cases__image--stoloto"><img src="public/media/figma/additional-stoloto-dots-image.png" alt="Stoloto game machines preview" /></div>
               </div>
@@ -771,7 +2551,7 @@
                 <div class="additional-cases__meta">
                   <div class="additional-cases__logo additional-cases__logo--postamat"><img src="public/media/figma/additional-postamat-logo.png" alt="" /></div>
                   <div class="additional-cases__copy"><p id="tv-case-postamat-title">Интерфейс постамата</p><p id="tv-case-postamat-role">арт-д, дизайнер</p></div>
-                  <p class="additional-cases__year">2024</p>
+                  <div class="additional-cases__meta-footer"><p class="additional-cases__year">2024</p><a class="additional-cases__link" href="https://www.mos.ru/city/projects/postamat/">Ссылка</a></div>
                 </div>
                 <div class="additional-cases__image additional-cases__image--postamat"><img src="public/media/figma/additional-postamat-image.png" alt="Postamat interface preview" /></div>
               </div>
@@ -781,8 +2561,8 @@
               <div class="additional-cases__row">
                 <div class="additional-cases__meta">
                   <div class="additional-cases__logo additional-cases__logo--auchan"><img src="public/media/figma/additional-auchan-logo.svg" alt="" /></div>
-                  <div class="additional-cases__copy"><p id="tv-case-auchan-title">Интерфейс постамата</p><p id="tv-case-auchan-role">арт-д, дизайнер</p></div>
-                  <p class="additional-cases__year">2024</p>
+                  <div class="additional-cases__copy"><p id="tv-case-auchan-title">Редизайн сайта</p><p id="tv-case-auchan-role">дизайнер</p></div>
+                  <div class="additional-cases__meta-footer"><p class="additional-cases__year">2024</p><a class="additional-cases__link" href="https://www.auchan.ru/">Ссылка</a></div>
                 </div>
                 <div class="additional-cases__image additional-cases__image--auchan"><img src="public/media/figma/additional-auchan-image.png" alt="Auchan interface preview" /></div>
               </div>
@@ -793,7 +2573,7 @@
                 <div class="additional-cases__meta">
                   <div class="additional-cases__logo additional-cases__logo--haier"><img src="public/media/figma/additional-haier-logo.png" alt="" /></div>
                   <div class="additional-cases__copy"><p id="tv-case-haier-title">Редизайн сайта</p><p id="tv-case-haier-role">дизайнер</p></div>
-                  <p class="additional-cases__year">2024</p>
+                  <div class="additional-cases__meta-footer"><p class="additional-cases__year">2024</p><a class="additional-cases__link" href="https://haieronline.ru/">Ссылка</a></div>
                 </div>
                 <div class="additional-cases__image additional-cases__image--haier"><img src="public/media/figma/additional-haier-image.png" alt="Haier redesign preview" /></div>
               </div>
@@ -804,7 +2584,7 @@
                 <div class="additional-cases__meta">
                   <div class="additional-cases__logo additional-cases__logo--borishoff"><img src="public/media/figma/additional-borishoff-logo.svg" alt="" /></div>
                   <div class="additional-cases__copy"><p id="tv-case-borishoff-title">Дизайн приложения</p><p id="tv-case-borishoff-role">арт-д</p></div>
-                  <p class="additional-cases__year">2025</p>
+                  <div class="additional-cases__meta-footer"><p class="additional-cases__year">2025</p><a class="additional-cases__link" href="https://borishof.ru/">Ссылка</a></div>
                 </div>
                 <div class="additional-cases__image additional-cases__image--borishoff"><img src="public/media/figma/additional-borishoff-image.png" alt="Borishoff app preview" /></div>
               </div>
@@ -814,7 +2594,7 @@
               <div class="additional-cases__meta">
                 <div class="additional-cases__finance-logo"><img src="public/media/figma/additional-finance-logo.png" alt="" /></div>
                 <div class="additional-cases__copy"><p id="tv-case-finance-title">Редизайн сайта</p><p id="tv-case-finance-role">дизайнер</p></div>
-                <p class="additional-cases__year">2023</p>
+                <div class="additional-cases__meta-footer"><p class="additional-cases__year">2023</p><a class="additional-cases__link" href="https://fincult.info/">Ссылка</a></div>
               </div>
               <div class="additional-cases__image additional-cases__image--finance"><img src="public/media/figma/additional-finance-image.png" alt="Финансовая культура preview" /></div>
             </div>
@@ -828,15 +2608,15 @@
 
           <footer class="portfolio-footer">
             <div class="portfolio-footer__left">
-              <p class="portfolio-footer__name">Tsarёv Andrey</p>
+              <p class="portfolio-footer__name" id="tv-footer-name">Tsarёv Andrey</p>
               <div class="portfolio-footer__portrait">
-                <img src="public/media/figma/footer-portrait.png" alt="" />
+                <video src="public/media/figma/Car Drive Video.mp4" autoplay loop muted playsinline preload="auto" aria-hidden="true"></video>
               </div>
             </div>
 
             <div class="portfolio-footer__center">
               <div class="portfolio-footer__role" id="tv-footer-role">
-                <p>Руководитель digital-дизайна</p>
+                <p>digital-дизайн тимлид</p>
                 <p>арт-директор</p>
                 <p>дизайнер</p>
               </div>
@@ -883,7 +2663,38 @@
       </div>
     </div>
 
+    <a class="desktop-floating-up" id="tv-floating-up" href="#top" aria-label="Наверх">
+      <svg class="desktop-floating-up__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 5.5 6.5 11l1.4 1.4 3.1-3.1V18h2V9.3l3.1 3.1 1.4-1.4L12 5.5Z" fill="currentColor"></path>
+      </svg>
+    </a>
+
+    <aside class="desktop-player" id="tv-player" aria-label="Player placeholder">
+      <audio id="tv-player-audio" preload="metadata" src="public/media/player/sade-pearls.mp3"></audio>
+      <button class="desktop-player__cover" id="tv-player-cover" type="button" aria-label="Play"><img src="public/media/player/Cover.png" alt="Sade - Pearls cover" /></button>
+      <div class="desktop-player__body">
+        <div class="desktop-player__info">
+          <p class="desktop-player__title" id="tv-player-title">Pearls</p>
+          <p class="desktop-player__artist" id="tv-player-artist">Sade</p>
+        </div>
+        <button class="desktop-player__toggle" id="tv-player-toggle" type="button" aria-label="Включить" aria-pressed="false">
+          <svg class="desktop-player__icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8 6.5v11l9-5.5-9-5.5Z" fill="currentColor"></path>
+          </svg>
+        </button>
+      </div>
+      <input class="desktop-player__progress" id="tv-player-progress" type="range" min="0" max="100" step="0.1" value="0" aria-label="Track progress" />
+    </aside>
+
     <div class="bottom-signs" aria-hidden="true"><span class="bottom-signs__name">Tsarёv Andrey</span><span class="bottom-signs__year">2026</span></div>
+    <div class="tv-lightbox" id="tv-lightbox" aria-modal="true" role="dialog">
+      <div class="tv-lightbox__stage">
+        <img class="tv-lightbox__image" id="tv-lightbox-image" alt="" />
+      </div>
+      <button class="tv-lightbox__close" id="tv-lightbox-close" type="button" aria-label="Close image preview">
+        <span class="tv-lightbox__close-icon" aria-hidden="true">×</span>
+      </button>
+    </div>
     <script>
       const tvTranslations = {
         ru: {
@@ -892,16 +2703,17 @@
           telegram: "Телеграм",
           mail: "Почта",
           wall: "Стена",
-          heroRole: ["Руководитель digital-дизайна", "арт-директор", "дизайнер"],
+          heroRole: ["digital-дизайн тимлид", "арт-директор", "дизайнер"],
           heroProjectsLabel: "Проекты",
-          heroProjects: ["ATOM auto", "Почта Банк,", "Bitrix24,", "Stoloto,", "Auchan,", "Москвич,", "Haier,", "Borishoff", "Мой Постамат", "Культура МСК", "и другое"],
-          heroPromo: "Создаю уникальные визуальные образы, делаю дизайн компаний узнаваемым, работаю с новыми устройствами, и помогаю командам расти",
+          heroProjects: ["ATOM авто", "Почта Банк,", "Битрикс24,", "Столото,", "Ашан,", "Москвич,", "Haier,", "Борисхофф", "Мой постамат", "Культура мск", "и другое"],
+          heroPromo: "Создаю уникальный визуал, делаю бренд узнаваемым, работаю с новыми форматами и устройствами, помогаю командам расти",
           atomStatus: "арт-директор • дизайнер • 24-26",
           atomMore: "Подробнее",
           atomDescription: "Эта легендарная компания успела перевернуть автомобильный рынок, стать настоящей рок-звездой индустрии, но закончила так же драматично и преждевременно",
           atomCopyOne: "Сделал целую UI-систему, на которой были построены все интерфейсы вокруг проекта: множество концептов, уникальный look&feel, виджеты главной страницы, HMX, анимации, иллюстрации и многое другое.",
-          atomCopyTwo: "Сделал целую UI-систему, на которой были собраны все интерфейсы вокруг проекта: много концептов, уникальный look&feel, виджеты главной, HMX, анимации, иллюстрации и многое другое.",
-          objTitle: "Ещё один автомобильный проект",
+          atomCopyTwo: "Проект не просто про интерфейсы, это полноценный опыт работы с автомобилем как цифровым продуктом, от первых касаний до повседневного использования. В итоге это дало уникальную для России экспертизу в HMI/HMX и стало одной из самых сложных и интересных задач в моей практике.",
+          objTitle: "ANOTHER AUTOMOTIVE",
+          mobileObjTitle: "ЕЩЁ ОДИН АВТОМОБИЛЬНЫЙ ПРОЕКТ",
           objStatus: "арт-директор • дизайнер",
           objCopy: "Определил look & feel, сделал сервисные и главные экраны: виджеты, климат-контроль, медиа и музыку, экран всех приложений, звонки, камеры и другое.",
           pbName: "ПРИЛОЖЕНИЕ ПОЧТА БАНКА",
@@ -923,8 +2735,8 @@
           stolotoStatus: "ведущий дизайнер",
           stolotoMore: "Подробнее",
           stolotoTag: "редизайн",
-          stolotoDescription: "Один из самых заметных лотерейных продуктов в России. Для него был собран новый визуальный язык, обновлены сценарии покупки и акцентирован сам продукт.",
-          stolotoCopy: ["Сделал новое приложение. Все разделы и вкладки были переработаны, большая часть UX собрана заново, включая быстрые платежи и решения для роста продуктовых метрик.", "Переработал иллюстрации, собрал дизайн-систему, гайдлайны, анимации, профили и баннеры."],
+          stolotoDescription: "Один из самых заметных лотерейных продуктов в России с миллионами пользователей и оборотом в миллиарды рублей. Для него был собран новый визуальный язык, обновлены сценарии покупки и акцентирован сам продукт.",
+          stolotoCopy: ["Важно было сохранить баланс между эмоцией и прозрачностью: лотерея — это про азарт, ожидание и вау-эффект, но при этом пользователь должен чётко понимать, что происходит с его деньгами. Мы сделали интерфейс проще, честнее и понятнее, не теряя ощущения игры и вовлечённости."],
           additionalTitle: "Ещё",
           additionalSubtitle: "Последние, но не менее важные",
           moskvichTitle: "Редизайн M-series",
@@ -935,21 +2747,26 @@
           stolotoDotsRole: "арт-д, дизайнер",
           postamatTitle: "Интерфейс постамата",
           postamatRole: "арт-д, дизайнер",
-          auchanTitle: "Интерфейс постамата",
-          auchanRole: "арт-д, дизайнер",
+          auchanTitle: "Редизайн сайта",
+          auchanRole: "дизайнер",
           haierTitle: "Редизайн сайта",
           haierRole: "дизайнер",
           borishoffTitle: "Дизайн приложения",
           borishoffRole: "арт-д",
           financeTitle: "Редизайн сайта",
           financeRole: "дизайнер",
+          additionalLink: "Ссылка",
           up: "Наверх",
-          footerRole: ["Руководитель digital-дизайна", "арт-директор", "дизайнер"],
+          footerRole: ["digital-дизайн тимлид", "арт-директор", "дизайнер"],
           footerProjects: "Проекты",
-          footerProjectList: ["ATOM auto", "Почта Банк,", "Bitrix24,", "Stoloto,", "Auchan,", "Москвич,", "Haier,", "Borishoff", "Мой Постамат", "Культура МСК", "и другое"],
+          footerProjectList: ["ATOM авто", "Почта Банк,", "Битрикс24,", "Столото,", "Ашан,", "Москвич,", "Haier,", "Борисхофф", "Мой постамат", "Культура мск", "и другое"],
           footerStatuses: ["арт-д, дизайнер", "арт-д, дизайнер", "вед-д, дизайнер", "вед-д, дизайнер", "дизайнер", "дизайнер", "дизайнер", "дизайнер", "арт-д, дизайнер", "вед-д, дизайнер"],
           footerTelegram: "Телеграм",
-          footerMail: "Почта"
+          footerMail: "Почта",
+          playerTitle: "Pearls",
+          playerArtist: "Sade",
+          playerPlay: "Включить",
+          playerPause: "Пауза"
         },
         en: {
           toggle: "Ru",
@@ -965,8 +2782,9 @@
           atomMore: "More",
           atomDescription: "This legendary company managed to revolutionize the automotive market, becoming the rock star of the industry, but it met its end just as dramatically and prematurely",
           atomCopyOne: "Made a whole UI system that was build all interfaces around it, lots of concepts that produced a unique look&feel, main page widgets, HMX, animations, ilutstrarions etc.",
-          atomCopyTwo: "Made a whole UI system that was biuld all interfaces around it, lots of concepts that produced a unique look&feel, main page widgets, HMX, animations, ilutstrarions etc.",
-          objTitle: "Another automotive",
+          atomCopyTwo: "The project was not just about interfaces — it was a full experience of working with a car as a digital product, from the first interactions to everyday use. In the end, it gave me a unique HMI/HMX expertise for Russia and became one of the most complex and exciting challenges in my practice.",
+          objTitle: "ANOTHER AUTOMOTIVE",
+          mobileObjTitle: "ANOTHER AUTOMOTIVE",
           objStatus: "art-d • designer",
           objCopy: "Defined look & feel, created service and main screens such as widgets, climate-control, media and music, all apps page, calls, cameras etc.",
           pbName: "POCHTA BANK APP",
@@ -988,8 +2806,8 @@
           stolotoStatus: "lead-designer",
           stolotoMore: "More",
           stolotoTag: "redesign",
-          stolotoDescription: "One of the most visible lottery products in Russia. The work included a new visual language, updated purchase scenarios, and a stronger focus on the core product.",
-          stolotoCopy: ["Made a whole new app. All of the sections and tabs redisgned, most of the UX is remade, including fast-paymant features and highers CTR to bank needed metrics.", "Reworked illutstrations, created a design-system, guidelines, animations, profiles and banners."],
+          stolotoDescription: "One of the most prominent lottery products in Russia, used by millions of people and generating billions in revenue. We developed a new visual language, redesigned the purchase flows, and put stronger emphasis on the core product.",
+          stolotoCopy: ["The key focus was balancing emotion and transparency: lotteries are about excitement, anticipation, and that “wow” feeling, but at the same time users need to clearly understand what’s happening with their money. We made the interface simpler, more honest, and easier to use—without losing the sense of play and engagement."],
           additionalTitle: "Etc.",
           additionalSubtitle: "Last, but not least",
           moskvichTitle: "M-series web redesign",
@@ -1000,25 +2818,309 @@
           stolotoDotsRole: "art-d, designer",
           postamatTitle: "Interface for postamat",
           postamatRole: "art-d, designer",
-          auchanTitle: "Interface for postamat",
-          auchanRole: "art-d, designer",
+          auchanTitle: "Web redesign",
+          auchanRole: "designer",
           haierTitle: "Web redesign",
           haierRole: "designer",
           borishoffTitle: "App design",
           borishoffRole: "art-d",
           financeTitle: "Web redesign",
           financeRole: "designer",
+          additionalLink: "Link",
           up: "UP",
           footerRole: ["Digital design team-lead", "art-d", "designer"],
           footerProjects: "Projects",
           footerProjectList: ["ATOM auto", "Pochta bank,", "Bitrix24,", "Stoloto,", "Auchan,", "Moskvich,", "Haier,", "Borishoff", "Moscow Postamat", "Culture of MSC", "and more"],
           footerStatuses: ["art-d, designer", "art-d, designer", "lead-d, designer", "lead-d, designer", "designer", "designer", "designer", "designer", "art-d, designer", "lead-d, designer"],
           footerTelegram: "Telegram",
-          footerMail: "Mail"
+          footerMail: "Mail",
+          playerTitle: "Pearls",
+          playerArtist: "Sade",
+          playerPlay: "Play",
+          playerPause: "Pause"
         }
       };
 
-      const tvState = { language: localStorage.getItem("test-visual-language") === "en" ? "en" : "ru" };
+      const tvState = { language: "en" };
+      const TV_PLAYER_STORAGE_KEY = "test-visual-player-state";
+      function readTvPlayerStoredState() {
+        try {
+          const raw = sessionStorage.getItem(TV_PLAYER_STORAGE_KEY);
+          if (!raw) return null;
+          const parsed = JSON.parse(raw);
+          return {
+            currentTime: Number.isFinite(parsed.currentTime) ? Number(parsed.currentTime) : 0,
+            isPlaying: parsed.isPlaying === true
+          };
+        } catch {
+          return null;
+        }
+      }
+      function writeTvPlayerStoredState() {
+        if (!tvPlayerAudio) return;
+        sessionStorage.setItem(TV_PLAYER_STORAGE_KEY, JSON.stringify({
+          currentTime: Number.isFinite(tvPlayerAudio.currentTime) ? tvPlayerAudio.currentTime : 0,
+          isPlaying: !tvPlayerAudio.paused
+        }));
+      }
+      const tvPlayerState = { isPlaying: false, isMobileExpanded: false, isMobileViewport: false };
+      const tvPlayerIcons = {
+        play: '<svg class="desktop-player__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6.5v11l9-5.5-9-5.5Z" fill="currentColor"></path></svg>',
+        pause: '<svg class="desktop-player__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h3v12H8zm5 0h3v12h-3z" fill="currentColor"></path></svg>',
+      };
+      const tvPlayer = document.getElementById("tv-player");
+      const tvPlayerAudio = document.getElementById("tv-player-audio");
+      const tvPlayerCover = document.getElementById("tv-player-cover");
+      const tvPlayerProgress = document.getElementById("tv-player-progress");
+      const tvFloatingUp = document.getElementById("tv-floating-up");
+      let tvPlayerCollapseTimer = null;
+      const tvStoredPlayerState = readTvPlayerStoredState();
+      const tvLoaderLogos = [
+        "public/media/figma/hero-project-logo1.png",
+        "public/media/figma/hero-project-logo2.png",
+        "public/media/figma/hero-project-logo3.png",
+        "public/media/figma/hero-project-logo4.png",
+        "public/media/figma/hero-project-logo5.png",
+        "public/media/figma/hero-project-logo6.png",
+        "public/media/figma/hero-project-logo7.png",
+        "public/media/figma/hero-project-logo8.png",
+        "public/media/figma/hero-project-logo9.png",
+        "public/media/figma/hero-project-logo10.png"
+      ];
+      const tvLanguageToast = document.getElementById("tv-language-toast");
+      const tvLightbox = document.getElementById("tv-lightbox");
+      const tvLightboxImage = document.getElementById("tv-lightbox-image");
+      const tvLightboxClose = document.getElementById("tv-lightbox-close");
+      let tvToastHoldTimer = null;
+      let tvToastCloseTimer = null;
+
+      function computeTvLightboxScale(state) {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const horizontalPadding = viewportWidth <= 767 ? 24 : 96;
+        const verticalPadding = viewportWidth <= 767 ? 120 : 168;
+        const availableWidth = Math.max(160, viewportWidth - horizontalPadding);
+        const availableHeight = Math.max(160, viewportHeight - verticalPadding);
+        const fitScale = Math.min(
+          availableWidth / state.naturalWidth,
+          availableHeight / state.naturalHeight
+        );
+        const displayedScale = Math.min(
+          state.displayedWidth / state.naturalWidth,
+          state.displayedHeight / state.naturalHeight
+        );
+        const isSmallImage =
+          state.displayedWidth <= Math.min(320, viewportWidth * 0.42) &&
+          state.displayedHeight <= Math.min(320, viewportHeight * 0.42);
+        const initialScale = isSmallImage
+          ? Math.min(fitScale, displayedScale * 2)
+          : Math.min(fitScale, displayedScale * 2.6);
+        return {
+          initialScale,
+          maxScale: isSmallImage
+            ? initialScale
+            : Math.min(fitScale, Math.max(displayedScale * 3, initialScale + 0.36))
+        };
+      }
+
+      let tvLightboxState = null;
+
+      function applyTvLightboxScale(nextScale) {
+        if (!tvLightboxState || !tvLightboxImage) return;
+        tvLightboxState.scale = nextScale;
+        tvLightboxImage.style.width = `${tvLightboxState.naturalWidth * nextScale}px`;
+        tvLightboxImage.style.height = `${tvLightboxState.naturalHeight * nextScale}px`;
+      }
+
+      function closeTvLightbox() {
+        if (!tvLightbox) return;
+        tvLightbox.classList.remove("tv-lightbox--visible");
+        document.body.classList.remove("tv-lightbox-open");
+        tvLightboxState = null;
+      }
+
+      function openTvLightbox(imageNode) {
+        if (!(imageNode instanceof HTMLImageElement) || !tvLightbox || !tvLightboxImage) return;
+        const rect = imageNode.getBoundingClientRect();
+        const isKamazImage = Boolean(imageNode.closest(".atom-kamaz, .tv-mobile-case-atom__kamaz"));
+        const naturalWidth = isKamazImage ? Math.round(rect.width) : imageNode.naturalWidth || Math.round(rect.width);
+        const naturalHeight = isKamazImage ? Math.round(rect.height) : imageNode.naturalHeight || Math.round(rect.height);
+        if (!naturalWidth || !naturalHeight) return;
+
+        tvLightboxState = {
+          currentSrc: imageNode.currentSrc || imageNode.src,
+          alt: imageNode.alt || "",
+          displayedWidth: rect.width,
+          displayedHeight: rect.height,
+          naturalWidth,
+          naturalHeight,
+          scale: 1,
+        };
+
+        const sizing = computeTvLightboxScale(tvLightboxState);
+        tvLightboxState.initialScale = sizing.initialScale;
+        tvLightboxState.maxScale = sizing.maxScale;
+        tvLightboxImage.src = tvLightboxState.currentSrc;
+        tvLightboxImage.alt = tvLightboxState.alt;
+        applyTvLightboxScale(sizing.initialScale);
+        tvLightbox.classList.add("tv-lightbox--visible");
+        document.body.classList.add("tv-lightbox-open");
+      }
+
+      function showLanguageToast() {
+        if (!tvLanguageToast) return;
+        if (tvToastHoldTimer) window.clearTimeout(tvToastHoldTimer);
+        if (tvToastCloseTimer) window.clearTimeout(tvToastCloseTimer);
+        tvLanguageToast.classList.remove("language-toast--closing");
+        tvLanguageToast.classList.add("language-toast--open");
+        tvToastHoldTimer = window.setTimeout(() => {
+          tvLanguageToast.classList.remove("language-toast--open");
+          tvLanguageToast.classList.add("language-toast--closing");
+          tvToastCloseTimer = window.setTimeout(() => {
+            tvLanguageToast.classList.remove("language-toast--closing");
+            tvToastCloseTimer = null;
+          }, 300);
+          tvToastHoldTimer = null;
+        }, 5000);
+      }
+
+      document.addEventListener("click", function (event) {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+
+        const imageNode = target.closest("img");
+        if (!(imageNode instanceof HTMLImageElement)) return;
+        if (!document.body.contains(imageNode)) return;
+        if (imageNode.closest(".loader, .language-toast, .desktop-player, .tv-desktop-menu, .tv-mobile-menu, .hero__project-logo, .tv-mobile-hero__project-logo, .atom-logo, .obu-logo, .pb-logo, .b24-logo, .stoloto-logo, .tv-mobile-case-atom__logo, .tv-mobile-case-obj__logo, .tv-mobile-case-pochta__logo, .tv-mobile-case-bitrix__logo, .tv-mobile-case-stoloto__logo, .additional-cases__logo, .additional-cases__finance-logo, .tv-mobile-additional-cases__logo, .hero__promo, .hero__promo-icon")) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        openTvLightbox(imageNode);
+      }, true);
+
+      if (tvLightbox) {
+        tvLightbox.addEventListener("click", function (event) {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+          if (target.closest(".tv-lightbox__image, .tv-lightbox__close")) return;
+          closeTvLightbox();
+        });
+      }
+
+      if (tvLightboxClose) {
+        tvLightboxClose.addEventListener("click", function (event) {
+          event.stopPropagation();
+          closeTvLightbox();
+        });
+      }
+
+      window.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          closeTvLightbox();
+        }
+      });
+
+      if (tvLightboxImage) {
+        tvLightboxImage.addEventListener("click", function (event) {
+          event.stopPropagation();
+          if (!tvLightboxState) return;
+          if (Math.abs(tvLightboxState.maxScale - tvLightboxState.initialScale) < 0.01) return;
+          const nextScale =
+            tvLightboxState.scale >= tvLightboxState.maxScale
+              ? tvLightboxState.initialScale
+              : tvLightboxState.maxScale;
+          applyTvLightboxScale(nextScale);
+        });
+
+        tvLightboxImage.addEventListener("wheel", function (event) {
+          if (!tvLightboxState) return;
+          event.preventDefault();
+          event.stopPropagation();
+          const delta = event.deltaY > 0 ? -0.12 : 0.12;
+          const nextScale = Math.min(
+            tvLightboxState.maxScale,
+            Math.max(tvLightboxState.initialScale, tvLightboxState.scale + delta)
+          );
+          applyTvLightboxScale(nextScale);
+        }, { passive: false });
+      }
+
+      function clearTvPlayerCollapseTimer() {
+        if (tvPlayerCollapseTimer) {
+          window.clearTimeout(tvPlayerCollapseTimer);
+          tvPlayerCollapseTimer = null;
+        }
+      }
+
+      function applyTvPlayerViewport() {
+        tvPlayerState.isMobileViewport = window.matchMedia("(max-width: 767px)").matches;
+
+        if (!tvPlayer) return;
+
+        tvPlayer.classList.remove("desktop-player--mobile-collapsed", "desktop-player--mobile-expanded");
+
+        if (!tvPlayerState.isMobileViewport) {
+          tvPlayerState.isMobileExpanded = false;
+          clearTvPlayerCollapseTimer();
+          return;
+        }
+
+        tvPlayer.classList.add(
+          tvPlayerState.isMobileExpanded ? "desktop-player--mobile-expanded" : "desktop-player--mobile-collapsed"
+        );
+      }
+
+      function scheduleTvPlayerCollapse() {
+        if (!tvPlayerState.isMobileViewport) return;
+        clearTvPlayerCollapseTimer();
+        tvPlayerCollapseTimer = window.setTimeout(() => {
+          tvPlayerState.isMobileExpanded = false;
+          applyTvPlayerViewport();
+          tvPlayerCollapseTimer = null;
+        }, 3000);
+      }
+
+      function registerTvPlayerInteraction() {
+        if (!tvPlayerState.isMobileViewport) return;
+        tvPlayerState.isMobileExpanded = true;
+        applyTvPlayerViewport();
+        scheduleTvPlayerCollapse();
+      }
+
+      function updateTvFloatingUpVisibility() {
+        if (!tvFloatingUp) return;
+        if (window.scrollY >= 1000) {
+          tvFloatingUp.classList.add("desktop-floating-up--visible");
+        } else {
+          tvFloatingUp.classList.remove("desktop-floating-up--visible");
+        }
+      }
+
+      (function startLoader() {
+        const loader = document.getElementById("tv-loader");
+        const loaderLogo = document.getElementById("tv-loader-logo");
+        const loaderProgress = document.getElementById("tv-loader-progress");
+        if (!loader || !loaderLogo || !loaderProgress) return;
+
+        let logoIndex = 0;
+        let progress = 0;
+        const totalDuration = 1400;
+        const logoTimer = window.setInterval(() => {
+          logoIndex = (logoIndex + 1) % tvLoaderLogos.length;
+          loaderLogo.src = tvLoaderLogos[logoIndex];
+        }, 100);
+        const progressTimer = window.setInterval(() => {
+          progress += 100 / (totalDuration / 50);
+          if (progress > 100) progress = 100;
+          loaderProgress.style.transform = `scaleX(${progress / 100})`;
+        }, 50);
+        window.setTimeout(() => loader.classList.add("loader--closing"), 1050);
+        window.setTimeout(() => {
+          window.clearInterval(logoTimer);
+          window.clearInterval(progressTimer);
+          loader.remove();
+        }, totalDuration);
+      })();
 
       function setLines(id, lines) {
         const node = document.getElementById(id);
@@ -1042,51 +3144,132 @@
         node.textContent = value;
       }
 
+      const tvShortRussianWords = [
+        "это", "без", "для", "при", "над", "под", "про", "но", "не", "на", "ни",
+        "по", "из", "за", "до", "от", "об", "во", "ко", "со", "а", "и", "в", "с",
+        "к", "у", "о"
+      ];
+      const tvShortRussianWordsPattern = new RegExp(`(^|[\\s\\u00A0])(${tvShortRussianWords.join("|")})(\\s+)`, "giu");
+
+      function formatRussianCaseText(language, text) {
+        if (language !== "ru" || typeof text !== "string") return text;
+        return text.replace(tvShortRussianWordsPattern, function (_, prefix, word) {
+          return `${prefix}${word}\u00A0`;
+        });
+      }
+
+      function setCaseText(language, id, value) {
+        setText(id, formatRussianCaseText(language, value));
+      }
+
+      function setCaseLines(language, id, lines) {
+        if (typeof lines === "string") {
+          setLines(id, formatRussianCaseText(language, lines));
+          return;
+        }
+
+        setLines(id, lines.map((line) => formatRussianCaseText(language, line)));
+      }
+
+      function setCaseHtmlBreaks(language, id, value) {
+        const parts = String(value).split("<br>").map((part) => formatRussianCaseText(language, part));
+        setHtml(id, parts.join("<br>"));
+      }
+
       function applyLanguage(language) {
         const t = tvTranslations[language];
         document.documentElement.lang = language;
         document.body.dataset.language = language;
         localStorage.setItem("test-visual-language", language);
         setText("tv-language-toggle", t.toggle);
+        setText("tv-language-toggle-mobile", t.toggle);
         setText("tv-home-link", t.home);
+        setText("tv-home-link-mobile", t.home);
         setText("tv-wall-link", t.wall);
-        setText("tv-telegram-button", t.telegram);
-        setText("tv-mail-button", t.mail);
+        setText("tv-wall-link-mobile", t.wall);
+        setText("tv-telegram-button", "Telegram");
+        setText("tv-telegram-button-mobile", "TG");
+        setText("tv-mail-button", "Mail");
+        setText("tv-mail-button-mobile", "Mail");
+        const displayName = language === "ru" ? "Царёв Андрей" : "Tsarёv Andrey";
+        setText("tv-mobile-hero-name", displayName);
+        setText("tv-hero-name", displayName);
+        setText("tv-mobile-footer-name", displayName);
+        setText("tv-footer-name", displayName);
+        const bottomSignsName = document.querySelector(".bottom-signs__name");
+        if (bottomSignsName) {
+          bottomSignsName.textContent = displayName;
+        }
         setLines("tv-hero-role", t.heroRole);
         setText("tv-hero-projects-label", t.heroProjectsLabel);
         setLines("tv-hero-projects-list", t.heroProjects);
+        setLines("tv-mobile-hero-role", t.heroRole);
+        setText("tv-mobile-hero-projects-label", t.heroProjectsLabel);
+        setLines("tv-mobile-hero-projects-list", t.heroProjects);
         setLines("tv-hero-promo", t.heroPromo);
         setText("tv-atom-status", t.atomStatus);
         setText("tv-atom-more", t.atomMore);
-        setText("tv-atom-description", t.atomDescription);
-        setText("tv-atom-copy-one", t.atomCopyOne);
-        setText("tv-atom-copy-two", t.atomCopyTwo);
+        setCaseText(language, "tv-atom-description", t.atomDescription);
+        setCaseText(language, "tv-atom-copy-one", t.atomCopyOne);
+        setCaseText(language, "tv-atom-copy-two", t.atomCopyTwo);
         setText("tv-obj-title", t.objTitle);
+        setText("tv-mobile-obj-title", t.mobileObjTitle);
         setText("tv-obj-status", t.objStatus);
-        setText("tv-obj-copy", t.objCopy);
+        setText("tv-mobile-obj-status", t.objStatus);
+        setCaseText(language, "tv-obj-copy", t.objCopy);
+        setCaseText(language, "tv-mobile-obj-copy", t.objCopy);
+        setText("tv-mobile-atom-title", "ATOM AUTOMOTIVE");
+        setText("tv-mobile-atom-status", t.atomStatus);
+        setText("tv-mobile-atom-more", t.atomMore);
+        setCaseText(language, "tv-mobile-atom-description", t.atomDescription);
+        setCaseText(language, "tv-mobile-atom-copy-one", t.atomCopyOne);
+        setCaseText(language, "tv-mobile-atom-copy-two", t.atomCopyTwo);
         setText("tv-pb-name", t.pbName);
+        setText("tv-mobile-pb-name", t.pbName);
         setText("tv-pb-status", t.pbStatus);
+        setText("tv-mobile-pb-status", t.pbStatus);
         setText("tv-pb-more", t.pbMore);
+        setText("tv-mobile-pb-more", t.pbMore);
         setText("tv-pb-tag", t.pbTag);
-        setHtml("tv-pb-copy", t.pbCopy);
-        setText("tv-pb-description", t.pbDescription);
+        setCaseHtmlBreaks(language, "tv-pb-copy", t.pbCopy);
+        const mobilePbCopy = t.pbCopy.split("<br>");
+        setCaseText(language, "tv-mobile-pb-copy-one", mobilePbCopy[0] ?? "");
+        setCaseText(language, "tv-mobile-pb-copy-two", mobilePbCopy[2] ?? mobilePbCopy[1] ?? "");
+        setCaseText(language, "tv-pb-description", t.pbDescription);
+        setCaseText(language, "tv-mobile-pb-description", t.pbDescription);
         setText("tv-b24-status", t.b24Status);
+        setText("tv-mobile-b24-title", "BITRIX 24");
+        setText("tv-mobile-b24-status", t.b24Status);
         setText("tv-b24-more", t.b24More);
+        setText("tv-mobile-b24-more", t.b24More);
         setText("tv-b24-tag", t.b24Tag);
-        setText("tv-b24-description-one", t.b24DescriptionOne);
-        setText("tv-b24-description-two", t.b24DescriptionTwo);
-        setText("tv-b24-bottom-left-one", t.b24BottomLeftOne);
-        setText("tv-b24-bottom-left-two", t.b24BottomLeftTwo);
-        setText("tv-b24-bottom-right-one", t.b24BottomRightOne);
-        setText("tv-b24-bottom-right-two", t.b24BottomRightTwo);
+        setCaseText(language, "tv-b24-description-one", t.b24DescriptionOne);
+        setCaseText(language, "tv-b24-description-two", t.b24DescriptionTwo);
+        setCaseText(language, "tv-mobile-b24-description", t.b24DescriptionOne);
+        setCaseText(language, "tv-mobile-b24-copy-top", t.b24DescriptionTwo);
+        setCaseText(language, "tv-b24-bottom-left-one", t.b24BottomLeftOne);
+        setCaseText(language, "tv-b24-bottom-left-two", t.b24BottomLeftTwo);
+        setCaseText(language, "tv-b24-bottom-right-one", t.b24BottomRightOne);
+        setCaseText(language, "tv-b24-bottom-right-two", t.b24BottomRightTwo);
+        setCaseText(language, "tv-mobile-b24-copy-bottom-one", t.b24BottomLeftOne);
+        setCaseText(language, "tv-mobile-b24-copy-bottom-two", t.b24BottomLeftTwo);
+        setCaseText(language, "tv-mobile-b24-copy-bottom-three", `${t.b24BottomRightOne} ${t.b24BottomRightTwo}`);
         setText("tv-stoloto-name", t.stolotoName);
+        setText("tv-mobile-stoloto-name", t.stolotoName);
         setText("tv-stoloto-status", t.stolotoStatus);
+        setText("tv-mobile-stoloto-status", t.stolotoStatus);
         setText("tv-stoloto-more", t.stolotoMore);
+        setText("tv-mobile-stoloto-more", t.stolotoMore);
         setText("tv-stoloto-tag", t.stolotoTag);
-        setText("tv-stoloto-description", t.stolotoDescription);
-        setLines("tv-stoloto-copy", t.stolotoCopy);
+        setCaseText(language, "tv-stoloto-description", t.stolotoDescription);
+        setCaseText(language, "tv-mobile-stoloto-description", t.stolotoDescription);
+        setCaseLines(language, "tv-stoloto-copy", t.stolotoCopy);
+        setCaseText(language, "tv-mobile-stoloto-copy-one", t.stolotoCopy[0]);
+        setCaseText(language, "tv-mobile-stoloto-copy-two", t.stolotoCopy[1] ?? "");
         setText("tv-additional-title", t.additionalTitle);
+        setText("tv-mobile-additional-title", t.additionalTitle);
         setText("tv-additional-subtitle", t.additionalSubtitle);
+        setText("tv-mobile-additional-subtitle", t.additionalSubtitle);
         setText("tv-case-moskvich-title", t.moskvichTitle);
         setText("tv-case-moskvich-role", t.moskvichRole);
         setText("tv-case-kultura-title", t.kulturaTitle);
@@ -1103,25 +3286,194 @@
         setText("tv-case-borishoff-role", t.borishoffRole);
         setText("tv-case-finance-title", t.financeTitle);
         setText("tv-case-finance-role", t.financeRole);
+        document.querySelectorAll(".additional-cases__link").forEach((node) => {
+          node.textContent = t.additionalLink;
+        });
+        document.querySelectorAll(".tv-mobile-additional-cases__link").forEach((node) => {
+          node.textContent = t.additionalLink;
+        });
         setText("tv-up-label", t.up);
+        setText("tv-mobile-up-label", t.up);
         setLines("tv-footer-role", t.footerRole);
+        setLines("tv-mobile-footer-role", t.footerRole);
         setText("tv-footer-projects-label", t.footerProjects);
+        setText("tv-mobile-footer-projects-label", t.footerProjects);
         setLines("tv-footer-projects-list", t.footerProjectList);
+        setLines("tv-mobile-footer-projects-list", t.footerProjectList);
         setText("tv-footer-telegram", t.footerTelegram);
         setText("tv-footer-mail", t.footerMail);
+        setText("tv-mobile-footer-telegram", t.footerTelegram);
+        setText("tv-mobile-footer-mail", t.footerMail);
+        setText("tv-player-title", t.playerTitle);
+        setText("tv-player-artist", t.playerArtist);
+        if (tvFloatingUp) {
+          tvFloatingUp.setAttribute("aria-label", t.up);
+        }
+
+        const playerToggle = document.getElementById("tv-player-toggle");
+        if (playerToggle) {
+          playerToggle.setAttribute("aria-label", tvPlayerState.isPlaying ? t.playerPause : t.playerPlay);
+          playerToggle.innerHTML = tvPlayerState.isPlaying ? tvPlayerIcons.pause : tvPlayerIcons.play;
+        }
+        if (tvPlayerCover) {
+          tvPlayerCover.setAttribute(
+            "aria-label",
+            tvPlayerState.isMobileViewport && !tvPlayerState.isMobileExpanded ? t.playerPlay : `${t.playerArtist} — ${t.playerTitle}`
+          );
+        }
 
         const footerStatuses = document.querySelectorAll(".portfolio-footer__statuses p");
         footerStatuses.forEach((node, index) => {
           if (t.footerStatuses[index]) node.textContent = t.footerStatuses[index];
         });
+        const mobileFooterStatuses = document.querySelectorAll(".tv-mobile-footer__statuses p");
+        mobileFooterStatuses.forEach((node, index) => {
+          if (t.footerStatuses[index]) node.textContent = t.footerStatuses[index];
+        });
       }
 
-      document.getElementById("tv-language-toggle").addEventListener("click", function () {
-        tvState.language = tvState.language === "ru" ? "en" : "ru";
+      ["tv-language-toggle", "tv-language-toggle-mobile"].forEach((id) => {
+        const toggle = document.getElementById(id);
+        if (!toggle) return;
+        toggle.addEventListener("click", function () {
+          const previousLanguage = tvState.language;
+          tvState.language = tvState.language === "ru" ? "en" : "ru";
+          applyLanguage(tvState.language);
+          if (previousLanguage === "en" && tvState.language === "ru") {
+            showLanguageToast();
+          }
+        });
+      });
+
+      document.getElementById("tv-player-toggle").addEventListener("click", function () {
+        registerTvPlayerInteraction();
+        tvPlayerState.isPlaying = !tvPlayerState.isPlaying;
+        if (tvPlayerAudio) {
+          if (tvPlayerState.isPlaying) {
+            tvPlayerAudio.play().catch(() => {
+              tvPlayerState.isPlaying = false;
+              applyLanguage(tvState.language);
+            });
+          } else {
+            tvPlayerAudio.pause();
+          }
+        }
         applyLanguage(tvState.language);
       });
 
+      if (tvPlayerAudio) {
+        if (tvStoredPlayerState?.currentTime > 0) {
+          tvPlayerAudio.addEventListener("loadedmetadata", function restoreTvPlayerTime() {
+            tvPlayerAudio.currentTime = tvStoredPlayerState.currentTime;
+          }, { once: true });
+        }
+
+        if (tvStoredPlayerState?.isPlaying) {
+          tvPlayerAudio.addEventListener("canplay", function resumeTvPlayer() {
+            tvPlayerState.isPlaying = true;
+            tvPlayerAudio.play().catch(() => {
+              tvPlayerState.isPlaying = false;
+              applyLanguage(tvState.language);
+            });
+          }, { once: true });
+        }
+
+        tvPlayerAudio.addEventListener("loadedmetadata", function () {
+          const progress = tvPlayerProgress;
+          if (!progress) return;
+          progress.value = "0";
+          progress.style.setProperty("--desktop-player-progress", "0%");
+          writeTvPlayerStoredState();
+        });
+
+        tvPlayerAudio.addEventListener("timeupdate", function () {
+          const progress = tvPlayerProgress;
+          if (!progress || !tvPlayerAudio.duration) return;
+          const value = (tvPlayerAudio.currentTime / tvPlayerAudio.duration) * 100;
+          progress.value = String(value);
+          progress.style.setProperty("--desktop-player-progress", `${value}%`);
+          writeTvPlayerStoredState();
+        });
+
+        tvPlayerAudio.addEventListener("ended", function () {
+          tvPlayerState.isPlaying = false;
+          const progress = tvPlayerProgress;
+          if (progress) {
+            progress.value = "100";
+            progress.style.setProperty("--desktop-player-progress", "100%");
+          }
+          writeTvPlayerStoredState();
+          applyLanguage(tvState.language);
+        });
+      }
+
+      if (tvPlayerProgress && tvPlayerAudio) {
+        tvPlayerProgress.addEventListener("input", function (event) {
+          registerTvPlayerInteraction();
+          if (!tvPlayerAudio.duration) return;
+          const value = Number(event.target.value);
+          tvPlayerAudio.currentTime = (value / 100) * tvPlayerAudio.duration;
+          tvPlayerProgress.style.setProperty("--desktop-player-progress", `${value}%`);
+          writeTvPlayerStoredState();
+        });
+      }
+
+      window.addEventListener("pagehide", writeTvPlayerStoredState);
+
+      if (tvPlayerCover) {
+        tvPlayerCover.addEventListener("click", function () {
+          if (!tvPlayerState.isMobileViewport) return;
+          registerTvPlayerInteraction();
+          applyLanguage(tvState.language);
+        });
+      }
+
+      window.addEventListener("resize", function () {
+        applyTvPlayerViewport();
+        applyLanguage(tvState.language);
+        updateTvFloatingUpVisibility();
+      });
+
+      window.addEventListener("scroll", updateTvFloatingUpVisibility, { passive: true });
+
+      let tvSecretDigitBuffer = "";
+
+      window.addEventListener("keyup", function (event) {
+        if (window.matchMedia("(max-width: 767px)").matches) return;
+        const target = event.target;
+        if (
+          target instanceof HTMLElement &&
+          (target.isContentEditable ||
+            target.tagName === "INPUT" ||
+            target.tagName === "TEXTAREA" ||
+            target.tagName === "SELECT")
+        ) {
+          return;
+        }
+
+        if (event.code === "Enter") {
+          event.preventDefault();
+          window.location.assign("./Test visual snake.html");
+          return;
+        }
+
+        const digitMatch = event.code.match(/^(Digit|Numpad)(\d)$/);
+        if (!digitMatch) {
+          tvSecretDigitBuffer = "";
+          return;
+        }
+
+        tvSecretDigitBuffer = `${tvSecretDigitBuffer}${digitMatch[2]}`.slice(-4);
+        if (tvSecretDigitBuffer === "1803") {
+          event.preventDefault();
+          tvSecretDigitBuffer = "";
+          window.location.assign("./Test visual 1803.html");
+        }
+      }, true);
+
+      applyTvPlayerViewport();
       applyLanguage(tvState.language);
+      updateTvFloatingUpVisibility();
     </script>
   </body>
 </html>

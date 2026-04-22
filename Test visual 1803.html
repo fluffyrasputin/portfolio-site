@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1803</title>
+    <style>
+      :root {
+        --bg: #050505;
+        --surface: rgba(16, 16, 16, 0.92);
+        --line: rgba(255, 255, 255, 0.12);
+        --text: #f3f3f0;
+        --muted: #a8a8a1;
+        --accent: #f5c451;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+      }
+
+      body {
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at top, rgba(245, 196, 81, 0.14), transparent 26%),
+          var(--bg);
+        color: var(--text);
+        font-family: "Suisse Intl", "Helvetica Neue", Arial, sans-serif;
+      }
+
+      a,
+      button {
+        font: inherit;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        border: 0;
+        background: none;
+      }
+
+      .secret-1904-page {
+        min-height: 100vh;
+        padding: 48px 16px 96px;
+      }
+
+      .secret-1904-panel {
+        width: min(920px, calc(100vw - 32px));
+        margin: 0 auto;
+        display: grid;
+        justify-items: center;
+        gap: 24px;
+        padding: 40px 0 48px;
+      }
+
+      .secret-1904-panel__header {
+        width: 100%;
+        display: grid;
+        justify-items: center;
+        gap: 24px;
+        text-align: center;
+      }
+
+      .secret-1904-panel__eyebrow {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 17px;
+      }
+
+      .secret-1904-panel__title {
+        font-size: 64px;
+        line-height: 64px;
+        font-weight: 400;
+        letter-spacing: -0.04em;
+      }
+
+      .secret-1904-panel__back {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        font-size: 13px;
+        line-height: 17px;
+      }
+
+      .secret-1904-panel__video {
+        width: 500px;
+        height: 500px;
+        object-fit: cover;
+        border-radius: 20px;
+      }
+
+      .secret-1904-panel__image {
+        width: 500px;
+        height: 500px;
+        object-fit: contain;
+      }
+
+      .secret-1904-panel__copy {
+        display: grid;
+        gap: 10px;
+        width: 500px;
+        color: var(--text);
+        font-size: 13px;
+        line-height: 17px;
+      }
+
+      .secret-1904-panel__copy p {
+        white-space: pre-line;
+      }
+
+      .secret-1904-player {
+        position: relative;
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: 18px;
+        width: 260px;
+        min-height: 94px;
+        padding: 10px 10px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 22px;
+        background: rgba(16, 16, 16, 0.92);
+      }
+
+      .secret-1904-player__cover {
+        width: 72px;
+        height: 72px;
+        overflow: hidden;
+        border-radius: 18px;
+      }
+
+      .secret-1904-player__cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .secret-1904-player__body {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 40px;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .secret-1904-player__info {
+        display: grid;
+        gap: 4px;
+        min-width: 0;
+      }
+
+      .secret-1904-player__title {
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 500;
+      }
+
+      .secret-1904-player__artist {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 16px;
+      }
+
+      .secret-1904-player__toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.88);
+        color: #000;
+        cursor: pointer;
+      }
+
+      .secret-1904-player__icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      .secret-1904-player__progress-input {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 12px;
+        margin: 0;
+        padding: 0;
+        appearance: none;
+        -webkit-appearance: none;
+        background: transparent;
+        cursor: pointer;
+        --secret-1904-progress: 0%;
+      }
+
+      .secret-1904-player__progress-input::-webkit-slider-runnable-track {
+        height: 3px;
+        border-radius: 0;
+        background:
+          linear-gradient(
+            90deg,
+            #fff 0%,
+            #fff var(--secret-1904-progress),
+            rgba(255, 255, 255, 0.16) var(--secret-1904-progress),
+            rgba(255, 255, 255, 0.16) 100%
+          );
+      }
+
+      .secret-1904-player__progress-input::-webkit-slider-thumb {
+        width: 0;
+        height: 0;
+        margin-top: 0;
+        border: 0;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .secret-1904-player__progress-input::-moz-range-track {
+        height: 3px;
+        border: 0;
+        border-radius: 0;
+        background: rgba(255, 255, 255, 0.16);
+      }
+
+      .secret-1904-player__progress-input::-moz-range-progress {
+        height: 3px;
+        border-radius: 0;
+        background: #fff;
+      }
+
+      .secret-1904-player__progress-input::-moz-range-thumb {
+        width: 0;
+        height: 0;
+        border: 0;
+      }
+
+      .secret-1904-mobile {
+        display: none;
+        min-height: 100vh;
+        place-items: center;
+        padding: 120px 24px 80px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      @media (max-width: 767px) {
+        .secret-1904-page {
+          display: none;
+        }
+
+        .secret-1904-mobile {
+          display: grid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="secret-1904-page">
+      <section class="secret-1904-panel" aria-label="1904 hidden page">
+        <div class="secret-1904-panel__header">
+          <div>
+            <p class="secret-1904-panel__eyebrow">травинковый</p>
+            <h1 class="secret-1904-panel__title">Алтарь Агапе</h1>
+          </div>
+          <a class="secret-1904-panel__back" href="./Test visual.html">Back to main</a>
+        </div>
+
+        <aside class="secret-1904-player" aria-label="1904 player placeholder">
+          <div class="secret-1904-player__cover">
+            <img src="public/media/figma/Vesna.jpg" alt="Vesna cover" />
+          </div>
+          <div class="secret-1904-player__body">
+            <div class="secret-1904-player__info">
+              <p class="secret-1904-player__title">Song later</p>
+              <p class="secret-1904-player__artist">Awaiting mp3</p>
+            </div>
+            <button type="button" class="secret-1904-player__toggle" id="secret-1904-toggle" aria-label="Play">
+              <svg aria-hidden="true" viewBox="0 0 24 24" class="secret-1904-player__icon">
+                <path d="M8 6.5v11l9-5.5-9-5.5Z" fill="currentColor"></path>
+              </svg>
+            </button>
+          </div>
+          <audio id="secret-1904-audio" preload="metadata" src="public/media/player/Iskrit,%20Ioneweb%20-%20Vesna.mp3"></audio>
+          <input class="secret-1904-player__progress-input" id="secret-1904-progress" type="range" min="0" max="100" step="0.1" value="0" aria-label="Track progress">
+        </aside>
+
+        <video
+          class="secret-1904-panel__video"
+          src="public/media/figma/1904%20video.mp4"
+          autoplay
+          loop
+          muted
+          playsinline
+          preload="auto"
+        ></video>
+
+        <img class="secret-1904-panel__image" src="public/media/figma/Soks.png" alt="Soks" />
+
+        <div class="secret-1904-panel__copy">
+          <p>Команда Агапе (agape) создана 7 января 2026 года</p>
+          <p>Участники договора:</p>
+          <p>Василевич Оксана Вадимовна</p>
+          <p>Царёв Андрей Алексеевич</p>
+          <p>Срок договора:<br>Бессрочный</p>
+          <p>Эксклюзивность контракта:<br>В единственном экземпляре</p>
+        </div>
+      </section>
+    </main>
+
+    <div class="secret-1904-mobile">This page is desktop only.</div>
+    <script>
+      const secret1904Audio = document.getElementById("secret-1904-audio");
+      const secret1904Toggle = document.getElementById("secret-1904-toggle");
+      const secret1904Progress = document.getElementById("secret-1904-progress");
+
+      if (secret1904Audio && secret1904Toggle && secret1904Progress) {
+        const playIcon = '<path d="M8 6.5v11l9-5.5-9-5.5Z" fill="currentColor"></path>';
+        const pauseIcon = '<path d="M8 6h3v12H8zm5 0h3v12h-3z" fill="currentColor"></path>';
+
+        function syncSecret1904Player() {
+          const isPlaying = !secret1904Audio.paused;
+          secret1904Toggle.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
+          secret1904Toggle.querySelector("svg").innerHTML = isPlaying ? pauseIcon : playIcon;
+
+          const duration = secret1904Audio.duration || 0;
+          const currentTime = secret1904Audio.currentTime || 0;
+          const progressValue = duration > 0 ? (currentTime / duration) * 100 : 0;
+          secret1904Progress.value = String(progressValue);
+          secret1904Progress.style.setProperty("--secret-1904-progress", `${progressValue}%`);
+        }
+
+        secret1904Toggle.addEventListener("click", function () {
+          if (secret1904Audio.paused) {
+            secret1904Audio.play().catch(() => {});
+          } else {
+            secret1904Audio.pause();
+          }
+        });
+
+        secret1904Progress.addEventListener("input", function (event) {
+          if (!secret1904Audio.duration) return;
+          const value = Number(event.target.value);
+          secret1904Audio.currentTime = (value / 100) * secret1904Audio.duration;
+          secret1904Progress.style.setProperty("--secret-1904-progress", `${value}%`);
+        });
+
+        ["play", "pause", "timeupdate", "loadedmetadata", "durationchange", "ended"].forEach((eventName) => {
+          secret1904Audio.addEventListener(eventName, syncSecret1904Player);
+        });
+
+        syncSecret1904Player();
+      }
+    </script>
+  </body>
+</html>

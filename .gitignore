@@ -22,6 +22,14 @@
 
 # misc
 .DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.cache/
+.turbo/
+*.swp
+*.swo
+*.orig
 *.pem
 
 # debug

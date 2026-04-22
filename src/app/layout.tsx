@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { BottomSigns } from "@/components/bottom-signs";
+import { ImageLightbox } from "@/components/image-lightbox";
 import { LanguageProvider } from "@/components/language-provider";
+import { PersistentFloatingControls } from "@/components/persistent-floating-controls";
+import { SecretSnakeHotkey } from "@/components/secret-snake-hotkey";
 import { SiteLoader } from "@/components/site-loader";
-import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,16 +17,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body>
         <LanguageProvider>
           <SiteLoader />
           <a className="skip-link" href="#content">
             Skip to content
           </a>
-          <SiteHeader />
           <main id="content">{children}</main>
-          <BottomSigns />
+          <ImageLightbox />
+          <PersistentFloatingControls />
+          <SecretSnakeHotkey />
         </LanguageProvider>
       </body>
     </html>

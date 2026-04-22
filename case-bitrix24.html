@@ -11,38 +11,97 @@
       body { min-height:100vh; background:var(--bg); color:var(--text); font-family:"Suisse Intl","Helvetica Neue",Arial,sans-serif; }
       a { color:inherit; text-decoration:none; }
       .page { width:min(620px, calc(100vw - 32px)); margin:0 auto; padding:120px 0 120px; min-height:100vh; display:grid; place-items:center; }
-      .topbar { position:fixed; top:0; left:16px; right:16px; z-index:20; min-height:64px; padding-top:24px; background:url("public/media/figma/top-menu-background.png") top center / 100% 64px no-repeat; }
-      .topbar__inner { position:relative; min-height:64px; }
-      .topbar__side, .topbar__controls { position:absolute; top:0; display:flex; align-items:center; }
-      .topbar__side--left { left:0; }
-      .topbar__side--right { right:0; gap:8px; }
-      .topbar__controls { left:50%; transform:translateX(-50%); gap:8px; }
-      .link, .button { transition:opacity 160ms ease; }
-      .link:hover, .button:hover { opacity:0.8; }
-      .link { display:inline-flex; align-items:center; min-height:40px; font-size:13px; line-height:17px; font-weight:400; text-decoration:underline; text-underline-offset:3px; }
-      .link--left, .link--right { width:98px; }
-      .link--right { justify-content:flex-end; text-align:right; }
-      .button { display:inline-flex; align-items:center; justify-content:center; height:40px; padding:8px; border-radius:2px; border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.8); backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%); box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 10px 30px rgba(0,0,0,.12); color:#000; font-size:13px; line-height:17px; font-weight:500; }
-      .button--small { width:48px; }
-      .button--wide { width:80px; }
+      .desktop-menu { position:fixed; top:0; left:16px; right:16px; z-index:20; height:64px; background:url("public/media/figma/top-menu-background.png") top center / 100% 64px no-repeat; }
+      .desktop-menu__inner { position:relative; height:64px; }
+      .desktop-menu__home, .desktop-menu__contacts, .desktop-menu__side { position:absolute; top:24px; display:flex; align-items:center; }
+      .desktop-menu__home { left:0; width:98px; }
+      .desktop-menu__contacts { left:50%; width:192px; transform:translateX(-50%); gap:8px; }
+      .desktop-menu__side { right:0; width:203px; justify-content:space-between; flex-wrap:nowrap; }
+      .link, .button, .more { transition:opacity 160ms ease; }
+      .link:hover, .button:hover, .more:hover { opacity:0.8; }
+      .link { display:inline-flex; align-items:center; min-height:0; font-size:13px; line-height:17px; font-weight:400; text-decoration:underline; text-underline-offset:3px; white-space:nowrap; }
+      button.link { border:0; background:transparent; padding:0; cursor:pointer; appearance:none; color:var(--text); position:relative; z-index:1; }
+      .link--left { width:98px; }
+      .link--right { width:auto; min-width:24px; justify-content:flex-end; text-align:right; }
+      .button { display:inline-flex; align-items:center; justify-content:center; height:40px; padding:8px; border-radius:2px; border:0; background:#fff; color:#000; font-size:13px; line-height:17px; font-weight:500; white-space:nowrap; }
+      .button--small { min-width:48px; padding-inline:12px; }
+      .button--wide { min-width:80px; padding-inline:12px; }
+      .desktop-link--home, .desktop-link--language { width:98px; height:33px; }
+      .desktop-link--wall { width:98px; height:33px; justify-content:flex-end; text-align:right; }
+      .desktop-link--language { justify-content:flex-end; text-align:right; }
+      .mobile-menu { display:none; }
+      .mobile-menu__inner { position:relative; width:100%; height:90px; margin:0; }
+      .mobile-menu__home, .mobile-menu__contacts, .mobile-menu__side { position:absolute; }
+      .mobile-menu__home { top:24px; left:16px; width:72px; }
+      .mobile-menu__contacts { top:24px; left:50%; width:160px; display:flex; gap:8px; transform:translateX(-50%); }
+      .mobile-menu__side { top:24px; right:16px; width:72px; display:grid; justify-items:end; gap:0; }
+      .mobile-link--home, .mobile-link--wall, .mobile-link--language { width:72px; height:33px; }
+      .mobile-link--wall, .mobile-link--language { justify-content:flex-end; text-align:right; }
+      .mobile-button { border:0; background:#fff; }
+      .mobile-button--cv, .mobile-button--tg, .mobile-button--mail { width:48px; min-width:48px; padding-inline:8px; }
       .label { font-size:24px; line-height:32px; font-weight:400; }
       .bottom-signs { position:fixed; left:16px; right:16px; bottom:0; z-index:18; height:64px; padding-bottom:12px; background:url("public/media/figma/bottom-signs-background.png") bottom center / 100% 64px no-repeat; }
       .bottom-signs__name, .bottom-signs__year { position:absolute; bottom:12px; font-size:13px; line-height:17px; font-weight:400; }
       .bottom-signs__name { left:85px; transform:translateX(-100%); text-align:right; }
       .bottom-signs__year { right:0; text-align:right; }
+      @media (max-width: 767px) {
+        .desktop-menu { display:none; }
+        .mobile-menu { position:fixed; top:0; left:0; right:0; z-index:40; display:block; width:100%; height:90px; background:url("public/media/figma/top-menu-background.png") top center / 100% 90px no-repeat; }
+        .bottom-signs { left:0; right:0; width:100%; }
+        .bottom-signs__name { left:101px; }
+        .bottom-signs__year { right:16px; }
+      }
     </style>
   </head>
   <body>
     <div class="page" id="top">
-      <header class="topbar">
-        <div class="topbar__inner">
-          <div class="topbar__side topbar__side--left"><a class="link link--left" href="./Test visual.html#top">Main page</a></div>
-          <div class="topbar__controls"><a class="button button--small" href="./cv.html">CV</a><a class="button button--wide" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Telegram</a><a class="button button--small" href="mailto:eggy0510@gmail.com">Mail</a></div>
-          <div class="topbar__side topbar__side--right"><span class="link link--right">Ru</span><a class="link link--right" href="./wall.html">The wall</a></div>
+      <header class="mobile-menu">
+        <div class="mobile-menu__inner">
+          <div class="mobile-menu__home"><a class="link mobile-link--home" id="home-link-mobile" href="./Test visual.html#top">Главная</a></div>
+          <div class="mobile-menu__contacts"><a class="button mobile-button mobile-button--cv" href="./cv.html">CV</a><a class="button mobile-button mobile-button--tg" id="telegram-link-mobile" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">TG</a><a class="button mobile-button mobile-button--mail" id="mail-link-mobile" href="mailto:eggy0510@gmail.com">Mail</a></div>
+          <div class="mobile-menu__side"><a class="link mobile-link--wall" id="wall-link-mobile" href="./wall.html">Стена</a><button class="link mobile-link--language" id="language-toggle-mobile" type="button">En</button></div>
         </div>
       </header>
-      <p class="label">Bitrix24</p>
+      <header class="desktop-menu">
+        <div class="desktop-menu__inner">
+          <div class="desktop-menu__home"><a class="link desktop-link--home" id="home-link" href="./Test visual.html#top">Main page</a></div>
+          <div class="desktop-menu__contacts"><a class="button button--small" href="./cv.html">CV</a><a class="button button--wide" id="telegram-link" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Telegram</a><a class="button button--small" id="mail-link" href="mailto:eggy0510@gmail.com">Mail</a></div>
+          <div class="desktop-menu__side"><button class="link desktop-link--language" id="language-toggle" type="button">En</button><a class="link desktop-link--wall" id="wall-link" href="./wall.html">The wall</a></div>
+        </div>
+      </header>
+      <p class="label" id="page-label">Bitrix24</p>
     </div>
     <div class="bottom-signs" aria-hidden="true"><span class="bottom-signs__name">Tsarёv Andrey</span><span class="bottom-signs__year">2026</span></div>
+    <script>
+      const translations = {
+        ru: { toggle: "En", home: "Главная", wall: "Стена", title: "Битрикс24" },
+        en: { toggle: "Ru", home: "Main page", wall: "The wall", title: "Bitrix24" }
+      };
+      const state = { language: localStorage.getItem("portfolio-language") === "en" ? "en" : "ru" };
+      function setText(id, value) {
+        const node = document.getElementById(id);
+        if (node) node.textContent = value;
+      }
+      function applyLanguage(language) {
+        const t = translations[language];
+        document.documentElement.lang = language;
+        localStorage.setItem("portfolio-language", language);
+        setText("language-toggle", t.toggle);
+        setText("language-toggle-mobile", t.toggle);
+        setText("home-link", t.home);
+        setText("home-link-mobile", t.home);
+        setText("wall-link", t.wall);
+        setText("wall-link-mobile", t.wall);
+        setText("page-label", t.title);
+        document.title = t.title;
+      }
+      ["language-toggle", "language-toggle-mobile"].forEach((id) => {
+        document.getElementById(id)?.addEventListener("click", function () {
+          state.language = state.language === "ru" ? "en" : "ru";
+          applyLanguage(state.language);
+        });
+      });
+      applyLanguage(state.language);
+    </script>
   </body>
 </html>

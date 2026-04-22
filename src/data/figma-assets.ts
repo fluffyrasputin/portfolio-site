@@ -33,6 +33,7 @@ export const heroAssets = {
   bitrixFaceThree: "/media/figma/bitrix-face-three.png",
   bitrixFaceFour: "/media/figma/bitrix-face-four.png",
   bitrixFaceFive: "/media/figma/bitrix-face-five.png",
+  bitrixFacesStatic: "/media/mobile/bitrix-faces-user.png",
   bitrixLogo: "/media/figma/bitrix-logo.svg",
   bitrixFileIcon: "/media/figma/bitrix-file-icon.svg",
   bitrixLikeIcon: "/media/figma/bitrix-like-icon.svg",

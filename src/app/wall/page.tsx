@@ -1,3 +1,5 @@
+import { WallPage } from "@/components/wall-page";
+
 export default function Page() {
-  return <div className="page-shell" />;
+  return <WallPage />;
 }

@@ -5,44 +5,1209 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The wall</title>
     <style>
-      :root { --bg:#050505; --text:#fff; }
-      html { scroll-behavior:smooth; }
-      * { box-sizing:border-box; margin:0; padding:0; }
-      body { min-height:100vh; background:var(--bg); color:var(--text); font-family:"Suisse Intl","Helvetica Neue",Arial,sans-serif; }
-      a { color:inherit; text-decoration:none; }
-      .page { width:min(620px, calc(100vw - 32px)); margin:0 auto; padding:120px 0 120px; min-height:100vh; display:grid; place-items:center; }
-      .topbar { position:fixed; top:0; left:16px; right:16px; z-index:20; min-height:64px; padding-top:24px; background:url("public/media/figma/top-menu-background.png") top center / 100% 64px no-repeat; }
-      .topbar__inner { position:relative; min-height:64px; }
-      .topbar__side, .topbar__controls { position:absolute; top:0; display:flex; align-items:center; }
-      .topbar__side--left { left:0; }
-      .topbar__side--right { right:0; gap:8px; }
-      .topbar__controls { left:50%; transform:translateX(-50%); gap:8px; }
-      .link, .button { transition:opacity 160ms ease; }
-      .link:hover, .button:hover { opacity:0.8; }
-      .link { display:inline-flex; align-items:center; min-height:40px; font-size:13px; line-height:17px; font-weight:400; text-decoration:underline; text-underline-offset:3px; }
-      .link--left, .link--right { width:98px; }
-      .link--right { justify-content:flex-end; text-align:right; }
-      .button { display:inline-flex; align-items:center; justify-content:center; height:40px; padding:8px; border-radius:2px; border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.8); backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%); box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 10px 30px rgba(0,0,0,.12); color:#000; font-size:13px; line-height:17px; font-weight:500; }
-      .button--small { width:48px; }
-      .button--wide { width:80px; }
-      .label { font-size:24px; line-height:32px; font-weight:400; }
-      .bottom-signs { position:fixed; left:16px; right:16px; bottom:0; z-index:18; height:64px; padding-bottom:12px; background:url("public/media/figma/bottom-signs-background.png") bottom center / 100% 64px no-repeat; }
-      .bottom-signs__name, .bottom-signs__year { position:absolute; bottom:12px; font-size:13px; line-height:17px; font-weight:400; }
-      .bottom-signs__name { left:85px; transform:translateX(-100%); text-align:right; }
-      .bottom-signs__year { right:0; text-align:right; }
+      :root {
+        --bg: #050505;
+        --text: #fff;
+        --muted: rgba(255, 255, 255, 0.62);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Suisse Intl", "Helvetica Neue", Arial, sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .link,
+      .button {
+        transition: opacity 160ms ease;
+      }
+
+      .link:hover,
+      .button:hover {
+        opacity: 0.8;
+      }
+
+      .link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        border: 0;
+        background: transparent;
+        padding: 0;
+        color: var(--text);
+        cursor: pointer;
+        appearance: none;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 400;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        white-space: nowrap;
+      }
+
+      .link--left {
+        width: 98px;
+      }
+
+      .link--right {
+        width: auto;
+        min-width: 24px;
+        justify-content: flex-end;
+        text-align: right;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        padding: 8px;
+        border: 0;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .button--small {
+        min-width: 48px;
+        padding-inline: 12px;
+      }
+
+      .button--wide {
+        min-width: 80px;
+        padding-inline: 12px;
+      }
+
+      .desktop-menu {
+        position: fixed;
+        top: 0;
+        left: 16px;
+        right: 16px;
+        z-index: 40;
+        height: 64px;
+        background: url("public/media/figma/top-menu-background.png") top center / 100% 64px no-repeat;
+      }
+
+      .desktop-menu__inner {
+        position: relative;
+        height: 64px;
+      }
+
+      .desktop-menu__home,
+      .desktop-menu__contacts,
+      .desktop-menu__side {
+        position: absolute;
+        top: 24px;
+        display: flex;
+        align-items: center;
+      }
+
+      .desktop-menu__home {
+        left: 0;
+        width: 98px;
+      }
+
+      .desktop-menu__contacts {
+        left: 50%;
+        width: 192px;
+        transform: translateX(-50%);
+        gap: 8px;
+      }
+
+      .desktop-menu__side {
+        right: 0;
+        width: 203px;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+      }
+
+      .desktop-link--home,
+      .desktop-link--language,
+      .desktop-link--wall {
+        min-height: 0;
+        height: 33px;
+      }
+
+      .desktop-link--home,
+      .desktop-link--language {
+        width: 98px;
+      }
+
+      .desktop-link--language,
+      .desktop-link--wall {
+        justify-content: flex-end;
+        text-align: right;
+      }
+
+      .desktop-link--wall {
+        width: 98px;
+      }
+
+      .mobile-menu {
+        display: none;
+      }
+
+      .mobile-menu__inner {
+        position: relative;
+        width: 100%;
+        height: 90px;
+      }
+
+      .mobile-menu__home,
+      .mobile-menu__contacts,
+      .mobile-menu__side {
+        position: absolute;
+      }
+
+      .mobile-menu__home {
+        top: 24px;
+        left: 16px;
+        width: 72px;
+      }
+
+      .mobile-menu__contacts {
+        top: 24px;
+        left: 50%;
+        width: 160px;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+      }
+
+      .mobile-menu__side {
+        top: 24px;
+        right: 16px;
+        width: 72px;
+        display: grid;
+        justify-items: end;
+        gap: 0;
+      }
+
+      .mobile-link--home,
+      .mobile-link--wall,
+      .mobile-link--language {
+        min-height: 0;
+        width: 72px;
+        height: 33px;
+      }
+
+      .mobile-link--wall,
+      .mobile-link--language {
+        justify-content: flex-end;
+        text-align: right;
+      }
+
+      .mobile-button {
+        width: 48px;
+        min-width: 48px;
+        padding-inline: 8px;
+      }
+
+      .language-toast {
+        position: fixed;
+        top: 32px;
+        left: 50%;
+        z-index: 130;
+        display: grid;
+        grid-template-columns: 48px minmax(0,1fr);
+        column-gap: 16px;
+        align-items: center;
+        width: min(420px, calc(100vw - 32px));
+        padding: 12px;
+        border-radius: 20px;
+        background: #fff;
+        color: #000;
+        box-shadow:
+          0 15px 36px rgba(0,0,0,.27),
+          0 42px 96px rgba(0,0,0,.48);
+        opacity: 1;
+        pointer-events: none;
+        visibility: hidden;
+        transform: translate(-50%, -16px);
+      }
+
+      .language-toast--open {
+        visibility: visible;
+        opacity: 1;
+        transform: translate(-50%, 0);
+        animation: language-toast-enter 500ms ease forwards;
+      }
+
+.language-toast--closing {
+        visibility: visible;
+        opacity: 0;
+        transform: translate(-50%, 0);
+        transition: opacity 500ms ease-out;
+      }
+
+      .language-toast__icon-wrap {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: #d9d9d9;
+      }
+
+      .language-toast__icon {
+        font-size: 28px;
+        line-height: 28px;
+        font-weight: 500;
+      }
+
+      .language-toast__copy {
+        display: grid;
+        gap: 2px;
+      }
+
+      .language-toast__title {
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 500;
+      }
+
+      .language-toast__description {
+        font-size: 13px;
+        line-height: 17px;
+        color: rgba(0,0,0,.64);
+      }
+
+      @keyframes language-toast-enter {
+        0% { opacity: 1; transform: translate(-50%, -16px); }
+        100% { opacity: 1; transform: translate(-50%, 0); }
+      }
+
+      .wall-desktop {
+        display: block;
+        padding: 0 16px 120px;
+      }
+
+      .wall-mobile {
+        display: none;
+      }
+
+      .wall-intro {
+        display: grid;
+        justify-items: center;
+      }
+
+      .wall-intro__portrait {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .wall-intro__portrait img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .wall-intro__title {
+        font-size: 32px;
+        line-height: 32px;
+        font-weight: 400;
+        text-align: center;
+      }
+
+      .wall-intro__text {
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 400;
+        text-align: center;
+      }
+
+      .wall-intro--desktop {
+        padding-top: 152px;
+        margin-bottom: 57px;
+      }
+
+      .wall-intro--desktop .wall-intro__portrait--desktop {
+        width: 126px;
+        height: 162px;
+        margin-bottom: 40px;
+      }
+
+      .wall-intro--desktop .wall-intro__title {
+        width: 514px;
+        margin-bottom: 20px;
+      }
+
+      .wall-intro--desktop .wall-intro__text {
+        width: 218px;
+      }
+
+      .wall-intro--memorial.wall-intro--desktop {
+        padding-top: 0;
+        margin-top: 200px;
+      }
+
+      .wall-intro--desktop .wall-intro__portrait--memorial-desktop {
+        width: 248px;
+        height: 160px;
+        margin-bottom: 40px;
+      }
+
+      .wall-intro--memorial.wall-intro--desktop .wall-intro__text {
+        width: 209px;
+      }
+
+      .wall-desktop-section {
+        width: 687px;
+        margin: 0 auto;
+      }
+
+      .wall-desktop-section--praise {
+        width: 620px;
+      }
+
+      .wall-desktop-section--memorial {
+        width: 620px;
+      }
+
+      .wall-collage {
+        position: relative;
+      }
+
+      .wall-collage__item {
+        position: absolute;
+        overflow: hidden;
+      }
+
+      .wall-collage__item img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .page-end {
+        display: grid;
+        gap: 260px;
+        width: 1020px;
+        max-width: 1020px;
+        margin-left: calc(50% - 510px);
+        padding-top: 200px;
+        padding-bottom: 60px;
+      }
+
+      .back-to-top {
+        display: grid;
+        place-items: center;
+        justify-self: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+      }
+
+      .portfolio-footer {
+        position: relative;
+        width: 100%;
+        height: 469px;
+        max-width: 1020px;
+      }
+
+      .portfolio-footer__left {
+        position: absolute;
+        left: 182px;
+        top: 0;
+        display: grid;
+        gap: 97px;
+        width: 180px;
+      }
+
+      .portfolio-footer__name {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 400;
+      }
+
+      .portfolio-footer__portrait {
+        width: 180px;
+        height: 180px;
+        overflow: hidden;
+        border-radius: 999px;
+        transform: scaleY(-1);
+      }
+
+      .portfolio-footer__portrait img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .portfolio-footer__center {
+        position: absolute;
+        left: 430px;
+        top: 0;
+        width: 355px;
+      }
+
+      .portfolio-footer__role,
+      .portfolio-footer__projects-label,
+      .portfolio-footer__projects-list,
+      .portfolio-footer__statuses {
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 400;
+      }
+
+      .portfolio-footer__role {
+        display: grid;
+        width: 120px;
+        white-space: nowrap;
+      }
+
+      .portfolio-footer__divider {
+        position: absolute;
+        left: 0;
+        top: 69px;
+        width: 1px;
+        height: 104px;
+        background: rgba(217, 217, 217, 0.6);
+      }
+
+      .portfolio-footer__projects-block {
+        position: absolute;
+        left: 0;
+        top: 191px;
+        display: grid;
+        grid-template-columns: 55px 55px 120px 105px;
+        column-gap: 29px;
+        align-items: start;
+      }
+
+      .portfolio-footer__cv {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 55px;
+        height: 40px;
+        margin-top: 92px;
+        grid-column: 1;
+        justify-self: start;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+      }
+
+      .portfolio-footer__projects-grid {
+        display: grid;
+        grid-template-columns: 120px 105px;
+        column-gap: 60px;
+        grid-column: 3 / 5;
+      }
+
+      .portfolio-footer__projects-list {
+        display: grid;
+        width: 120px;
+      }
+
+      .portfolio-footer__statuses {
+        display: grid;
+        width: 105px;
+        color: var(--muted);
+      }
+
+      .portfolio-footer__contacts {
+        position: absolute;
+        left: 778px;
+        top: 0;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .portfolio-footer__contact-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        padding: 8px 12px;
+        min-width: 48px;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+      }
+
+      .mobile-page-end {
+        display: grid;
+        gap: 120px;
+        padding: 0 0 60px;
+      }
+
+      .mobile-page-end__up {
+        display: grid;
+        place-items: center;
+        justify-self: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+      }
+
+      .mobile-footer {
+        position: relative;
+        width: 390px;
+        height: 660px;
+        margin-left: calc(50% - 195px);
+      }
+
+      .mobile-footer__name {
+        position: absolute;
+        left: 16px;
+        top: 32px;
+        width: 156px;
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 400;
+      }
+
+      .mobile-footer__contacts {
+        position: absolute;
+        left: 235px;
+        top: 84px;
+        display: flex;
+        gap: 8px;
+      }
+
+      .mobile-footer__contact-button,
+      .mobile-footer__cv {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        border-radius: 2px;
+        background: #fff;
+        color: #000;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 500;
+      }
+
+      .mobile-footer__contact-button--telegram {
+        width: 81px;
+      }
+
+      .mobile-footer__contact-button--mail,
+      .mobile-footer__cv {
+        width: 50px;
+      }
+
+      .mobile-footer__role,
+      .mobile-footer__projects-label,
+      .mobile-footer__projects-list,
+      .mobile-footer__statuses {
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 400;
+      }
+
+      .mobile-footer__role {
+        position: absolute;
+        left: 16px;
+        top: 88px;
+        width: 147px;
+      }
+
+      .mobile-footer__projects-block {
+        position: absolute;
+        left: 16px;
+        top: 323px;
+        width: 358px;
+        height: 244px;
+      }
+
+      .mobile-footer__rail {
+        position: absolute;
+        left: 0;
+        top: -144px;
+        width: 1px;
+        height: 104px;
+        background: rgba(217, 217, 217, 0.6);
+      }
+
+      .mobile-footer__projects-label {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 55px;
+      }
+
+      .mobile-footer__cv {
+        position: absolute;
+        left: 0;
+        top: 103px;
+      }
+
+      .mobile-footer__projects-grid {
+        position: absolute;
+        left: 94px;
+        top: 0;
+        display: grid;
+        grid-template-columns: 120px 105px;
+        column-gap: 58px;
+        align-items: start;
+      }
+
+      .mobile-footer__projects-list {
+        display: grid;
+        width: 120px;
+      }
+
+      .mobile-footer__statuses {
+        display: grid;
+        width: 105px;
+        color: var(--muted);
+      }
+
+      .mobile-footer__portrait {
+        position: absolute;
+        right: 16px;
+        bottom: 0;
+        width: 117px;
+        height: 117px;
+        overflow: hidden;
+        border-radius: 999px;
+        transform: scaleY(-1);
+      }
+
+      .mobile-footer__portrait img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .bottom-signs {
+        position: fixed;
+        left: 16px;
+        right: 16px;
+        bottom: -1px;
+        z-index: 18;
+        height: 65px;
+        padding-bottom: 12px;
+        background: url("public/media/figma/bottom-signs-background.png") bottom center / 100% 65px no-repeat;
+      }
+
+      .bottom-signs__name,
+      .bottom-signs__year {
+        position: absolute;
+        bottom: 12px;
+        font-size: 13px;
+        line-height: 17px;
+        font-weight: 400;
+      }
+
+      .bottom-signs__name {
+        left: 85px;
+        transform: translateX(-100%);
+        text-align: right;
+      }
+
+      .bottom-signs__year {
+        right: 0;
+        text-align: right;
+      }
+
+      @media (max-width: 767px) {
+        .desktop-menu,
+        .wall-desktop {
+          display: none;
+        }
+
+        .mobile-menu {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 40;
+          display: block;
+          width: 100%;
+          height: 90px;
+          background: url("public/media/figma/top-menu-background.png") top center / 100% 90px no-repeat;
+        }
+
+        .wall-mobile {
+          display: block;
+          width: min(360px, calc(100vw - 32px));
+          margin: 0 auto;
+          padding: 0 0 96px;
+        }
+
+        .wall-intro--mobile {
+          padding-top: 152px;
+          margin-bottom: 57px;
+        }
+
+        .wall-intro--mobile .wall-intro__portrait--mobile {
+          width: 126px;
+          height: 162px;
+          margin-bottom: 40px;
+        }
+
+        .wall-intro--mobile .wall-intro__title {
+          margin-bottom: 20px;
+        }
+
+        .wall-intro--mobile .wall-intro__text {
+          width: 218px;
+        }
+
+        .wall-intro--memorial.wall-intro--mobile {
+          padding-top: 0;
+          margin-top: 138px;
+          margin-bottom: 70px;
+        }
+
+        .wall-intro--mobile .wall-intro__portrait--memorial-mobile {
+          width: 248px;
+          height: 160px;
+          margin-bottom: 40px;
+        }
+
+        .wall-intro--memorial.wall-intro--mobile .wall-intro__text {
+          width: 209px;
+        }
+
+        .wall-mobile-section {
+          width: 358px;
+          margin: 0 auto;
+        }
+
+        .wall-mobile-section--memorial {
+          margin-bottom: 120px;
+        }
+
+        .bottom-signs {
+          left: 0;
+          right: 0;
+          width: 100%;
+        }
+
+        .bottom-signs__name {
+          left: 101px;
+        }
+
+        .bottom-signs__year {
+          right: 16px;
+        }
+      }
     </style>
   </head>
   <body>
-    <div class="page" id="top">
-      <header class="topbar">
-        <div class="topbar__inner">
-          <div class="topbar__side topbar__side--left"><a class="link link--left" href="./Test visual.html#top">Main page</a></div>
-          <div class="topbar__controls"><a class="button button--small" href="./cv.html">CV</a><a class="button button--wide" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Telegram</a><a class="button button--small" href="mailto:eggy0510@gmail.com">Mail</a></div>
-          <div class="topbar__side topbar__side--right"><span class="link link--right">Ru</span><a class="link link--right" href="./wall.html">The wall</a></div>
-        </div>
-      </header>
-      <p class="label">The wall</p>
+    <div id="top"></div>
+    <div class="language-toast" id="language-toast" aria-live="polite" aria-atomic="true">
+      <div class="language-toast__icon-wrap" aria-hidden="true"><span class="language-toast__icon">!</span></div>
+      <div class="language-toast__copy">
+        <p class="language-toast__title">Родной, лучше оставь английский</p>
+        <p class="language-toast__description">Тексты могут съехать, я предупредил.</p>
+      </div>
     </div>
-    <div class="bottom-signs" aria-hidden="true"><span class="bottom-signs__name">Tsarёv Andrey</span><span class="bottom-signs__year">2026</span></div>
+
+    <header class="mobile-menu">
+      <div class="mobile-menu__inner">
+        <div class="mobile-menu__home">
+          <a class="link mobile-link--home" id="home-link-mobile" href="./Test visual.html#top">Главная</a>
+        </div>
+        <div class="mobile-menu__contacts">
+          <a class="button mobile-button mobile-button--cv" href="./cv.html">CV</a>
+          <a class="button mobile-button mobile-button--tg" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">TG</a>
+          <a class="button mobile-button mobile-button--mail" href="mailto:eggy0510@gmail.com">Mail</a>
+        </div>
+        <div class="mobile-menu__side">
+          <a class="link mobile-link--wall" id="wall-link-mobile" href="./wall.html">Стена</a>
+          <button class="link mobile-link--language" id="language-toggle-mobile" type="button">En</button>
+        </div>
+      </div>
+    </header>
+
+    <header class="desktop-menu">
+      <div class="desktop-menu__inner">
+        <div class="desktop-menu__home">
+          <a class="link link--left desktop-link--home" id="home-link" href="./Test visual.html#top">Главная</a>
+        </div>
+        <div class="desktop-menu__contacts">
+          <a class="button button--small" href="./cv.html">CV</a>
+          <a class="button button--wide" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Telegram</a>
+          <a class="button button--small" href="mailto:eggy0510@gmail.com">Mail</a>
+        </div>
+        <div class="desktop-menu__side">
+          <button class="link link--right desktop-link--language" id="language-toggle" type="button">En</button>
+          <a class="link link--right desktop-link--wall" id="wall-link" href="./wall.html">Стена</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="wall-desktop">
+        <section class="wall-intro wall-intro--desktop">
+          <div class="wall-intro__portrait wall-intro__portrait--desktop">
+            <img alt="" src="public/media/wall/desktop-top-portrait.png" />
+          </div>
+          <h1 class="wall-intro__title" id="desktop-praises-title">Личные похвалы</h1>
+          <p class="wall-intro__text" id="desktop-praises-text">Не люблю хвалить себя, но это всё-таки портфолио</p>
+        </section>
+
+        <section class="wall-desktop-section wall-desktop-section--praise">
+          <div class="wall-collage" id="desktop-praise-collage" style="height: 1659px"></div>
+        </section>
+
+        <section class="wall-intro wall-intro--memorial wall-intro--desktop">
+          <div class="wall-intro__portrait wall-intro__portrait--memorial-desktop">
+            <img alt="" src="public/media/wall/desktop-memorial-illustration.png" />
+          </div>
+          <h2 class="wall-intro__title" id="desktop-memorial-title">Мемориал продуктам</h2>
+          <p class="wall-intro__text" id="desktop-memorial-text">Они исчезли, но навсегда остались в наших сердцах</p>
+        </section>
+
+        <section class="wall-desktop-section wall-desktop-section--memorial">
+          <div class="wall-collage" id="desktop-memorial-collage" style="height: 1763px"></div>
+        </section>
+
+        <section class="page-end" aria-label="Page end">
+          <a class="back-to-top" href="#top" id="desktop-up">Наверх</a>
+
+          <footer class="portfolio-footer">
+            <div class="portfolio-footer__left">
+              <p class="portfolio-footer__name">Tsarёv Andrey</p>
+              <div class="portfolio-footer__portrait">
+                <img alt="" src="public/media/figma/footer-portrait.png" />
+              </div>
+            </div>
+
+            <div class="portfolio-footer__center">
+              <div class="portfolio-footer__role" id="desktop-footer-role"></div>
+              <div class="portfolio-footer__divider" aria-hidden="true"></div>
+              <div class="portfolio-footer__projects-block">
+                <p class="portfolio-footer__projects-label" id="desktop-projects-label">Проекты</p>
+                <a class="portfolio-footer__cv" href="./cv.html">CV</a>
+                <div class="portfolio-footer__projects-grid">
+                  <div class="portfolio-footer__projects-list" id="desktop-projects-list"></div>
+                  <div class="portfolio-footer__statuses" id="desktop-project-statuses"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="portfolio-footer__contacts">
+              <a class="portfolio-footer__contact-button" id="desktop-telegram-label" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Телеграм</a>
+              <a class="portfolio-footer__contact-button" id="desktop-mail-label" href="mailto:eggy0510@gmail.com">Почта</a>
+            </div>
+          </footer>
+        </section>
+      </div>
+
+      <div class="wall-mobile">
+        <section class="wall-intro wall-intro--mobile">
+          <div class="wall-intro__portrait wall-intro__portrait--mobile">
+            <img alt="" src="public/media/wall/mobile-top-portrait.png" />
+          </div>
+          <h1 class="wall-intro__title" id="mobile-praises-title">Личные похвалы</h1>
+          <p class="wall-intro__text" id="mobile-praises-text">Не люблю хвалить себя, но это всё-таки портфолио</p>
+        </section>
+
+        <section class="wall-mobile-section">
+          <div class="wall-collage" id="mobile-praise-collage" style="height: 2442px"></div>
+        </section>
+
+        <section class="wall-intro wall-intro--memorial wall-intro--mobile">
+          <div class="wall-intro__portrait wall-intro__portrait--memorial-mobile">
+            <img alt="" src="public/media/wall/mobile-memorial-illustration.png" />
+          </div>
+          <h2 class="wall-intro__title" id="mobile-memorial-title">Мемориал продуктам</h2>
+          <p class="wall-intro__text" id="mobile-memorial-text">Они исчезли, но навсегда остались в наших сердцах</p>
+        </section>
+
+        <section class="wall-mobile-section wall-mobile-section--memorial">
+          <div class="wall-collage" id="mobile-memorial-collage" style="height: 2879px"></div>
+        </section>
+
+        <section class="mobile-page-end" aria-label="Page end">
+          <a class="mobile-page-end__up" href="#top" id="mobile-up">Наверх</a>
+
+          <footer class="mobile-footer">
+            <p class="mobile-footer__name">Tsarёv Andrey</p>
+
+            <nav class="mobile-footer__contacts" aria-label="Footer links">
+              <a class="mobile-footer__contact-button mobile-footer__contact-button--telegram" id="mobile-telegram-label" href="https://t.me/andreytsarev" target="_blank" rel="noreferrer">Телеграм</a>
+              <a class="mobile-footer__contact-button mobile-footer__contact-button--mail" id="mobile-mail-label" href="mailto:eggy0510@gmail.com">Почта</a>
+            </nav>
+
+            <div class="mobile-footer__role" id="mobile-footer-role"></div>
+
+            <div class="mobile-footer__projects-block">
+              <div class="mobile-footer__rail" aria-hidden="true"></div>
+              <p class="mobile-footer__projects-label" id="mobile-projects-label">Проекты</p>
+              <a class="mobile-footer__cv" href="./cv.html">CV</a>
+              <div class="mobile-footer__projects-grid">
+                <div class="mobile-footer__projects-list" id="mobile-projects-list"></div>
+                <div class="mobile-footer__statuses" id="mobile-project-statuses"></div>
+              </div>
+            </div>
+
+            <div class="mobile-footer__portrait">
+              <img alt="" src="public/media/figma/footer-portrait.png" />
+            </div>
+          </footer>
+        </section>
+      </div>
+    </main>
+
+    <div class="bottom-signs" aria-hidden="true">
+      <span class="bottom-signs__name">Tsarёv Andrey</span>
+      <span class="bottom-signs__year">2026</span>
+    </div>
+
+    <script>
+      const wallCopy = {
+        ru: {
+          toggle: "En",
+          home: "Главная",
+          wall: "Стена",
+          praisesTitle: "Личные похвалы",
+          praisesText: "Не люблю хвалить себя, но это всё-таки портфолио",
+          memorialTitle: "Мемориал продуктам",
+          memorialText: "Они исчезли, но навсегда остались в наших сердцах",
+          up: "Наверх",
+          role: ["Руководитель digital-дизайна", "арт-директор", "дизайнер"],
+          projectsLabel: "Проекты",
+          projectItems: ["ATOM auto", "Почта Банк,", "Bitrix24,", "Stoloto,", "Auchan,", "Москвич,", "Haier,", "Borishoff", "Мой Постамат", "Культура МСК", "и другое"],
+          statuses: ["арт-д, дизайнер", "арт-д, дизайнер", "вед-д, дизайнер", "вед-д, дизайнер", "дизайнер", "дизайнер", "дизайнер", "дизайнер", "арт-д, дизайнер", "вед-д, дизайнер"],
+          telegram: "Телеграм",
+          mail: "Почта"
+        },
+        en: {
+          toggle: "Ru",
+          home: "Main page",
+          wall: "The wall",
+          praisesTitle: "Personal praises",
+          praisesText: "Don't like to praise myself, but that's a portfolio at the end",
+          memorialTitle: "Grocieries memorial",
+          memorialText: "They disappeared, but remained in our hearts forever",
+          up: "UP",
+          role: ["Digital design team-lead", "art-d", "designer"],
+          projectsLabel: "Projects",
+          projectItems: ["ATOM auto", "Pochta bank,", "Bitrix24,", "Stoloto,", "Auchan,", "Moskvich,", "Haier,", "Borishoff", "Moscow Postamat", "Culture of MSC", "and more"],
+          statuses: ["art-d, designer", "art-d, designer", "lead-d, designer", "lead-d, designer", "designer", "designer", "designer", "designer", "art-d, designer", "lead-d, designer"],
+          telegram: "Telegram",
+          mail: "Mail"
+        }
+      };
+
+      const desktopPraiseItems = [
+        ["public/media/wall/desktop-praise-major-grom.png", 0, 0, 620, 349],
+        ["public/media/wall/desktop-praise-header-note.png", 0, 381, 306, 83],
+        ["public/media/wall/desktop-praise-small-caption.png", 0, 472, 306, 58],
+        ["public/media/wall/desktop-praise-main-portrait.png", 314, 381, 270, 287],
+        ["public/media/wall/desktop-praise-quote-card.png", 157, 542, 149, 84],
+        ["public/media/wall/desktop-praise-review-column.png", 0, 638, 306, 690],
+        ["public/media/wall/desktop-praise-horizontal-review.png", 314, 680, 306, 56],
+        ["public/media/wall/desktop-praise-square-card.png", 314, 748, 177, 228],
+        ["public/media/wall/desktop-praise-photo-left.png", 314, 988, 154, 273],
+        ["public/media/wall/desktop-praise-photo-right.jpg", 476, 988, 143, 191],
+        ["public/media/wall/desktop-praise-line-quote.png", 1, 1340, 305, 38],
+        ["public/media/wall/desktop-praise-second-line-quote.png", 1, 1390, 305, 50],
+        ["public/media/wall/desktop-praise-third-line-quote.png", 16, 1452, 290, 45],
+        ["public/media/wall/desktop-praise-wide-quote.png", 106, 1509, 200, 75],
+        ["public/media/wall/desktop-praise-vertical-card.png", 314, 1273, 177, 197],
+        ["public/media/wall/desktop-praise-bottom-photo.jpg", 314, 1482, 305, 177]
+      ];
+
+      const desktopMemorialItems = [
+        ["public/media/wall/desktop-memorial-product-left.png", 1, 0, 150, 215],
+        ["public/media/wall/desktop-memorial-product-right.png", 159, 15, 150, 201],
+        ["public/media/wall/desktop-memorial-main-poster.png", 343, 151, 277, 390],
+        ["public/media/wall/desktop-memorial-bottom-banner.png", 343, 712, 277, 124, "contain"],
+        ["public/media/wall/desktop-memorial-large-collage.png", 0, 565, 306, 512],
+        ["public/media/wall/desktop-memorial-bottom-collage.png", 105, 1333, 410, 430],
+        ["public/media/wall/desktop-memorial-center-packshot.png", 152, 413, 157, 125],
+        ["public/media/wall/desktop-memorial-top-sticker.png", 204, 242, 105, 144],
+        ["public/media/wall/desktop-memorial-left-label.jpg", 0, 271, 151, 85],
+        ["public/media/wall/desktop-memorial-header-strip.png", 343, 585, 153, 74],
+        ["public/media/wall/desktop-memorial-round-logo.jpg", 107, 1104, 196, 196],
+        ["public/media/wall/desktop-memorial-vertical-poster.png", 314, 894, 201, 406],
+        ["public/media/wall/desktop-memorial-small-icon.png", 520, 585, 100, 94],
+        ["public/media/wall/desktop-memorial-mini-pack.png", 1, 1104, 95, 130],
+        ["public/media/wall/desktop-memorial-small-pack.png", 523, 890, 97, 121],
+        ["public/media/wall/desktop-memorial-thin-pack.png", 523, 1137, 97, 168],
+        ["public/media/wall/desktop-memorial-mini-label.jpg", 523, 1035, 97, 78]
+      ];
+
+      const mobilePraiseItems = [
+        ["public/media/wall/mobile-praise-major-grom.png", 0, 0, 359, 202],
+        ["public/media/wall/mobile-praise-header-note.png", 0, 234, 358, 97],
+        ["public/media/wall/mobile-praise-main-review.png", 21, 343, 317, 337],
+        ["public/media/wall/mobile-praise-wide-strip.png", 0, 690, 358, 68],
+        ["public/media/wall/mobile-praise-left-column.png", 0, 770, 177, 399],
+        ["public/media/wall/mobile-praise-right-card.png", 181, 920, 177, 100],
+        ["public/media/wall/mobile-praise-mid-strip.png", 0, 1508, 358, 65],
+        ["public/media/wall/mobile-praise-right-photo.png", 181, 1073, 176, 226],
+        ["public/media/wall/mobile-praise-left-photo.png", 0, 1181, 178, 315],
+        ["public/media/wall/mobile-praise-lower-card.jpg", 0, 1585, 177, 236],
+        ["public/media/wall/mobile-praise-line-quote.png", 0, 2042, 358, 45],
+        ["public/media/wall/mobile-praise-vertical-card.png", 0, 1833, 177, 197],
+        ["public/media/wall/mobile-praise-second-line-quote.png", 0, 2099, 357, 58],
+        ["public/media/wall/mobile-praise-third-line-quote.png", 9, 2169, 340, 53],
+        ["public/media/wall/mobile-praise-bottom-photo.jpg", 0, 2234, 358, 208],
+        ["public/media/wall/mobile-praise-right-caption.png", 181, 1800, 177, 66]
+      ];
+
+      const mobileMemorialItems = [
+        ["public/media/wall/mobile-memorial-large-collage.png", 26, 1764, 306, 512],
+        ["public/media/wall/mobile-memorial-product-left.png", 30, 0, 150, 215],
+        ["public/media/wall/mobile-memorial-product-right.png", 188, 15, 150, 201],
+        ["public/media/wall/mobile-memorial-bottom-collage.png", 14, 2532, 331, 347],
+        ["public/media/wall/mobile-memorial-center-packshot.png", 101, 413, 157, 125],
+        ["public/media/wall/mobile-memorial-top-sticker.png", 233, 242, 105, 144],
+        ["public/media/wall/mobile-memorial-left-label.jpg", 29, 271, 151, 85],
+        ["public/media/wall/mobile-memorial-round-logo.jpg", 136, 2303, 196, 196],
+        ["public/media/wall/mobile-memorial-vertical-poster.png", 1, 1313, 201, 406],
+        ["public/media/wall/mobile-memorial-mini-pack.png", 30, 2303, 95, 130],
+        ["public/media/wall/mobile-memorial-header-strip.png", 41, 990, 153, 74],
+        ["public/media/wall/mobile-memorial-main-poster.png", 40, 570, 277, 390],
+        ["public/media/wall/mobile-memorial-wide-banner.png", -1, 1114, 361, 160],
+        ["public/media/wall/mobile-memorial-small-pack.png", 210, 1309, 97, 121],
+        ["public/media/wall/mobile-memorial-small-icon.png", 218, 990, 100, 94],
+        ["public/media/wall/mobile-memorial-thin-pack.png", 210, 1556, 97, 168],
+        ["public/media/wall/mobile-memorial-mini-label.jpg", 210, 1454, 97, 78]
+      ];
+
+      function renderCollage(id, items) {
+        const node = document.getElementById(id);
+        if (!node) return;
+        node.innerHTML = items
+          .map(([src, x, y, width, height, fit]) => `<div class="wall-collage__item" style="left:${x}px;top:${y}px;width:${width}px;height:${height}px"><img alt="" src="${src}" style="${fit ? `object-fit:${fit};` : ""}" /></div>`)
+          .join("");
+      }
+
+      function setList(id, items) {
+        const node = document.getElementById(id);
+        if (!node) return;
+        node.innerHTML = items.map((item) => `<p>${item}</p>`).join("");
+      }
+
+      function setText(id, value) {
+        const node = document.getElementById(id);
+        if (node) node.textContent = value;
+      }
+
+      function applyLanguage(language) {
+        const copy = wallCopy[language];
+        document.documentElement.lang = language;
+        localStorage.setItem("portfolio-language", language);
+
+        setText("language-toggle", copy.toggle);
+        setText("language-toggle-mobile", copy.toggle);
+        setText("home-link", copy.home);
+        setText("home-link-mobile", copy.home);
+        setText("wall-link", copy.wall);
+        setText("wall-link-mobile", copy.wall);
+
+        setText("desktop-praises-title", copy.praisesTitle);
+        setText("desktop-praises-text", copy.praisesText);
+        setText("desktop-memorial-title", copy.memorialTitle);
+        setText("desktop-memorial-text", copy.memorialText);
+        setText("mobile-praises-title", copy.praisesTitle);
+        setText("mobile-praises-text", copy.praisesText);
+        setText("mobile-memorial-title", copy.memorialTitle);
+        setText("mobile-memorial-text", copy.memorialText);
+
+        setText("desktop-up", copy.up);
+        setText("mobile-up", copy.up);
+        setText("desktop-projects-label", copy.projectsLabel);
+        setText("mobile-projects-label", copy.projectsLabel);
+        setText("desktop-telegram-label", copy.telegram);
+        setText("mobile-telegram-label", copy.telegram);
+        setText("desktop-mail-label", copy.mail);
+        setText("mobile-mail-label", copy.mail);
+
+        setList("desktop-footer-role", copy.role);
+        setList("mobile-footer-role", copy.role);
+        setList("desktop-projects-list", copy.projectItems);
+        setList("mobile-projects-list", copy.projectItems);
+        setList("desktop-project-statuses", copy.statuses);
+        setList("mobile-project-statuses", copy.statuses);
+      }
+
+      const languageToast = document.getElementById("language-toast");
+      let toastHoldTimer = null;
+      let toastCloseTimer = null;
+
+      function showLanguageToast() {
+        if (!languageToast) return;
+        if (toastHoldTimer) window.clearTimeout(toastHoldTimer);
+        if (toastCloseTimer) window.clearTimeout(toastCloseTimer);
+        languageToast.classList.remove("language-toast--closing");
+        languageToast.classList.add("language-toast--open");
+        toastHoldTimer = window.setTimeout(() => {
+          languageToast.classList.remove("language-toast--open");
+          languageToast.classList.add("language-toast--closing");
+          toastCloseTimer = window.setTimeout(() => {
+            languageToast.classList.remove("language-toast--closing");
+            toastCloseTimer = null;
+          }, 500);
+          toastHoldTimer = null;
+        }, 5000);
+      }
+
+      const initialLanguage = "en";
+
+      renderCollage("desktop-praise-collage", desktopPraiseItems);
+      renderCollage("desktop-memorial-collage", desktopMemorialItems);
+      renderCollage("mobile-praise-collage", mobilePraiseItems);
+      renderCollage("mobile-memorial-collage", mobileMemorialItems);
+      applyLanguage(initialLanguage);
+
+      ["language-toggle", "language-toggle-mobile"].forEach((id) => {
+        document.getElementById(id)?.addEventListener("click", () => {
+          const current = localStorage.getItem("portfolio-language") === "ru" ? "ru" : "en";
+          const next = current === "ru" ? "en" : "ru";
+          applyLanguage(next);
+          if (current === "en" && next === "ru") {
+            showLanguageToast();
+          }
+        });
+      });
+    </script>
   </body>
 </html>

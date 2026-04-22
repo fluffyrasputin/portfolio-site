@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLanguage } from "@/components/language-provider";
 import { heroAssets } from "@/data/figma-assets";
 import { contacts } from "@/data/site-content";
+import { formatCaseText } from "@/lib/russian-typography";
 
 const heroProjectItems = [
   "ATOM auto",
@@ -34,11 +35,11 @@ const footerProjectStatuses = [
 
 const pageCopy = {
   ru: {
-    heroRole: ["Руководитель digital-дизайна", "арт-директор", "дизайнер"],
+    heroRole: ["digital-дизайн тимлид", "арт-директор", "дизайнер"],
     heroProjectsLabel: "Проекты",
     heroAndMore: "и другое",
     heroPromo:
-      "Создаю уникальные визуальные образы, делаю дизайн компаний узнаваемым, работаю с новыми устройствами, и помогаю командам расти",
+      "Создаю уникальный визуал, делаю бренд узнаваемым, работаю с новыми форматами и устройствами, помогаю командам расти",
     atomMore: "Подробнее",
     atomStatus: "арт-директор • дизайнер • 24-26",
     atomDescription:
@@ -46,7 +47,7 @@ const pageCopy = {
     atomCopyOne:
       "Сделал целую UI-систему, на которой были построены все интерфейсы вокруг проекта: множество концептов, уникальный look&feel, виджеты главной страницы, HMX, анимации, иллюстрации и многое другое.",
     atomCopyTwo:
-      "Сделал целую UI-систему, на которой были собраны все интерфейсы вокруг проекта: много концептов, уникальный look&feel, виджеты главной, HMX, анимации, иллюстрации и многое другое.",
+      "Проект не просто про интерфейсы, это полноценный опыт работы с автомобилем как цифровым продуктом, от первых касаний до повседневного использования. В итоге это дало уникальную для России экспертизу в HMI/HMX и стало одной из самых сложных и интересных задач в моей практике.",
     obuTitle: "Ещё один автомобильный проект",
     obuStatus: "арт-директор • дизайнер",
     obuCopy:
@@ -76,17 +77,17 @@ const pageCopy = {
     stolotoMore: "Подробнее",
     stolotoTag: "редизайн",
     stolotoDescription:
-      "Один из самых заметных лотерейных продуктов в России. Для него был собран новый визуальный язык, обновлены сценарии покупки и акцентирован сам продукт.",
+      "Один из самых заметных лотерейных продуктов в России с миллионами пользователей и оборотом в миллиарды рублей. Для него был собран новый визуальный язык, обновлены сценарии покупки и акцентирован сам продукт.",
     stolotoCopyOne:
-      "Сделал новое приложение. Все разделы и вкладки были переработаны, большая часть UX собрана заново, включая быстрые платежи и решения для роста продуктовых метрик.",
+      "Важно было сохранить баланс между эмоцией и прозрачностью: лотерея — это про азарт, ожидание и вау-эффект, но при этом пользователь должен чётко понимать, что происходит с его деньгами. Мы сделали интерфейс проще, честнее и понятнее, не теряя ощущения игры и вовлечённости.",
     stolotoCopyTwo:
-      "Переработал иллюстрации, собрал дизайн-систему, гайдлайны, анимации, профили и баннеры.",
+      "",
     additionalTitle: "Ещё",
     additionalSubtitle: "Последние, но не менее важные",
     financeTitle: "Редизайн сайта",
     financeRole: "дизайнер",
     up: "Наверх",
-    footerRole: ["Руководитель digital-дизайна", "арт-директор", "дизайнер"],
+    footerRole: ["digital-дизайн тимлид", "арт-директор", "дизайнер"],
     footerProjectsLabel: "Проекты",
     footerAndMore: "и другое",
     footerTelegram: "Телеграм",
@@ -105,7 +106,7 @@ const pageCopy = {
     atomCopyOne:
       "Made a whole UI system that was build all interfaces around it, lots of concepts that produced a unique look&feel, main page widgets, HMX, animations, ilutstrarions etc.",
     atomCopyTwo:
-      "Made a whole UI system that was biuld all interfaces around it, lots of concepts that produced a unique look&feel, main page widgets, HMX, animations, ilutstrarions etc.",
+      "The project was not just about interfaces — it was a full experience of working with a car as a digital product, from the first interactions to everyday use. In the end, it gave me a unique HMI/HMX expertise for Russia and became one of the most complex and exciting challenges in my practice.",
     obuTitle: "Another automotive",
     obuStatus: "art-d • designer",
     obuCopy:
@@ -135,11 +136,11 @@ const pageCopy = {
     stolotoMore: "More",
     stolotoTag: "redesign",
     stolotoDescription:
-      "One of the most visible lottery products in Russia. The work included a new visual language, updated purchase scenarios, and a stronger focus on the core product.",
+      "One of the most prominent lottery products in Russia, used by millions of people and generating billions in revenue. We developed a new visual language, redesigned the purchase flows, and put stronger emphasis on the core product.",
     stolotoCopyOne:
-      "Made a whole new app. All of the sections and tabs redisgned, most of the UX is remade, including fast-paymant features and highers CTR to bank needed metrics.",
+      "The key focus was balancing emotion and transparency: lotteries are about excitement, anticipation, and that “wow” feeling, but at the same time users need to clearly understand what’s happening with their money. We made the interface simpler, more honest, and easier to use—without losing the sense of play and engagement.",
     stolotoCopyTwo:
-      "Reworked illutstrations, created a design-system, guidelines, animations, profiles and banners.",
+      "",
     additionalTitle: "Etc.",
     additionalSubtitle: "Last, but not least",
     financeTitle: "Web redesign",
@@ -195,19 +196,21 @@ function FinanceCultureLogo() {
 export function HomePage() {
   const { language } = useLanguage();
   const copy = pageCopy[language];
+  const displayName = language === "ru" ? "Царёв Андрей" : "Tsarёv Andrey";
+  const formatText = (text: string) => formatCaseText(language, text);
   const localizedHeroProjectItems =
     language === "ru"
       ? [
-          "ATOM auto",
+          "ATOM авто",
           "Почта Банк,",
-          "Bitrix24,",
-          "Stoloto,",
-          "Auchan,",
+          "Битрикс24,",
+          "Столото,",
+          "Ашан,",
           "Москвич,",
           "Haier,",
-          "Borishoff",
-          "Мой Постамат",
-          "Культура МСК",
+          "Борисхофф",
+          "Мой постамат",
+          "Культура мск",
         ]
       : heroProjectItems;
   const localizedFooterProjectStatuses =
@@ -228,6 +231,7 @@ export function HomePage() {
   const additionalCases = [
     {
       id: "moskvich",
+      href: "https://moskvich-m.ru/models/m70",
       logo: heroAssets.additionalMoskvichLogo,
       logoClassName: "additional-cases__logo additional-cases__logo--moskvich",
       title: language === "ru" ? "Редизайн M-series" : "M-series web redesign",
@@ -239,6 +243,7 @@ export function HomePage() {
     },
     {
       id: "kultura",
+      href: "https://kultura.mos.ru/",
       logo: heroAssets.additionalKulturaLogo,
       logoClassName: "additional-cases__logo additional-cases__logo--kultura",
       title: language === "ru" ? "Веб-концепт" : "Web concept",
@@ -250,6 +255,7 @@ export function HomePage() {
     },
     {
       id: "stoloto-dots",
+      href: "https://www.stoloto.ru/",
       logo: heroAssets.additionalStolotoDotsLogo,
       logoClassName: "additional-cases__logo additional-cases__logo--stoloto",
       title: language === "ru" ? "Интерфейс игровых автоматов" : "Game machines interface",
@@ -261,6 +267,7 @@ export function HomePage() {
     },
     {
       id: "postamat",
+      href: "https://www.mos.ru/city/projects/postamat/",
       logo: heroAssets.additionalPostamatLogo,
       logoClassName: "additional-cases__logo additional-cases__logo--postamat",
       title: language === "ru" ? "Интерфейс постамата" : "Interface for postamat",
@@ -272,10 +279,11 @@ export function HomePage() {
     },
     {
       id: "auchan",
+      href: "https://www.auchan.ru/",
       logo: heroAssets.additionalAuchanLogo,
       logoClassName: "additional-cases__logo additional-cases__logo--auchan",
-      title: language === "ru" ? "Интерфейс постамата" : "Interface for postamat",
-      role: language === "ru" ? "арт-д, дизайнер" : "art-d, designer",
+      title: language === "ru" ? "Редизайн сайта" : "Web redesign",
+      role: language === "ru" ? "дизайнер" : "designer",
       year: "2024",
       image: heroAssets.additionalAuchanImage,
       imageAlt: language === "ru" ? "Превью Auchan" : "Auchan interface preview",
@@ -283,6 +291,7 @@ export function HomePage() {
     },
     {
       id: "haier",
+      href: "https://haieronline.ru/",
       logo: heroAssets.additionalHaierLogo,
       logoClassName: "additional-cases__logo additional-cases__logo--haier",
       title: language === "ru" ? "Редизайн сайта" : "Web redesign",
@@ -294,6 +303,7 @@ export function HomePage() {
     },
     {
       id: "borishoff",
+      href: "https://borishof.ru/",
       logo: heroAssets.additionalBorishoffLogo,
       logoClassName: "additional-cases__logo additional-cases__logo--borishoff",
       title: language === "ru" ? "Дизайн приложения" : "App design",
@@ -306,11 +316,11 @@ export function HomePage() {
   ] as const;
 
   return (
-    <div className={`page-shell page-shell--${language}`} id="top">
+    <div className={`page-shell page-shell--${language}`}>
       <section className="hero hero--figma">
         <div className="hero-figma">
           <div className="hero-figma__identity">
-            <h1 className="hero-figma__name">Tsarёv Andrey</h1>
+            <h1 className="hero-figma__name">{displayName}</h1>
             <div className="hero-figma__role">
               {copy.heroRole.map((item) => (
                 <p key={item}>{item}</p>
@@ -380,7 +390,7 @@ export function HomePage() {
                 </Link>
               </div>
 
-              <p className="atom-case__description">{copy.atomDescription}</p>
+              <p className="atom-case__description">{formatText(copy.atomDescription)}</p>
             </div>
           </div>
 
@@ -390,7 +400,7 @@ export function HomePage() {
 
           <div className="atom-case__block-two">
             <div className="atom-case__block-copy">
-              <p>{copy.atomCopyOne}</p>
+              <p>{formatText(copy.atomCopyOne)}</p>
               <div className="atom-case__kamaz">
                 <Image alt="" aria-hidden="true" src={heroAssets.atomKamaz} fill sizes={imageSizes.mini} />
               </div>
@@ -408,7 +418,7 @@ export function HomePage() {
               </div>
 
               <div className="atom-case__small-copy">
-                <p>{copy.atomCopyTwo}</p>
+                <p>{formatText(copy.atomCopyTwo)}</p>
                 <div className="atom-case__small-photo">
                   <Image alt="" aria-hidden="true" src="/media/figma/atom-small-photo.jpg" fill sizes={imageSizes.tiny} />
                 </div>
@@ -437,7 +447,7 @@ export function HomePage() {
             </div>
             <div className="obu-case__intro">
               <div className="obu-case__meta">
-                <h2 id="obu-case-title" className="obu-case__title">{copy.obuTitle}</h2>
+                <h2 id="obu-case-title" className="obu-case__title">ANOTHER AUTOMOTIVE</h2>
                 <p className="obu-case__status">{copy.obuStatus}</p>
               </div>
               <div className="obu-case__description-image">
@@ -450,7 +460,7 @@ export function HomePage() {
             <Image alt="Covered concept car" src={heroAssets.obuCar} fill sizes={imageSizes.full} />
           </div>
 
-          <p className="obu-case__copy">{copy.obuCopy}</p>
+          <p className="obu-case__copy">{formatText(copy.obuCopy)}</p>
 
           <div className="obu-case__music">
             <Image alt="OBJ music interface" src={heroAssets.obuMusic} fill sizes={imageSizes.full} />
@@ -483,7 +493,7 @@ export function HomePage() {
                 <Image alt="Pochta bank app phone screen" src={heroAssets.pochtaPhone} fill sizes={imageSizes.card} />
               </div>
 
-              <p className="pb-case__copy">{copy.pochtaCopy}</p>
+              <p className="pb-case__copy">{formatText(copy.pochtaCopy)}</p>
 
               <div className="pb-case__description-card">
                 <Image alt={language === "ru" ? "Карточки быстрых платежей Почта Банка" : "Pochta bank fast pay cards"} src={heroAssets.pochtaDescriptionCard} fill sizes={imageSizes.narrow} />
@@ -491,7 +501,7 @@ export function HomePage() {
             </div>
 
             <div className="pb-case__right">
-              <p className="pb-case__description">{copy.pochtaDescription}</p>
+              <p className="pb-case__description">{formatText(copy.pochtaDescription)}</p>
 
               <div className="pb-case__card">
                 <Image alt="Pochta bank eagle card" src={heroAssets.pochtaCard} fill sizes={imageSizes.card} />
@@ -528,43 +538,15 @@ export function HomePage() {
 
           <div className="b24-case__story">
             <div className="b24-case__faces">
-              <div className="b24-case__faces-left" aria-hidden="true">
-                <div className="b24-case__face b24-case__face--left-one">
-                  <Image alt="" src={heroAssets.bitrixFaceOne} fill sizes={imageSizes.face} />
-                </div>
-                <div className="b24-case__face b24-case__face--left-two">
-                  <Image alt="" src={heroAssets.bitrixFaceTwo} fill sizes={imageSizes.face} />
-                </div>
-                <div className="b24-case__badge b24-case__badge--file">
-                  <Image alt="" src={heroAssets.bitrixFileIcon} fill sizes={imageSizes.badge} />
-                </div>
-              </div>
-
-              <div className="b24-case__faces-right" aria-hidden="true">
-                <div className="b24-case__face b24-case__face--right-one">
-                  <Image alt="" src={heroAssets.bitrixFaceThree} fill sizes={imageSizes.face} />
-                </div>
-                <div className="b24-case__badge b24-case__badge--like">
-                  <Image alt="" src={heroAssets.bitrixLikeIcon} fill sizes={imageSizes.badge} />
-                </div>
-                <div className="b24-case__face b24-case__face--right-two">
-                  <Image alt="" src={heroAssets.bitrixFaceFour} fill sizes={imageSizes.face} />
-                </div>
-                <div className="b24-case__face b24-case__face--right-three">
-                  <Image alt="" src={heroAssets.bitrixFaceFive} fill sizes={imageSizes.face} />
-                </div>
-                <div className="b24-case__badge b24-case__badge--brush">
-                  <Image alt="" src={heroAssets.bitrixBrushIcon} fill sizes={imageSizes.badge} />
-                </div>
-              </div>
+              <Image alt="Bitrix24 faces" src={heroAssets.bitrixFacesStatic} fill sizes={imageSizes.full} />
             </div>
 
             <div className="b24-case__copy-row">
               <p className="b24-case__description">
-                {copy.bitrixDescriptionOne}
+                {formatText(copy.bitrixDescriptionOne)}
               </p>
               <p className="b24-case__description">
-                {copy.bitrixDescriptionTwo}
+                {formatText(copy.bitrixDescriptionTwo)}
               </p>
             </div>
           </div>
@@ -576,13 +558,13 @@ export function HomePage() {
           <div className="b24-case__bottom">
             <div className="b24-case__bottom-copy">
               <div className="b24-case__bottom-copy-left">
-                <p>{copy.bitrixBottomLeftOne}</p>
-                <p>{copy.bitrixBottomLeftTwo}</p>
+                <p>{formatText(copy.bitrixBottomLeftOne)}</p>
+                <p>{formatText(copy.bitrixBottomLeftTwo)}</p>
               </div>
 
               <div className="b24-case__bottom-copy-right">
-                <p>{copy.bitrixBottomRightOne}</p>
-                <p>{copy.bitrixBottomRightTwo}</p>
+                <p>{formatText(copy.bitrixBottomRightOne)}</p>
+                <p>{formatText(copy.bitrixBottomRightTwo)}</p>
               </div>
             </div>
 
@@ -615,7 +597,7 @@ export function HomePage() {
           </div>
 
           <div className="stoloto-case__feature">
-            <p className="stoloto-case__description">{copy.stolotoDescription}</p>
+            <p className="stoloto-case__description">{formatText(copy.stolotoDescription)}</p>
 
             <div className="stoloto-case__matryoshka">
               <Image alt="Stoloto mascots" src={heroAssets.stolotoMatryoshka} fill sizes={imageSizes.full} />
@@ -625,8 +607,9 @@ export function HomePage() {
           <div className="stoloto-case__lower">
             <div className="stoloto-case__lower-left">
               <div className="stoloto-case__copy">
-                <p>{copy.stolotoCopyOne}</p>
-                <p>{copy.stolotoCopyTwo}</p>
+                {[copy.stolotoCopyOne, copy.stolotoCopyTwo].filter(Boolean).map((item) => (
+                  <p key={item}>{formatText(item)}</p>
+                ))}
               </div>
 
               <div className="stoloto-case__lotteries">
@@ -658,7 +641,12 @@ export function HomePage() {
                       <p>{item.title}</p>
                       <p>{item.role}</p>
                     </div>
-                    <p className="additional-cases__year">{item.year}</p>
+                    <div className="additional-cases__meta-footer">
+                      <p className="additional-cases__year">{item.year}</p>
+                      <a className="additional-cases__link" href={item.href}>
+                        {language === "ru" ? "Ссылка" : "Link"}
+                      </a>
+                    </div>
                   </div>
 
                   <div className={item.imageClassName}>
@@ -677,7 +665,12 @@ export function HomePage() {
                   <p>{copy.financeTitle}</p>
                   <p>{copy.financeRole}</p>
                 </div>
-                <p className="additional-cases__year">2023</p>
+                <div className="additional-cases__meta-footer">
+                  <p className="additional-cases__year">2023</p>
+                  <a className="additional-cases__link" href="https://fincult.info/">
+                    {language === "ru" ? "Ссылка" : "Link"}
+                  </a>
+                </div>
               </div>
 
               <div className="additional-cases__image additional-cases__image--finance">
@@ -694,9 +687,18 @@ export function HomePage() {
 
           <footer className="portfolio-footer">
             <div className="portfolio-footer__left">
-              <p className="portfolio-footer__name">Tsarёv Andrey</p>
+              <p className="portfolio-footer__name">{displayName}</p>
               <div className="portfolio-footer__portrait">
-                <Image alt="" aria-hidden="true" src={heroAssets.footerPortrait} fill sizes={imageSizes.footerPortrait} />
+                <video
+                  aria-hidden="true"
+                  className="portfolio-footer__portrait-media"
+                  src="/media/figma/Car Drive Video.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                />
               </div>
             </div>
 

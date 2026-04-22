@@ -1,6 +1,8 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { LanguageToast } from "@/components/language-toast";
 import type { Language } from "@/types/site";
 
 type LanguageContextValue = {
@@ -11,30 +13,77 @@ type LanguageContextValue = {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>(() => {
+  const pathname = usePathname();
+  const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window === "undefined") {
-      return "ru";
+      return "en";
     }
-
-    const savedLanguage = window.localStorage.getItem("portfolio-language");
-
-    return savedLanguage === "ru" || savedLanguage === "en" ? savedLanguage : "ru";
+    return "en";
   });
+  const [toastPhase, setToastPhase] = useState<"closed" | "open" | "closing">("closed");
+  const toastHoldTimerRef = useRef<number | null>(null);
+  const toastCloseTimerRef = useRef<number | null>(null);
+
+  const setLanguage = useCallback((nextLanguage: Language) => {
+    setLanguageState((currentLanguage) => {
+      if (currentLanguage === "en" && nextLanguage === "ru") {
+        if (toastHoldTimerRef.current !== null) {
+          window.clearTimeout(toastHoldTimerRef.current);
+        }
+
+        if (toastCloseTimerRef.current !== null) {
+          window.clearTimeout(toastCloseTimerRef.current);
+        }
+
+        setToastPhase("open");
+        toastHoldTimerRef.current = window.setTimeout(() => {
+          setToastPhase("closing");
+          toastCloseTimerRef.current = window.setTimeout(() => {
+            setToastPhase("closed");
+            toastCloseTimerRef.current = null;
+          }, 300);
+          toastHoldTimerRef.current = null;
+        }, 5000);
+      }
+
+      return nextLanguage;
+    });
+  }, []);
 
   useEffect(() => {
     document.documentElement.lang = language;
     window.localStorage.setItem("portfolio-language", language);
   }, [language]);
 
+  useEffect(() => {
+    return () => {
+      if (toastHoldTimerRef.current !== null) {
+        window.clearTimeout(toastHoldTimerRef.current);
+      }
+      if (toastCloseTimerRef.current !== null) {
+        window.clearTimeout(toastCloseTimerRef.current);
+      }
+    };
+  }, []);
+
   const value = useMemo(
     () => ({
-      language,
+      language: pathname === "/wall" ? "en" : language,
       setLanguage,
     }),
-    [language],
+    [language, pathname, setLanguage],
   );
 
-  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
+  return (
+    <LanguageContext.Provider value={value}>
+      {children}
+      <LanguageToast
+        phase={toastPhase}
+        title="Родной, лучше оставь английский"
+        description="Тексты могут перевестись некорректно, я тебя предупредил"
+      />
+    </LanguageContext.Provider>
+  );
 }
 
 export function useLanguage() {
