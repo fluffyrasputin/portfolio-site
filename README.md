@@ -96,3 +96,4 @@ npm run build
 - добавить настоящие ссылки на `Telegram`, `email`, `CV`
 - положить реальные файлы в `public`
 - начать переносить дизайн из Figma по секциям
+# portfolio-site
