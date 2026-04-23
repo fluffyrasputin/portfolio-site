@@ -3058,6 +3058,7 @@ main img {
   display: grid;
   gap: 20px;
   width: 182px;
+  z-index: 1;
 }
 
 .mobile-hero__name {
@@ -3093,6 +3094,7 @@ main img {
   display: flex;
   gap: 8px;
   align-items: flex-start;
+  z-index: 1;
 }
 
 .mobile-hero__project-logos {
@@ -3118,6 +3120,7 @@ main img {
   width: 286px;
   height: 408px;
   overflow: hidden;
+  z-index: 0;
 }
 
 .mobile-hero__wolf img,
@@ -3130,8 +3133,8 @@ main img {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 180%;
-  height: 180%;
+  width: 156%;
+  height: 156%;
   max-width: none;
   transform: translate(-50%, -50%);
 }
