@@ -49,7 +49,15 @@ export function MobileHero() {
       </div>
 
       <div className="mobile-hero__wolf">
-        <Image alt="" src={mobileAssets.heroWolf} width={238} height={340} sizes="238px" priority />
+        <video
+          aria-hidden="true"
+          src="/media/figma/Wolfy video.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        />
       </div>
     </section>
   );

@@ -3020,6 +3020,7 @@ main img {
 
 .mobile-hero__photo img,
 .mobile-hero__wolf img,
+.mobile-hero__wolf video,
 .mobile-hero__project-logo img,
 .mobile-case-atom__logo img,
 .mobile-case-atom__car img,
@@ -3109,7 +3110,8 @@ main img {
   overflow: hidden;
 }
 
-.mobile-hero__wolf img {
+.mobile-hero__wolf img,
+.mobile-hero__wolf video {
   object-fit: cover;
   object-position: center;
 }
@@ -3812,6 +3814,10 @@ main img {
   object-fit: cover;
 }
 
+.mobile-footer__portrait video.mobile-footer__portrait-media {
+  transform: rotate(180deg);
+}
+
 .mobile-footer__role,
 .mobile-footer__projects-label,
 .mobile-footer__projects-list,
@@ -3953,17 +3959,18 @@ main img {
     z-index: 40;
     display: block;
     height: 90px;
-    background-image: var(--mobile-menu-background);
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: 100% 90px;
+    background: transparent;
   }
 
   .mobile-header__inner {
     position: relative;
-    width: 100%;
+    width: min(100%, 390px);
     height: 90px;
-    margin: 0;
+    margin: 0 auto;
+    background-image: var(--mobile-menu-background);
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100% 90px;
   }
 
   .mobile-header__home,
