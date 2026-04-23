@@ -3133,8 +3133,8 @@ main img {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 140%;
-  height: 140%;
+  width: 133%;
+  height: 133%;
   max-width: none;
   transform: translate(-50%, -50%);
 }
@@ -3986,8 +3986,7 @@ main img {
 
   .mobile-header__inner {
     position: relative;
-    width: calc(100% - 32px);
-    max-width: none;
+    width: min(358px, calc(100% - 32px));
     height: 90px;
     margin: 0 auto;
     background-image: var(--mobile-menu-background);
