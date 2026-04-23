@@ -1290,10 +1290,8 @@ main img {
   padding: 10px 10px 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 22px;
-  background: rgba(16, 16, 16, 0.88);
+  background: rgba(16, 16, 16, 0.94);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   overflow: hidden;
 }
 
@@ -1483,9 +1481,7 @@ main img {
       gap 220ms ease,
       border-color 220ms ease,
       background-color 220ms ease,
-      box-shadow 220ms ease,
-      backdrop-filter 220ms ease,
-      -webkit-backdrop-filter 220ms ease;
+      box-shadow 220ms ease;
   }
 
   .desktop-player--mobile-collapsed {
@@ -1501,12 +1497,10 @@ main img {
     padding: 12px;
     border-color: rgba(255, 255, 255, 0.18);
     border-radius: 20px;
-    background: rgba(24, 24, 24, 0.98);
+    background: rgba(16, 16, 16, 0.94);
     box-shadow:
       0 16px 48px rgba(0, 0, 0, 0.32),
       0 0 0 1px rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
   }
 
   .desktop-player--mobile-collapsed .desktop-player__cover {
@@ -2043,26 +2037,6 @@ main img {
   overflow: hidden;
 }
 
-.pb-case__card img {
-  position: absolute;
-  left: -34.77%;
-  top: -6.66%;
-  width: 169.55%;
-  height: 111.68%;
-  max-width: none;
-  object-fit: cover;
-}
-
-.pb-case__pills img {
-  position: absolute;
-  left: -9.84%;
-  top: -0.01%;
-  width: 119.74%;
-  height: 119.41%;
-  max-width: none;
-  object-fit: cover;
-}
-
 .pb-case__copy {
   width: 259px;
   white-space: pre-line;
@@ -2070,7 +2044,7 @@ main img {
 
 .pb-case__description {
   width: 201px;
-  min-height: 197px;
+  min-height: 181px;
   padding-top: 72px;
 }
 
@@ -2802,14 +2776,6 @@ main img {
 
 .page-shell--ru .pb-case__left {
   gap: 56px;
-}
-
-.page-shell--ru .pb-case__description {
-  min-height: 264px;
-}
-
-.page-shell--ru .pb-case__card {
-  margin-top: 24px;
 }
 
 .page-shell--ru .stoloto-case__copy {

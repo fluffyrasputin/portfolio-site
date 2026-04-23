@@ -371,8 +371,19 @@
       .hero__identity { position: relative; z-index: 2; display: grid; gap: 20px; width: fit-content; }
       .hero__name { font-size: 32px; line-height: 32px; font-weight: 400; }
       .hero__role, .hero__projects-list, .hero__promo-text, .text { font-size: 13px; line-height: 17px; font-weight: 400; }
-      .hero__wolf { position: absolute; left: calc(50% + 3px); bottom: 0; width: 254px; height: 389px; transform: translateX(-50%); overflow: hidden; }
-      .hero__wolf img { position: absolute; top: -20.3%; left: -60.09%; width: 220.53%; height: 144.36%; max-width: none; object-fit: cover; }
+      .hero__wolf { position: absolute; left: calc(50% + 3px); bottom: 0; width: 308px; height: 389px; transform: translateX(-50%); overflow: hidden; }
+      .hero__wolf img,
+      .hero__wolf video {
+        position: absolute;
+        top: -51px;
+        left: 50%;
+        width: 556px;
+        height: 505px;
+        max-width: none;
+        object-fit: cover;
+        display: block;
+        transform: translateX(-50%);
+      }
       .hero__portrait { position: absolute; right: 0; bottom: 0; width: 96px; height: 96px; }
       .hero__projects { position: absolute; left: 0; top: 202px; display: flex; gap: 28px; align-items: flex-start; }
       .hero__project-list { display: flex; gap: 8px; align-items: flex-start; }
@@ -462,7 +473,7 @@
       .pb-right { gap: 0; }
       .pb-phone { width: 306px; height: 620px; }
       .pb-copy { width: 259px; white-space: pre-line; }
-      .pb-description { width: 201px; min-height: 197px; padding-top: 72px; }
+      .pb-description { width: 201px; min-height: 181px; padding-top: 72px; }
       .pb-card { width: 306px; height: 465px; }
       .pb-msc { width: 306px; height: 306px; margin-top: 40px; }
       .pb-desc-card { width: 201px; height: 324px; }
@@ -559,7 +570,6 @@
       .stoloto-block img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; max-width: none; object-fit: contain; object-position: left center; }
 
       .pb-phone img { object-fit: fill; }
-      .pb-card img { position: absolute; left: -34.77%; top: -6.66%; width: 169.55%; height: 111.68%; max-width: none; object-fit: cover; }
       .pb-pills img { position: absolute; left: -9.84%; top: -0.01%; width: 119.74%; height: 119.41%; max-width: none; object-fit: cover; }
 
       .bottom-signs {
@@ -588,10 +598,8 @@
         padding: 10px 10px 14px;
         border: 1px solid rgba(255,255,255,.12);
         border-radius: 22px;
-        background: rgba(16,16,16,.88);
+        background: rgba(16,16,16,.94);
         box-shadow: 0 16px 48px rgba(0,0,0,.28);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
         overflow: hidden;
       }
 
@@ -763,9 +771,7 @@
             gap 220ms ease,
             border-color 220ms ease,
             background-color 220ms ease,
-            box-shadow 220ms ease,
-            backdrop-filter 220ms ease,
-            -webkit-backdrop-filter 220ms ease;
+            box-shadow 220ms ease;
         }
 
         .desktop-player--mobile-collapsed {
@@ -781,10 +787,8 @@
           padding: 12px;
           border-color: rgba(255,255,255,.12);
           border-radius: 20px;
-          background: rgba(16,16,16,.92);
+          background: rgba(16,16,16,.94);
           box-shadow: 0 16px 48px rgba(0,0,0,.28);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
         }
 
         .desktop-player--mobile-collapsed .desktop-player__cover {
@@ -1050,8 +1054,6 @@
       body[data-language="ru"] .b24-intro,
       body[data-language="ru"] .stoloto-intro { gap: 16px; }
       body[data-language="ru"] .pb-left { gap: 56px; }
-      body[data-language="ru"] .pb-description { min-height: 264px; }
-      body[data-language="ru"] .pb-card { margin-top: 24px; }
       body[data-language="ru"] .stoloto-copy { min-height: 214px; }
       body[data-language="ru"] .stoloto-lotteries { margin-top: 64px; }
       body[data-language="ru"] .additional-cases__meta { gap: 16px; }
@@ -1792,6 +1794,10 @@
         object-fit: cover;
       }
 
+      .tv-mobile-footer__portrait video {
+        transform: rotate(180deg);
+      }
+
       .tv-mobile-footer__role,
       .tv-mobile-footer__projects-label,
       .tv-mobile-footer__projects-list,
@@ -2367,7 +2373,11 @@
           <h1 class="hero__name" id="tv-hero-name">Tsarёv Andrey</h1>
           <div class="hero__role" id="tv-hero-role"><p>digital-дизайн тимлид</p><p>арт-директор</p><p>дизайнер</p></div>
         </div>
-        <div class="hero__wolf"><img src="public/media/figma/wolf.png" alt="" /></div>
+        <div class="hero__wolf">
+          <video autoplay loop muted playsinline webkit-playsinline preload="auto" disablepictureinpicture aria-hidden="true">
+            <source src="public/media/figma/Wolfy video.mp4" type="video/mp4" />
+          </video>
+        </div>
         <img class="hero__portrait" src="public/media/figma/portrait.png" alt="Portrait of Andrey" />
         <div class="hero__projects">
           <p class="hero__projects-list" id="tv-hero-projects-label">Проекты</p>
@@ -2447,7 +2457,7 @@
             </div>
             <div class="pb-right">
               <p class="pb-description" id="tv-pb-description">Почта Банк — один из крупнейших розничных банков России с самой широкой сетью: более 30 000 точек обслуживания в 83 регионах и клиентской базой более 21 миллиона человек.</p>
-              <div class="media pb-card"><img src="public/media/figma/pochta-card.png" alt="Pochta bank eagle card" /></div>
+              <div class="media pb-card"><img src="public/media/figma/pochta-bank-card.png" alt="Pochta bank eagle card" /></div>
               <div class="media pb-msc"><img src="public/media/figma/pochta-msc-logo.png" alt="Pochta bank red circle illustration" /></div>
               <div class="media-sm pb-pills"><img src="public/media/figma/pochta-pills.png" alt="Pochta bank payments list" /></div>
             </div>
@@ -2707,13 +2717,13 @@
           heroProjectsLabel: "Проекты",
           heroProjects: ["ATOM авто", "Почта Банк,", "Битрикс24,", "Столото,", "Ашан,", "Москвич,", "Haier,", "Борисхофф", "Мой постамат", "Культура мск", "и другое"],
           heroPromo: "Создаю уникальный визуал, делаю бренд узнаваемым, работаю с новыми форматами и устройствами, помогаю командам расти",
-          atomStatus: "арт-директор • дизайнер • 24-26",
+          atomStatus: "арт-директор • дизайнер •\u00A024‑26",
           atomMore: "Подробнее",
           atomDescription: "Эта легендарная компания успела перевернуть автомобильный рынок, стать настоящей рок-звездой индустрии, но закончила так же драматично и преждевременно",
           atomCopyOne: "Сделал целую UI-систему, на которой были построены все интерфейсы вокруг проекта: множество концептов, уникальный look&feel, виджеты главной страницы, HMX, анимации, иллюстрации и многое другое.",
           atomCopyTwo: "Проект не просто про интерфейсы, это полноценный опыт работы с автомобилем как цифровым продуктом, от первых касаний до повседневного использования. В итоге это дало уникальную для России экспертизу в HMI/HMX и стало одной из самых сложных и интересных задач в моей практике.",
           objTitle: "ANOTHER AUTOMOTIVE",
-          mobileObjTitle: "ЕЩЁ ОДИН АВТОМОБИЛЬНЫЙ ПРОЕКТ",
+          mobileObjTitle: "АВТОМОБИЛЬНЫЙ ПРОЕКТ",
           objStatus: "арт-директор • дизайнер",
           objCopy: "Определил look & feel, сделал сервисные и главные экраны: виджеты, климат-контроль, медиа и музыку, экран всех приложений, звонки, камеры и другое.",
           pbName: "ПРИЛОЖЕНИЕ ПОЧТА БАНКА",
@@ -2778,7 +2788,7 @@
           heroProjectsLabel: "Projects",
           heroProjects: ["ATOM auto", "Pochta bank,", "Bitrix24,", "Stoloto,", "Auchan,", "Moskvich,", "Haier,", "Borishoff", "Moscow Postamat", "Culture of MSC", "and more"],
           heroPromo: "Creating beautiful visuals, making companies' design unique, working with never known devices, delivering teams growth",
-          atomStatus: "art-d • designer • 24-26",
+          atomStatus: "art-d • designer •\u00A024‑26",
           atomMore: "More",
           atomDescription: "This legendary company managed to revolutionize the automotive market, becoming the rock star of the industry, but it met its end just as dramatically and prematurely",
           atomCopyOne: "Made a whole UI system that was build all interfaces around it, lots of concepts that produced a unique look&feel, main page widgets, HMX, animations, ilutstrarions etc.",
