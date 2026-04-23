@@ -17,12 +17,12 @@ export const mobileCaseCopy = {
       "Культура мск",
       "и другое",
     ],
-    objTitle: "ЕЩЁ ОДИН АВТОМОБИЛЬНЫЙ ПРОЕКТ",
+    objTitle: "АВТОМОБИЛЬНЫЙ ПРОЕКТ",
     objStatus: "арт-д • дизайнер",
     objCopy:
       "Определил look & feel, сделал сервисные и главные экраны: виджеты, климат-контроль, медиа и музыку, экран всех приложений, звонки, камеры и другое.",
     atomTitle: "ATOM AUTOMOTIVE",
-    atomStatus: "арт-д • дизайнер • 24-26",
+    atomStatus: "арт-д • дизайнер •\u00A024‑26",
     atomDescription:
       "Эта легендарная компания успела перевернуть автомобильный рынок, стать настоящей рок-звездой индустрии, но закончила так же драматично и преждевременно",
     atomCopyOne:
@@ -89,7 +89,7 @@ export const mobileCaseCopy = {
     objCopy:
       "Defined look & feel, created service and main screens such as widgets, climate-control, media and music, all apps page, calls, cameras etc.",
     atomTitle: "ATOM AUTOMOTIVE",
-    atomStatus: "art-d • designer • 24-26",
+    atomStatus: "art-d • designer •\u00A024‑26",
     atomDescription:
       "This legendary company managed to revolutionize the automotive market, becoming the rock star of the industry, but it met its end just as dramatically and prematurely",
     atomCopyOne:

@@ -41,7 +41,7 @@ const pageCopy = {
     heroPromo:
       "Создаю уникальный визуал, делаю бренд узнаваемым, работаю с новыми форматами и устройствами, помогаю командам расти",
     atomMore: "Подробнее",
-    atomStatus: "арт-директор • дизайнер • 24-26",
+    atomStatus: "арт-директор • дизайнер •\u00A024‑26",
     atomDescription:
       "Эта легендарная компания успела перевернуть автомобильный рынок, стать настоящей рок-звездой индустрии, но закончила так же драматично и преждевременно",
     atomCopyOne:
@@ -100,7 +100,7 @@ const pageCopy = {
     heroPromo:
       "Creating beautiful visuals, making companies' design unique, working with never known devices, delivering teams growth",
     atomMore: "More",
-    atomStatus: "art-d • designer • 24-26",
+    atomStatus: "art-d • designer •\u00A024‑26",
     atomDescription:
       "This legendary company managed to revolutionize the automotive market, becoming the rock star of the industry, but it met its end just as dramatically and prematurely",
     atomCopyOne:
@@ -329,7 +329,15 @@ export function HomePage() {
           </div>
 
           <div className="hero-figma__wolf-wrap" aria-hidden="true">
-            <Image alt="" className="hero-figma__wolf" src={heroAssets.wolf} fill priority sizes={imageSizes.heroWolf} />
+            <video
+              className="hero-figma__wolf"
+              src="/media/figma/Wolfy video.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+            />
           </div>
 
           <Image
