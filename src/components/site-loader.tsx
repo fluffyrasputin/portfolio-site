@@ -41,21 +41,21 @@ export function SiteLoader() {
 
     window.sessionStorage.setItem(LOADER_SESSION_KEY, "1");
 
-    const settleDuration = 220;
-    const fadeDuration = 560;
-    const stopTime = 980;
+    const settleDuration = 380;
+    const fadeDuration = 820;
+    const stopTime = 1240;
     const closeTime = stopTime + settleDuration;
     const totalDuration = closeTime + fadeDuration;
-    const openTimer = window.setTimeout(() => setPhase("open"), 40);
+    const openTimer = window.setTimeout(() => setPhase("open"), 24);
     const logoTimer = window.setInterval(() => {
       setLogoIndex((current) => (current + 1) % logos.length);
-    }, 100);
+    }, 140);
     const progressTimer = window.setInterval(() => {
       setProgress((current) => {
-        const next = current + 100 / (totalDuration / 50);
+        const next = current + 100 / (totalDuration / 60);
         return next >= 100 ? 100 : next;
       });
-    }, 50);
+    }, 60);
     const stopTimer = window.setTimeout(() => {
       window.clearInterval(logoTimer);
       window.clearInterval(progressTimer);
@@ -81,7 +81,7 @@ export function SiteLoader() {
       return;
     }
 
-    document.body.classList.toggle("site-loader-active", phase !== "closed");
+    document.body.classList.toggle("site-loader-active", phase === "open" || phase === "closing");
 
     return () => {
       document.body.classList.remove("site-loader-active");
