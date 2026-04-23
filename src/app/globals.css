@@ -974,7 +974,7 @@ main img {
   position: absolute;
   left: calc(50% + 3px);
   bottom: 0;
-  width: 254px;
+  width: 308px;
   height: 389px;
   transform: translateX(-50%);
   overflow: hidden;
@@ -982,12 +982,13 @@ main img {
 
 .hero-figma__wolf {
   position: absolute;
-  top: -20.3%;
-  left: -60.09%;
-  width: 220.53%;
-  height: 144.36%;
+  top: -51px;
+  left: 50%;
+  width: 556px;
+  height: 505px;
   max-width: none;
   object-fit: cover;
+  transform: translateX(-50%);
 }
 
 .hero-figma__portrait {
@@ -2778,6 +2779,10 @@ main img {
   gap: 56px;
 }
 
+.page-shell--ru .pb-case__description {
+  margin-bottom: 16px;
+}
+
 .page-shell--ru .stoloto-case__copy {
   min-height: 214px;
 }
@@ -3815,7 +3820,7 @@ main img {
 }
 
 .mobile-footer__portrait video.mobile-footer__portrait-media {
-  transform: rotate(180deg);
+  transform: scaleY(-1);
 }
 
 .mobile-footer__role,
@@ -3935,7 +3940,6 @@ main img {
   height: 117px;
   overflow: hidden;
   border-radius: 999px;
-  transform: scaleY(-1);
 }
 
 @media (max-width: 767px) {

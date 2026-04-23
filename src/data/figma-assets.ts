@@ -24,7 +24,7 @@ export const heroAssets = {
   obuMusic: "/media/figma/obu-music.png",
   pochtaLogo: "/media/figma/pochta-logo.svg",
   pochtaPhone: "/media/figma/pochta-phone.png",
-  pochtaDescriptionCard: "/media/figma/pochta-last-cards.png",
+  pochtaDescriptionCard: "/media/figma/pochta-description-card.png",
   pochtaCard: "/media/figma/pochta-bank-card.png",
   pochtaMscLogo: "/media/figma/pochta-msc-logo.png",
   pochtaPills: "/media/figma/pochta-pills.png",

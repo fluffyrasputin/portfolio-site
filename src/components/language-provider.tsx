@@ -12,14 +12,7 @@ type LanguageContextValue = {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(() => {
-    if (typeof window === "undefined") {
-      return "en";
-    }
-
-    const storedLanguage = window.localStorage.getItem("portfolio-language");
-    return storedLanguage === "ru" || storedLanguage === "en" ? storedLanguage : "en";
-  });
+  const [language, setLanguageState] = useState<Language>("en");
   const [toastPhase, setToastPhase] = useState<"closed" | "open" | "closing">("closed");
   const toastHoldTimerRef = useRef<number | null>(null);
   const toastCloseTimerRef = useRef<number | null>(null);
