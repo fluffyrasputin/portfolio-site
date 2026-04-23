@@ -41,8 +41,8 @@ export function SiteLoader() {
 
     window.sessionStorage.setItem(LOADER_SESSION_KEY, "1");
 
-    const settleDuration = 380;
-    const fadeDuration = 820;
+    const settleDuration = 460;
+    const fadeDuration = 1120;
     const stopTime = 1240;
     const closeTime = stopTime + settleDuration;
     const totalDuration = closeTime + fadeDuration;
