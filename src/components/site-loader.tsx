@@ -32,6 +32,11 @@ export function SiteLoader() {
       return;
     }
 
+    logos.forEach((src) => {
+      const image = new Image();
+      image.src = src;
+    });
+
     const hasSeenLoader = window.sessionStorage.getItem(LOADER_SESSION_KEY) === "1";
     if (hasSeenLoader) {
       const skipTimer = window.setTimeout(() => setPhase("closed"), 0);
@@ -42,9 +47,10 @@ export function SiteLoader() {
 
     window.sessionStorage.setItem(LOADER_SESSION_KEY, "1");
 
+    const logoInterval = 120;
     const settleDuration = 460;
     const fadeDuration = 1120;
-    const stopTime = 1240;
+    const stopTime = logos.length * logoInterval + 360;
     const closeTime = stopTime + settleDuration;
     const totalDuration = closeTime + fadeDuration;
     const openTimer = window.setTimeout(() => {
@@ -53,7 +59,7 @@ export function SiteLoader() {
     }, 24);
     const logoTimer = window.setInterval(() => {
       setLogoIndex((current) => (current + 1) % logos.length);
-    }, 140);
+    }, logoInterval);
     const progressTimer = window.setInterval(() => {
       setProgress((current) => {
         const next = current + 100 / (totalDuration / 60);
@@ -82,7 +88,7 @@ export function SiteLoader() {
       window.clearInterval(logoTimer);
       window.clearInterval(progressTimer);
     };
-  }, [logos.length]);
+  }, [logos]);
 
   useEffect(() => {
     if (typeof document === "undefined") {
