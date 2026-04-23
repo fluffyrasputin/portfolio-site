@@ -1,15 +1,15 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { heroAssets } from "@/data/figma-assets";
 
 const LOADER_SESSION_KEY = "portfolio-site-loader-seen";
 
 export function SiteLoader() {
   const [phase, setPhase] = useState<"checking" | "open" | "closing" | "closed">("checking");
+  const [logoIndex, setLogoIndex] = useState(0);
   const [progress, setProgress] = useState(0);
-  const logoRef = useRef<HTMLImageElement | null>(null);
   const logos = useMemo(
     () => [
       heroAssets.heroProjectLogo1,
@@ -46,13 +46,9 @@ export function SiteLoader() {
     const stopTime = 1050;
     const closeTime = stopTime + settleDuration;
     const totalDuration = closeTime + fadeDuration;
-    let nextLogoIndex = 0;
     const openTimer = window.setTimeout(() => setPhase("open"), 0);
     const logoTimer = window.setInterval(() => {
-      nextLogoIndex = (nextLogoIndex + 1) % logos.length;
-      if (logoRef.current) {
-        logoRef.current.src = logos[nextLogoIndex];
-      }
+      setLogoIndex((current) => (current + 1) % logos.length);
     }, 100);
     const progressTimer = window.setInterval(() => {
       setProgress((current) => {
@@ -97,8 +93,7 @@ export function SiteLoader() {
         <img
           alt=""
           className="site-loader__logo"
-          ref={logoRef}
-          src={logos[0]}
+          src={logos[logoIndex]}
         />
       </div>
       <div className="site-loader__track" aria-hidden="true">

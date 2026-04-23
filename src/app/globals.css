@@ -3971,10 +3971,11 @@ main img {
 
   .mobile-header__inner {
     position: relative;
-    width: calc(100% - 32px);
-    max-width: none;
+    width: 100%;
     height: 90px;
     margin: 0 auto;
+    padding-inline: 16px;
+    box-sizing: border-box;
     background-image: var(--mobile-menu-background);
     background-repeat: no-repeat;
     background-position: top center;
