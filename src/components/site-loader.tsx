@@ -41,12 +41,12 @@ export function SiteLoader() {
 
     window.sessionStorage.setItem(LOADER_SESSION_KEY, "1");
 
-    const settleDuration = 180;
-    const fadeDuration = 500;
-    const stopTime = 1050;
+    const settleDuration = 220;
+    const fadeDuration = 560;
+    const stopTime = 980;
     const closeTime = stopTime + settleDuration;
     const totalDuration = closeTime + fadeDuration;
-    const openTimer = window.setTimeout(() => setPhase("open"), 0);
+    const openTimer = window.setTimeout(() => setPhase("open"), 40);
     const logoTimer = window.setInterval(() => {
       setLogoIndex((current) => (current + 1) % logos.length);
     }, 100);
@@ -83,7 +83,7 @@ export function SiteLoader() {
   return (
     <div
       aria-hidden="true"
-      className={`site-loader${phase === "closing" ? " site-loader--closing" : ""}`}
+      className={`site-loader${phase === "open" ? " site-loader--open" : ""}${phase === "closing" ? " site-loader--closing" : ""}`}
     >
       <div className="site-loader__identity">
         <p className="site-loader__name">Andrey Tsarёv</p>
