@@ -81,6 +81,7 @@ export function SiteLoader() {
         <img
           alt=""
           className="site-loader__logo"
+          key={logos[logoIndex]}
           src={logos[logoIndex]}
         />
       </div>

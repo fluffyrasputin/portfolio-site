@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
 import { LanguageToast } from "@/components/language-toast";
 import type { Language } from "@/types/site";
 
@@ -13,12 +12,13 @@ type LanguageContextValue = {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window === "undefined") {
       return "en";
     }
-    return "en";
+
+    const storedLanguage = window.localStorage.getItem("portfolio-language");
+    return storedLanguage === "ru" || storedLanguage === "en" ? storedLanguage : "en";
   });
   const [toastPhase, setToastPhase] = useState<"closed" | "open" | "closing">("closed");
   const toastHoldTimerRef = useRef<number | null>(null);
@@ -68,10 +68,10 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(
     () => ({
-      language: pathname === "/wall" ? "en" : language,
+      language,
       setLanguage,
     }),
-    [language, pathname, setLanguage],
+    [language, setLanguage],
   );
 
   return (
