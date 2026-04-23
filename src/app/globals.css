@@ -502,6 +502,27 @@ main img {
   overflow: hidden;
 }
 
+body.site-loader-active main,
+body.site-loader-active .persistent-floating-controls,
+body.site-loader-active .language-toast,
+body.site-loader-active .skip-link,
+body.image-lightbox-open main,
+body.image-lightbox-open .persistent-floating-controls,
+body.image-lightbox-open .language-toast,
+body.image-lightbox-open .skip-link {
+  filter: blur(18px);
+  transform: translateZ(0);
+  transition: filter 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: filter;
+}
+
+body.site-loader-active main,
+body.site-loader-active .persistent-floating-controls,
+body.site-loader-active .language-toast,
+body.site-loader-active .skip-link {
+  filter: blur(14px);
+}
+
 .image-lightbox {
   position: fixed;
   inset: 0;
@@ -515,9 +536,7 @@ main img {
 .image-lightbox__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(5, 5, 5, 0.4);
-  backdrop-filter: blur(24px) saturate(0.88);
-  -webkit-backdrop-filter: blur(24px) saturate(0.88);
+  background: rgba(5, 5, 5, 0.32);
 }
 
 .image-lightbox__stage {
@@ -753,9 +772,7 @@ main img {
   inset: 0;
   z-index: 120;
   overflow: hidden;
-  background: rgba(8, 8, 8, 0.72);
-  backdrop-filter: blur(18px) saturate(0.92);
-  -webkit-backdrop-filter: blur(18px) saturate(0.92);
+  background: rgba(8, 8, 8, 0.58);
   pointer-events: none;
   opacity: 0;
   visibility: hidden;

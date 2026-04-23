@@ -76,6 +76,18 @@ export function SiteLoader() {
     };
   }, [logos.length]);
 
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    document.body.classList.toggle("site-loader-active", phase !== "closed");
+
+    return () => {
+      document.body.classList.remove("site-loader-active");
+    };
+  }, [phase]);
+
   if (phase === "closed") {
     return null;
   }
