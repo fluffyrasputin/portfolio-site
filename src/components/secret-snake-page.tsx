@@ -263,13 +263,7 @@ export function SecretSnakePage() {
                 </Link>
               </div>
 
-              <div
-                className="secret-snake-board"
-                style={{
-                  width: BOARD_SIZE * CELL_SIZE,
-                  height: BOARD_SIZE * CELL_SIZE,
-                }}
-              >
+              <div className="secret-snake-board">
                 {Array.from({ length: BOARD_SIZE * BOARD_SIZE }).map((_, index) => {
                   const x = index % BOARD_SIZE;
                   const y = Math.floor(index / BOARD_SIZE);
