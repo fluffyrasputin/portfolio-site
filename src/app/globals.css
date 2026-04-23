@@ -751,8 +751,8 @@ main img {
   opacity: 1;
   visibility: visible;
   transition:
-    opacity 500ms ease,
-    visibility 500ms ease;
+    opacity 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 500ms;
 }
 
 .site-loader--closing {
@@ -3971,7 +3971,8 @@ main img {
 
   .mobile-header__inner {
     position: relative;
-    width: min(358px, calc(100% - 32px));
+    width: calc(100% - 32px);
+    max-width: none;
     height: 90px;
     margin: 0 auto;
     background-image: var(--mobile-menu-background);
