@@ -41,13 +41,13 @@ export function SiteLoader() {
 
     window.sessionStorage.setItem(LOADER_SESSION_KEY, "1");
 
-    const totalDuration = 1600;
+    const totalDuration = 1400;
     const openTimer = window.setTimeout(() => setPhase("open"), 0);
     const closeTimer = window.setTimeout(() => setPhase("closing"), 1050);
     const hideTimer = window.setTimeout(() => setPhase("closed"), totalDuration);
     const logoTimer = window.setInterval(() => {
       setLogoIndex((current) => (current + 1) % logos.length);
-    }, 140);
+    }, 100);
     const progressTimer = window.setInterval(() => {
       setProgress((current) => {
         const next = current + 100 / (totalDuration / 50);
@@ -81,7 +81,6 @@ export function SiteLoader() {
         <img
           alt=""
           className="site-loader__logo"
-          key={logos[logoIndex]}
           src={logos[logoIndex]}
         />
       </div>
