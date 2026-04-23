@@ -509,12 +509,20 @@ main img {
   display: grid;
   place-items: center;
   padding: 24px 16px 112px;
-  background: rgba(5, 5, 5, 0.38);
+  background: transparent;
+}
+
+.image-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.4);
   backdrop-filter: blur(24px) saturate(0.88);
   -webkit-backdrop-filter: blur(24px) saturate(0.88);
 }
 
 .image-lightbox__stage {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
   width: 100%;
@@ -558,9 +566,8 @@ main img {
 
 .image-lightbox__close-icon {
   display: block;
-  font-size: 42px;
-  line-height: 1;
-  font-weight: 300;
+  width: 32px;
+  height: 32px;
 }
 
 .desktop-header {
@@ -746,7 +753,9 @@ main img {
   inset: 0;
   z-index: 120;
   overflow: hidden;
-  background: rgba(8, 8, 8, 0.94);
+  background: rgba(8, 8, 8, 0.72);
+  backdrop-filter: blur(18px) saturate(0.92);
+  -webkit-backdrop-filter: blur(18px) saturate(0.92);
   pointer-events: none;
   opacity: 0;
   visibility: hidden;

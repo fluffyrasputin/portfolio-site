@@ -54,15 +54,14 @@ function computeInitialScale(image: LightboxImageState) {
   const isSmallImage =
     image.displayedWidth <= Math.min(320, viewportWidth * 0.42) &&
     image.displayedHeight <= Math.min(320, viewportHeight * 0.42);
+  const enlargementLimit = isSmallImage ? 2 : 1.85;
   const initialScale = isSmallImage
     ? Math.min(fitScale, displayedScale * 2)
-    : Math.min(fitScale, displayedScale * 2.6);
+    : Math.min(fitScale, displayedScale * enlargementLimit);
 
   return {
     initialScale,
-    maxScale: isSmallImage
-      ? initialScale
-      : Math.min(fitScale, Math.max(displayedScale * 3, initialScale + 0.36)),
+    maxScale: Math.min(fitScale, Math.max(displayedScale * 2, initialScale)),
   };
 }
 
@@ -160,6 +159,7 @@ export function ImageLightbox() {
       role="dialog"
       onClick={() => setImage(null)}
     >
+      <div className="image-lightbox__backdrop" aria-hidden="true" />
       <div className="image-lightbox__stage">
         <img
           alt={image.alt}
@@ -194,9 +194,15 @@ export function ImageLightbox() {
         }}
         type="button"
       >
-        <span className="image-lightbox__close-icon" aria-hidden="true">
-          ×
-        </span>
+        <svg aria-hidden="true" className="image-lightbox__close-icon" viewBox="0 0 24 24">
+          <path
+            d="M6 6l12 12M18 6L6 18"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeWidth="1.75"
+          />
+        </svg>
       </button>
     </div>
   );
