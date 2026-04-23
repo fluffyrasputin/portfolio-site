@@ -506,6 +506,10 @@ body.site-loader-active main,
 body.site-loader-active .persistent-floating-controls,
 body.site-loader-active .language-toast,
 body.site-loader-active .skip-link,
+body.site-loader-closing main,
+body.site-loader-closing .persistent-floating-controls,
+body.site-loader-closing .language-toast,
+body.site-loader-closing .skip-link,
 body.image-lightbox-open main,
 body.image-lightbox-open .persistent-floating-controls,
 body.image-lightbox-open .language-toast,
@@ -521,6 +525,14 @@ body.site-loader-active .persistent-floating-controls,
 body.site-loader-active .language-toast,
 body.site-loader-active .skip-link {
   filter: blur(20px);
+}
+
+body.site-loader-closing main,
+body.site-loader-closing .persistent-floating-controls,
+body.site-loader-closing .language-toast,
+body.site-loader-closing .skip-link {
+  filter: blur(0px);
+  transition: filter 1120ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .image-lightbox {

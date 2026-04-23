@@ -8,6 +8,7 @@ const LOADER_SESSION_KEY = "portfolio-site-loader-seen";
 
 export function SiteLoader() {
   const [phase, setPhase] = useState<"checking" | "open" | "closing" | "closed">("checking");
+  const [blurPhase, setBlurPhase] = useState<"idle" | "active" | "closing">("idle");
   const [logoIndex, setLogoIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const logos = useMemo(
@@ -46,7 +47,10 @@ export function SiteLoader() {
     const stopTime = 1240;
     const closeTime = stopTime + settleDuration;
     const totalDuration = closeTime + fadeDuration;
-    const openTimer = window.setTimeout(() => setPhase("open"), 24);
+    const openTimer = window.setTimeout(() => {
+      setPhase("open");
+      setBlurPhase("active");
+    }, 24);
     const logoTimer = window.setInterval(() => {
       setLogoIndex((current) => (current + 1) % logos.length);
     }, 140);
@@ -63,8 +67,12 @@ export function SiteLoader() {
     }, stopTime);
     const closeTimer = window.setTimeout(() => {
       setPhase("closing");
+      setBlurPhase("closing");
     }, closeTime);
-    const hideTimer = window.setTimeout(() => setPhase("closed"), totalDuration);
+    const hideTimer = window.setTimeout(() => {
+      setPhase("closed");
+      setBlurPhase("idle");
+    }, totalDuration);
 
     return () => {
       window.clearTimeout(openTimer);
@@ -81,12 +89,14 @@ export function SiteLoader() {
       return;
     }
 
-    document.body.classList.toggle("site-loader-active", phase === "open" || phase === "closing");
+    document.body.classList.toggle("site-loader-active", blurPhase === "active");
+    document.body.classList.toggle("site-loader-closing", blurPhase === "closing");
 
     return () => {
       document.body.classList.remove("site-loader-active");
+      document.body.classList.remove("site-loader-closing");
     };
-  }, [phase]);
+  }, [blurPhase]);
 
   if (phase === "closed") {
     return null;
