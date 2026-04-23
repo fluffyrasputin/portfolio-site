@@ -25,13 +25,12 @@ html {
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top, rgba(245, 196, 81, 0.14), transparent 26%),
-    var(--background);
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
 }
 
 * {
@@ -748,6 +747,7 @@ main img {
   z-index: 120;
   overflow: hidden;
   background: #050505;
+  pointer-events: none;
   opacity: 1;
   visibility: visible;
   transition:
@@ -756,7 +756,7 @@ main img {
 }
 
 .site-loader--closing {
-  opacity: 1;
+  opacity: 0;
   visibility: hidden;
 }
 
@@ -842,11 +842,9 @@ main img {
   padding: 12px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 18px;
-  background: rgba(16, 16, 16, 0.88);
+  background: rgba(16, 16, 16, 0.94);
   color: var(--foreground);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
@@ -879,9 +877,7 @@ main img {
   height: 48px;
   border-radius: 12px;
   overflow: hidden;
-  background:
-    radial-gradient(circle at top, rgba(245, 196, 81, 0.22), transparent 48%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .language-toast__icon-image {
@@ -958,6 +954,12 @@ main img {
   line-height: 32px;
   letter-spacing: 0;
   font-weight: 400;
+}
+
+.hero--figma .hero-figma__name {
+  max-width: none;
+  font-size: 32px;
+  line-height: 32px;
 }
 
 .hero-figma__role,
@@ -1861,8 +1863,8 @@ main img {
 
 .obu-case__title,
 .b24-case__title {
-  font-size: 32px;
-  line-height: 32px;
+  font-size: 13px;
+  line-height: 17px;
   letter-spacing: 0;
   font-weight: 400;
   white-space: nowrap;
@@ -1907,6 +1909,13 @@ main img {
   width: 620px;
   max-width: 100%;
   height: 92px;
+}
+
+.pb-case__header {
+  display: grid;
+  gap: 32px;
+  width: 620px;
+  max-width: 100%;
 }
 
 .pb-case__intro,
@@ -1979,6 +1988,12 @@ main img {
 
 .pb-case__more:hover {
   opacity: 0.8;
+}
+
+.atom-case__more,
+.pb-case__more,
+.mobile-case__more {
+  display: none !important;
 }
 
 .pb-case__left,

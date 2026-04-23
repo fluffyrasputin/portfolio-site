@@ -7,19 +7,7 @@ import { heroAssets } from "@/data/figma-assets";
 const LOADER_SESSION_KEY = "portfolio-site-loader-seen";
 
 export function SiteLoader() {
-  const [visible, setVisible] = useState(() => {
-    if (typeof window === "undefined") {
-      return false;
-    }
-
-    const hasSeenLoader = window.sessionStorage.getItem(LOADER_SESSION_KEY) === "1";
-    if (!hasSeenLoader) {
-      window.sessionStorage.setItem(LOADER_SESSION_KEY, "1");
-    }
-
-    return !hasSeenLoader;
-  });
-  const [closing, setClosing] = useState(false);
+  const [phase, setPhase] = useState<"checking" | "open" | "closing" | "closed">("checking");
   const [logoIndex, setLogoIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const logos = useMemo(
@@ -39,13 +27,24 @@ export function SiteLoader() {
   );
 
   useEffect(() => {
-    if (typeof window === "undefined" || !visible) {
+    if (typeof window === "undefined") {
       return;
     }
 
+    const hasSeenLoader = window.sessionStorage.getItem(LOADER_SESSION_KEY) === "1";
+    if (hasSeenLoader) {
+      const skipTimer = window.setTimeout(() => setPhase("closed"), 0);
+      return () => {
+        window.clearTimeout(skipTimer);
+      };
+    }
+
+    window.sessionStorage.setItem(LOADER_SESSION_KEY, "1");
+
     const totalDuration = 1400;
-    const closeTimer = window.setTimeout(() => setClosing(true), 1050);
-    const hideTimer = window.setTimeout(() => setVisible(false), totalDuration);
+    const openTimer = window.setTimeout(() => setPhase("open"), 0);
+    const closeTimer = window.setTimeout(() => setPhase("closing"), 1050);
+    const hideTimer = window.setTimeout(() => setPhase("closed"), totalDuration);
     const logoTimer = window.setInterval(() => {
       setLogoIndex((current) => (current + 1) % logos.length);
     }, 100);
@@ -57,21 +56,22 @@ export function SiteLoader() {
     }, 50);
 
     return () => {
+      window.clearTimeout(openTimer);
       window.clearTimeout(closeTimer);
       window.clearTimeout(hideTimer);
       window.clearInterval(logoTimer);
       window.clearInterval(progressTimer);
     };
-  }, [logos.length, visible]);
+  }, [logos.length]);
 
-  if (!visible) {
+  if (phase === "closed") {
     return null;
   }
 
   return (
     <div
       aria-hidden="true"
-      className={`site-loader${closing ? " site-loader--closing" : ""}`}
+      className={`site-loader${phase === "closing" ? " site-loader--closing" : ""}`}
     >
       <div className="site-loader__identity">
         <p className="site-loader__name">Andrey Tsarёv</p>
