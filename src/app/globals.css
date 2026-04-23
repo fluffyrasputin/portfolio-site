@@ -3113,10 +3113,10 @@ main img {
 
 .mobile-hero__wolf {
   position: absolute;
-  top: 150px;
-  right: 0;
-  width: 238px;
-  height: 340px;
+  top: 126px;
+  right: -18px;
+  width: 286px;
+  height: 408px;
   overflow: hidden;
 }
 
@@ -3835,7 +3835,7 @@ main img {
 }
 
 .mobile-footer__portrait video.mobile-footer__portrait-media {
-  transform: rotate(90deg) scale(1.08);
+  transform: none !important;
 }
 
 .mobile-footer__role,
@@ -3983,7 +3983,8 @@ main img {
 
   .mobile-header__inner {
     position: relative;
-    width: min(calc(100% - 32px), 358px);
+    width: calc(100% - 32px);
+    max-width: none;
     height: 90px;
     margin: 0 auto;
     background-image: var(--mobile-menu-background);
