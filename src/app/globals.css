@@ -751,8 +751,8 @@ main img {
   opacity: 1;
   visibility: visible;
   transition:
-    opacity 360ms ease,
-    visibility 360ms ease;
+    opacity 500ms ease,
+    visibility 500ms ease;
 }
 
 .site-loader--closing {
@@ -802,7 +802,6 @@ main img {
   max-width: min(72vw, 620px);
   height: min(144px, 19.2vh, 33.6vw);
   object-fit: contain;
-  animation: loader-logo-blink 0.2s step-end infinite;
 }
 
 @media (max-width: 767px) {
@@ -905,20 +904,6 @@ main img {
   font-size: 13px;
   line-height: 17px;
   color: var(--muted);
-}
-
-@keyframes loader-logo-blink {
-  0% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.92;
-  }
-
-  100% {
-    opacity: 1;
-  }
 }
 
 .page-shell {

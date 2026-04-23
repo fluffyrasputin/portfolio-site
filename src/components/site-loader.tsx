@@ -41,11 +41,11 @@ export function SiteLoader() {
 
     window.sessionStorage.setItem(LOADER_SESSION_KEY, "1");
 
-    const totalDuration = 1400;
+    const fadeDuration = 500;
+    const stopTime = 1050;
+    const totalDuration = stopTime + fadeDuration;
     let nextLogoIndex = 0;
     const openTimer = window.setTimeout(() => setPhase("open"), 0);
-    const closeTimer = window.setTimeout(() => setPhase("closing"), 1050);
-    const hideTimer = window.setTimeout(() => setPhase("closed"), totalDuration);
     const logoTimer = window.setInterval(() => {
       nextLogoIndex = (nextLogoIndex + 1) % logos.length;
       if (logoRef.current) {
@@ -58,10 +58,17 @@ export function SiteLoader() {
         return next >= 100 ? 100 : next;
       });
     }, 50);
+    const stopTimer = window.setTimeout(() => {
+      window.clearInterval(logoTimer);
+      window.clearInterval(progressTimer);
+      setProgress(100);
+      setPhase("closing");
+    }, stopTime);
+    const hideTimer = window.setTimeout(() => setPhase("closed"), totalDuration);
 
     return () => {
       window.clearTimeout(openTimer);
-      window.clearTimeout(closeTimer);
+      window.clearTimeout(stopTimer);
       window.clearTimeout(hideTimer);
       window.clearInterval(logoTimer);
       window.clearInterval(progressTimer);
