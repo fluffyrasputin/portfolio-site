@@ -3061,9 +3061,11 @@ body.site-loader-closing .skip-link {
   width: 100%;
   max-width: 462px;
   margin: 0 auto;
+  padding-inline: 16px;
+  box-sizing: border-box;
   display: grid;
   gap: 120px;
-  justify-items: stretch;
+  justify-items: center;
 }
 
 .mobile-hero,
@@ -3074,8 +3076,19 @@ body.site-loader-closing .skip-link {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding-inline: 16px;
-  box-sizing: border-box;
+  min-width: 0;
+}
+
+.mobile-case-atom__intro > *,
+.mobile-case-pochta__intro > *,
+.mobile-case-bitrix__intro > *,
+.mobile-case-stoloto__intro > *,
+.mobile-additional-cases__row > *,
+.mobile-case-atom__text-kamaz > *,
+.mobile-case-atom__photo-copy > *,
+.mobile-case-obj__intro > *,
+.mobile-case-stoloto__copy-row > * {
+  min-width: 0;
 }
 
 .mobile-hero {
