@@ -32,14 +32,29 @@ const wallCopy = {
   },
 } as const;
 
-function WallCollage({ items, className, height }: { items: WallAssetItem[]; className: string; height: number }) {
+function WallCollage({
+  items,
+  className,
+  baseWidth,
+  height,
+}: {
+  items: WallAssetItem[];
+  className: string;
+  baseWidth: number;
+  height: number;
+}) {
   return (
-    <div className={className} style={{ height }}>
+    <div className={className} style={{ aspectRatio: `${baseWidth} / ${height}` }}>
       {items.map((item, index) => (
         <div
           className="wall-collage__item"
           key={`${item.src}-${index}`}
-          style={{ left: item.x, top: item.y, width: item.width, height: item.height }}
+          style={{
+            left: `${(item.x / baseWidth) * 100}%`,
+            top: `${(item.y / height) * 100}%`,
+            width: `${(item.width / baseWidth) * 100}%`,
+            height: `${(item.height / height) * 100}%`,
+          }}
         >
           <img alt={item.alt ?? ""} src={item.src} style={{ objectFit: item.fit ?? "cover" }} />
         </div>
@@ -69,7 +84,7 @@ export function WallPage() {
           </section>
 
           <section className="wall-desktop-section wall-desktop-section--praise">
-            <WallCollage className="wall-collage wall-collage--desktop" items={wallDesktopPraiseItems} height={1659} />
+            <WallCollage className="wall-collage wall-collage--desktop" items={wallDesktopPraiseItems} baseWidth={620} height={1659} />
           </section>
 
           <section className="wall-intro wall-intro--memorial wall-intro--desktop">
@@ -81,7 +96,7 @@ export function WallPage() {
           </section>
 
           <section className="wall-desktop-section wall-desktop-section--memorial">
-            <WallCollage className="wall-collage wall-collage--desktop" items={wallDesktopMemorialItems} height={1763} />
+            <WallCollage className="wall-collage wall-collage--desktop" items={wallDesktopMemorialItems} baseWidth={620} height={1763} />
           </section>
 
           <DesktopPageEnd />
@@ -99,7 +114,7 @@ export function WallPage() {
           </section>
 
           <section className="wall-mobile-section">
-            <WallCollage className="wall-collage wall-collage--mobile" items={wallMobilePraiseItems} height={2442} />
+            <WallCollage className="wall-collage wall-collage--mobile" items={wallMobilePraiseItems} baseWidth={358} height={2442} />
           </section>
 
           <section className="wall-intro wall-intro--memorial wall-intro--mobile">
@@ -111,7 +126,7 @@ export function WallPage() {
           </section>
 
           <section className="wall-mobile-section wall-mobile-section--memorial">
-            <WallCollage className="wall-collage wall-collage--mobile" items={wallMobileMemorialItems} height={2879} />
+            <WallCollage className="wall-collage wall-collage--mobile" items={wallMobileMemorialItems} baseWidth={358} height={2879} />
           </section>
 
           <MobilePageEnd />

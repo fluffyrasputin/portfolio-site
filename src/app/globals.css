@@ -2907,8 +2907,11 @@ body.site-loader-closing .skip-link {
 }
 
 .wall-mobile-page {
-  width: min(360px, calc(100vw - 32px));
+  width: 100%;
+  max-width: 462px;
   margin: 0 auto;
+  padding-inline: 16px;
+  box-sizing: border-box;
   padding: 0 0 96px;
 }
 
@@ -2992,7 +2995,7 @@ body.site-loader-closing .skip-link {
 }
 
 .wall-mobile-section {
-  width: 358px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -3012,7 +3015,7 @@ body.site-loader-closing .skip-link {
 }
 
 .wall-intro--mobile .wall-intro__text {
-  width: 218px;
+  width: min(218px, 100%);
 }
 
 .wall-intro--memorial.wall-intro--mobile {
@@ -3028,7 +3031,7 @@ body.site-loader-closing .skip-link {
 }
 
 .wall-intro--memorial.wall-intro--mobile .wall-intro__text {
-  width: 209px;
+  width: min(209px, 100%);
 }
 
 .wall-mobile-section--memorial {
@@ -3037,6 +3040,7 @@ body.site-loader-closing .skip-link {
 
 .wall-collage {
   position: relative;
+  width: 100%;
 }
 
 .wall-collage__item {
