@@ -968,14 +968,14 @@ body.site-loader-closing .skip-link {
 }
 
 .language-toast__title {
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 13px;
+  line-height: 17px;
   font-weight: 500;
 }
 
 .language-toast__description {
-  font-size: 13px;
-  line-height: 17px;
+  font-size: 12px;
+  line-height: 15px;
   color: var(--muted);
 }
 
