@@ -3425,6 +3425,11 @@ body.site-loader-closing .skip-link {
   align-content: start;
 }
 
+.mobile-case-obj__title {
+  white-space: normal;
+  max-width: 110px;
+}
+
 .mobile-case-obj__description {
   position: relative;
   width: min(201px, 100%);
