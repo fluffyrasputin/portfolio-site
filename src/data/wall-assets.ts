@@ -89,7 +89,7 @@ export const wallMobileMemorialItems: WallAssetItem[] = [
   { src: "/media/wall/mobile-memorial-mini-pack.png", x: 30, y: 2303, width: 95, height: 130 },
   { src: "/media/wall/mobile-memorial-header-strip.png", x: 41, y: 990, width: 153, height: 74 },
   { src: "/media/wall/mobile-memorial-main-poster.png", x: 40, y: 570, width: 277, height: 390 },
-  { src: "/media/wall/mobile-memorial-wide-banner.png", x: -1, y: 1114, width: 361, height: 160 },
+  { src: "/media/wall/mobile-memorial-wide-banner.png", x: -1, y: 1114, width: 361, height: 160, fit: "contain" },
   { src: "/media/wall/mobile-memorial-small-pack.png", x: 210, y: 1309, width: 97, height: 121 },
   { src: "/media/wall/mobile-memorial-small-icon.png", x: 218, y: 990, width: 100, height: 94 },
   { src: "/media/wall/mobile-memorial-thin-pack.png", x: 210, y: 1556, width: 97, height: 168 },

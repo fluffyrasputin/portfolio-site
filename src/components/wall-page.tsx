@@ -46,18 +46,27 @@ function WallCollage({
   return (
     <div className={className} style={{ aspectRatio: `${baseWidth} / ${height}` }}>
       {items.map((item, index) => (
+        (() => {
+          const clampedLeft = Math.max(0, item.x);
+          const clampedTop = Math.max(0, item.y);
+          const widthWithinFrame = Math.min(baseWidth - clampedLeft, item.width + Math.min(0, item.x));
+          const heightWithinFrame = Math.min(height - clampedTop, item.height + Math.min(0, item.y));
+
+          return (
         <div
           className="wall-collage__item"
           key={`${item.src}-${index}`}
           style={{
-            left: `${(item.x / baseWidth) * 100}%`,
-            top: `${(item.y / height) * 100}%`,
-            width: `${(item.width / baseWidth) * 100}%`,
-            height: `${(item.height / height) * 100}%`,
+            left: `${(clampedLeft / baseWidth) * 100}%`,
+            top: `${(clampedTop / height) * 100}%`,
+            width: `${(widthWithinFrame / baseWidth) * 100}%`,
+            height: `${(heightWithinFrame / height) * 100}%`,
           }}
         >
           <img alt={item.alt ?? ""} src={item.src} style={{ objectFit: item.fit ?? "cover" }} />
         </div>
+          );
+        })()
       ))}
     </div>
   );
