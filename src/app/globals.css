@@ -3270,7 +3270,7 @@ body.site-loader-closing .skip-link {
 .mobile-case-atom__intro {
   display: grid;
   grid-template-columns: 143px minmax(0, 1fr);
-  column-gap: var(--mobile-col-gap);
+  column-gap: clamp(18px, 5vw, 26px);
   row-gap: 16px;
   width: 100%;
   margin-bottom: 32px;
@@ -3353,7 +3353,7 @@ body.site-loader-closing .skip-link {
   display: grid;
   grid-template-columns: 128px minmax(0, 1fr);
   align-items: flex-start;
-  gap: var(--mobile-col-gap);
+  gap: clamp(18px, 5vw, 26px);
   width: 100%;
   margin-bottom: 32px;
 }
@@ -4049,7 +4049,7 @@ body.site-loader-closing .skip-link {
   grid-template-columns: max-content max-content;
   column-gap: 8px;
   justify-content: space-between;
-  width: 100%;
+  width: calc(100% - 16px);
   grid-column: 2;
   grid-row: 1 / span 2;
 }
@@ -4076,7 +4076,7 @@ body.site-loader-closing .skip-link {
 .mobile-footer__contacts {
   position: absolute;
   top: 84px;
-  right: 0;
+  right: 16px;
   left: auto;
   display: flex;
   gap: 8px;
@@ -4084,7 +4084,7 @@ body.site-loader-closing .skip-link {
 
 .mobile-footer__portrait {
   position: absolute;
-  right: 0;
+  right: 16px;
   bottom: 0;
   width: 117px;
   height: 117px;
