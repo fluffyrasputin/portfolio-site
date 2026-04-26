@@ -3340,6 +3340,7 @@ body.site-loader-closing .skip-link {
 .mobile-case-atom__copy {
   width: 100%;
   max-width: min(180px, 100%);
+  justify-self: end;
 }
 
 .mobile-case-atom__kamaz {
@@ -3356,7 +3357,7 @@ body.site-loader-closing .skip-link {
 
 .mobile-case-atom__photo-copy {
   display: grid;
-  grid-template-columns: 120px minmax(0, 1fr);
+  grid-template-columns: 128px minmax(0, 1fr);
   align-items: flex-start;
   gap: clamp(18px, 5vw, 24px);
   width: 100%;
@@ -3365,7 +3366,7 @@ body.site-loader-closing .skip-link {
 
 .mobile-case-atom__small-photo {
   position: relative;
-  width: 120px;
+  width: 128px;
   height: auto;
   aspect-ratio: 128 / 75;
 }
@@ -3697,7 +3698,7 @@ body.site-loader-closing .skip-link {
 .mobile-case-stoloto__copy-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  column-gap: clamp(16px, 4vw, 24px);
+  column-gap: clamp(20px, 4vw, 24px);
   align-items: start;
   width: 100%;
   max-width: 100%;
@@ -3742,7 +3743,7 @@ body.site-loader-closing .skip-link {
 .mobile-case-stoloto__end img {
   width: 100%;
   height: auto;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
 }
 
