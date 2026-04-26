@@ -1067,10 +1067,15 @@
       }
 
       .tv-mobile-preview__page {
+        --tv-mobile-shell: 100%;
+        --tv-mobile-scale: calc(var(--tv-mobile-shell) / 358px);
+        --tv-mobile-text-wide: clamp(201px, calc(var(--tv-mobile-shell) - 157px), 233px);
+        --tv-mobile-right-col: max(168px, calc(var(--tv-mobile-shell) - 143px - var(--tv-mobile-col-gap)));
+        --tv-mobile-col-gap: clamp(12px, 4vw, 22px);
         width: 100%;
-        max-width: 390px;
+        max-width: 462px;
         margin: 0 auto;
-        padding: 120px 0 96px;
+        padding: 120px 16px 96px;
         display: grid;
         gap: 120px;
         justify-items: center;
@@ -1078,7 +1083,7 @@
 
       .tv-mobile-hero,
       .tv-mobile-case {
-        width: 358px;
+        width: var(--tv-mobile-shell);
         margin: 0 auto;
       }
 
@@ -1179,16 +1184,29 @@
 
       .tv-mobile-hero__wolf {
         position: absolute;
-        top: 150px;
-        right: 0;
-        width: 238px;
-        height: 340px;
+        top: 126px;
+        right: -18px;
+        width: 300px;
+        height: 408px;
         overflow: hidden;
       }
 
       .tv-mobile-hero__wolf img {
         object-fit: cover;
         object-position: center;
+      }
+
+      .tv-mobile-hero__wolf video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: block;
+        width: 133%;
+        height: 133%;
+        max-width: none;
+        object-fit: cover;
+        object-position: center;
+        transform: translate(-50%, -50%);
       }
 
       .tv-mobile-case__status {
@@ -1224,19 +1242,19 @@
       .tv-mobile-case-obj__car,
       .tv-mobile-case-obj__music {
         position: relative;
-        width: 358px;
+        width: 100%;
         max-width: 100%;
       }
 
       .tv-mobile-case-atom__logo {
-        height: 55px;
-        margin-bottom: 32px;
+        height: auto;
+        margin-bottom: calc(32px * var(--tv-mobile-scale));
       }
 
       .tv-mobile-case-atom__intro {
         display: grid;
-        grid-template-columns: 143px 177px;
-        column-gap: 38px;
+        grid-template-columns: 143px minmax(0, 1fr);
+        column-gap: var(--tv-mobile-col-gap);
         row-gap: 16px;
         margin-bottom: 32px;
       }
@@ -1263,14 +1281,16 @@
       .tv-mobile-case-atom__description {
         grid-column: 2;
         grid-row: 1 / span 2;
-        width: 177px;
+        width: var(--tv-mobile-right-col);
+        max-width: 100%;
+        justify-self: end;
       }
 
-      .tv-mobile-case-atom__car { height: 173px; margin-bottom: 32px; }
-      .tv-mobile-case-atom__steering { height: 261px; margin-bottom: 32px; }
-      .tv-mobile-case-atom__cards { height: 193px; margin-bottom: 32px; }
-      .tv-mobile-case-atom__radar { height: 320px; margin-bottom: 32px; }
-      .tv-mobile-case-atom__last { height: 201px; }
+      .tv-mobile-case-atom__car { margin-bottom: 32px; aspect-ratio: 358 / 173; height: auto; }
+      .tv-mobile-case-atom__steering { margin-bottom: 32px; aspect-ratio: 358 / 261; height: auto; }
+      .tv-mobile-case-atom__cards { margin-bottom: 32px; aspect-ratio: 358 / 193; height: auto; }
+      .tv-mobile-case-atom__radar { margin-bottom: 32px; aspect-ratio: 358 / 320; height: auto; }
+      .tv-mobile-case-atom__last { aspect-ratio: 358 / 201; height: auto; }
 
       .tv-mobile-case-atom__car img,
       .tv-mobile-case-atom__steering img,
@@ -1290,7 +1310,7 @@
         margin-bottom: 32px;
       }
 
-      .tv-mobile-case-atom__copy { width: 201px; }
+      .tv-mobile-case-atom__copy { width: 100%; max-width: var(--tv-mobile-text-wide); }
 
       .tv-mobile-case-atom__kamaz {
         position: relative;
@@ -1301,7 +1321,8 @@
       .tv-mobile-case-atom__small-photo {
         position: relative;
         width: 128px;
-        height: 75px;
+        aspect-ratio: 128 / 75;
+        height: auto;
       }
 
       .tv-mobile-case-atom__small-photo img,
@@ -1311,8 +1332,9 @@
 
       .tv-mobile-case-atom__thin {
         position: relative;
-        width: 177px;
-        height: 86px;
+        width: var(--tv-mobile-right-col);
+        aspect-ratio: 177 / 86;
+        height: auto;
         margin-left: auto;
         margin-bottom: 16px;
       }
@@ -1326,8 +1348,8 @@
       }
 
       .tv-mobile-case-obj__logo {
-        height: 53px;
-        margin-bottom: 32px;
+        height: auto;
+        margin-bottom: calc(32px * var(--tv-mobile-scale));
       }
 
       .tv-mobile-case-obj__meta {
@@ -1347,23 +1369,27 @@
         position: relative;
         width: 201px;
         height: 64px;
+        margin-left: auto;
+        flex: 0 0 201px;
       }
 
       .tv-mobile-case-obj__car {
-        height: 179px;
+        aspect-ratio: 358 / 179;
+        height: auto;
         margin-bottom: 32px;
       }
 
       .tv-mobile-case-obj__copy {
-        width: 358px;
-        max-width: 100%;
+        width: 100%;
+        max-width: var(--tv-mobile-text-wide);
         margin-bottom: 32px;
         font-size: 13px;
         line-height: 17px;
       }
 
       .tv-mobile-case-obj__music {
-        height: 201px;
+        aspect-ratio: 358 / 201;
+        height: auto;
         overflow: hidden;
         border-radius: 8px;
       }
@@ -1389,34 +1415,38 @@
       .tv-mobile-case-stoloto__end,
       .tv-mobile-case-stoloto__lotteries {
         position: relative;
-        width: 358px;
+        width: 100%;
         max-width: 100%;
       }
 
       .tv-mobile-case-pochta__logo,
       .tv-mobile-case-stoloto__logo {
-        height: 55px;
+        height: auto;
       }
 
       .tv-mobile-case-bitrix__logo {
-        height: 64px;
+        height: auto;
       }
 
+      .tv-mobile-case-atom__logo img,
+      .tv-mobile-case-obj__logo img,
       .tv-mobile-case-pochta__logo img,
       .tv-mobile-case-bitrix__logo img,
       .tv-mobile-case-stoloto__logo img {
         display: block;
         width: 100%;
-        height: 100%;
+        height: auto;
+        max-width: 100%;
         object-fit: contain;
+        object-position: left center;
       }
 
       .tv-mobile-case-pochta__intro,
       .tv-mobile-case-bitrix__intro,
       .tv-mobile-case-stoloto__intro {
         display: grid;
-        grid-template-columns: 143px 177px;
-        column-gap: 38px;
+        grid-template-columns: 143px minmax(0, 1fr);
+        column-gap: var(--tv-mobile-col-gap);
         row-gap: 16px;
       }
 
@@ -1442,13 +1472,16 @@
       .tv-mobile-case-pochta__description,
       .tv-mobile-case-bitrix__description,
       .tv-mobile-case-stoloto__description {
-        width: 177px;
+        width: var(--tv-mobile-right-col);
+        max-width: 100%;
         font-size: 13px;
         line-height: 17px;
+        justify-self: end;
       }
 
       .tv-mobile-case-pochta__phone {
-        height: 725px;
+        aspect-ratio: 358 / 725;
+        height: auto;
       }
 
       .tv-mobile-case-pochta__phone img,
@@ -1464,7 +1497,7 @@
       .tv-mobile-case-stoloto__right img,
       .tv-mobile-case-stoloto__end img {
         display: block;
-        width: 358px;
+        width: 100%;
         height: 100%;
         object-fit: contain;
       }
@@ -1481,12 +1514,13 @@
       }
 
       .tv-mobile-case-pochta__card {
-        height: 236px;
+        aspect-ratio: 358 / 236;
+        height: auto;
       }
 
       .tv-mobile-case-pochta__lower {
         display: grid;
-        grid-template-columns: 165px 177px;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         column-gap: 16px;
         row-gap: 30px;
         width: 100%;
@@ -1495,20 +1529,23 @@
 
       .tv-mobile-case-pochta__fast-pay {
         position: relative;
-        width: 165px;
-        height: 265px;
+        width: 100%;
+        aspect-ratio: 165 / 265;
+        height: auto;
       }
 
       .tv-mobile-case-pochta__msc {
         position: relative;
-        width: 177px;
-        height: 177px;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        height: auto;
       }
 
       .tv-mobile-case-pochta__plashki {
         position: relative;
         width: 100%;
-        height: 198px;
+        aspect-ratio: 358 / 198;
+        height: auto;
         grid-column: 1 / -1;
       }
 
@@ -1519,9 +1556,10 @@
 
       .tv-mobile-case-bitrix__faces {
         position: relative;
-        width: 358px;
+        width: 100%;
         max-width: 100%;
-        height: 160px;
+        aspect-ratio: 358 / 160;
+        height: auto;
       }
       .tv-mobile-case-bitrix__faces img {
         display: block;
@@ -1534,26 +1572,30 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: 34px;
-        width: 183px;
+        width: var(--tv-mobile-right-col);
         margin-left: auto;
         font-size: 13px;
         line-height: 17px;
+        justify-items: start;
       }
 
       .tv-mobile-case-bitrix__block {
-        height: 275px;
+        aspect-ratio: 358 / 275;
+        height: auto;
       }
 
       .tv-mobile-case-bitrix__last {
-        height: 221px;
+        aspect-ratio: 358 / 221;
+        height: auto;
       }
 
       .tv-mobile-case-stoloto__block {
-        height: 371px;
+        aspect-ratio: 358 / 371;
+        height: auto;
       }
 
       .tv-mobile-case-stoloto__mid-description {
-        width: 177px;
+        width: var(--tv-mobile-right-col);
         margin-left: auto;
         font-size: 13px;
         line-height: 17px;
@@ -1561,9 +1603,10 @@
 
       .tv-mobile-case-stoloto__mascots-top {
         position: relative;
-        width: 358px;
+        width: 100%;
         max-width: 100%;
-        height: 277px;
+        aspect-ratio: 358 / 277;
+        height: auto;
       }
 
       .tv-mobile-case-stoloto__mascots-top img {
@@ -1576,21 +1619,24 @@
 
       .tv-mobile-case-stoloto__copy-row {
         display: grid;
-        grid-template-columns: 177px 177px;
-        column-gap: 4px;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: clamp(12px, 3vw, 20px);
         align-items: start;
-        width: 358px;
+        width: 100%;
         max-width: 100%;
       }
 
       .tv-mobile-case-stoloto__copy {
-        width: 177px;
+        width: 100%;
+        max-width: 177px;
       }
 
       .tv-mobile-case-stoloto__mascot-right {
         position: relative;
         width: 162px;
-        height: 301px;
+        aspect-ratio: 162 / 301;
+        height: auto;
+        justify-self: end;
       }
 
       .tv-mobile-case-stoloto__mascot-right img {
@@ -1602,7 +1648,8 @@
       }
 
       .tv-mobile-case-stoloto__right {
-        height: 735px;
+        aspect-ratio: 358 / 735;
+        height: auto;
       }
 
       .tv-mobile-case-stoloto__end {
@@ -1610,7 +1657,7 @@
         align-items: center;
         justify-content: center;
         position: relative;
-        width: 358px;
+        width: 100%;
         max-width: 100%;
         height: auto;
         aspect-ratio: 3396 / 4096;
@@ -1625,14 +1672,14 @@
       .tv-mobile-additional-cases {
         display: grid;
         gap: 32px;
-        width: 358px;
+        width: var(--tv-mobile-shell);
       }
 
       .tv-mobile-additional-cases__heading {
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
-        width: 358px;
+        width: 100%;
       }
 
       .tv-mobile-additional-cases__title {
@@ -1671,13 +1718,14 @@
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        width: 358px;
+        width: 100%;
       }
 
       .tv-mobile-additional-cases__meta {
         display: grid;
         gap: 16px;
-        width: 177px;
+        width: 100%;
+        max-width: clamp(177px, calc(var(--tv-mobile-shell) - 181px), 209px);
       }
 
       .tv-mobile-additional-cases__copy,
@@ -1707,7 +1755,7 @@
 
       .tv-mobile-additional-cases__image img {
         display: block;
-        width: 390px;
+        width: 100%;
         height: 100%;
         object-fit: cover;
       }
@@ -1739,7 +1787,8 @@
       .tv-mobile-page-end {
         display: grid;
         gap: 120px;
-        width: 390px;
+        width: 100%;
+        max-width: none;
         margin: 0 auto;
         padding-bottom: 60px;
       }
@@ -1761,14 +1810,16 @@
 
       .tv-mobile-footer {
         position: relative;
-        width: 390px;
+        width: var(--tv-mobile-shell);
+        max-width: 100%;
+        margin: 0 auto;
         height: 660px;
       }
 
       .tv-mobile-footer__name {
         position: absolute;
         top: 32px;
-        left: 16px;
+        left: 0;
         width: 156px;
         font-size: 24px;
         line-height: 32px;
@@ -1779,7 +1830,7 @@
       .tv-mobile-footer__portrait {
         position: absolute;
         top: 543px;
-        left: 257px;
+        right: 0;
         width: 117px;
         height: 117px;
         overflow: hidden;
@@ -1810,17 +1861,19 @@
         display: grid;
         position: absolute;
         top: 88px;
-        left: 16px;
+        left: 0;
         width: 147px;
+        justify-items: start;
+        text-align: left;
       }
 
       .tv-mobile-footer__projects-block {
         display: grid;
         position: absolute;
         top: 323px;
-        left: 16px;
-        width: 358px;
-        grid-template-columns: 55px 120px 105px;
+        left: 0;
+        width: 100%;
+        grid-template-columns: 55px minmax(0, 1fr);
         column-gap: 39px;
         align-items: start;
       }
@@ -1875,9 +1928,11 @@
 
       .tv-mobile-footer__projects-grid {
         display: grid;
-        grid-template-columns: 120px 105px;
-        column-gap: 39px;
-        grid-column: 2 / 4;
+        grid-template-columns: max-content max-content;
+        column-gap: 8px;
+        justify-content: space-between;
+        width: 100%;
+        grid-column: 2;
         grid-row: 1 / span 2;
       }
 
@@ -1886,16 +1941,26 @@
         display: grid;
       }
 
+      .tv-mobile-footer__projects-list p,
+      .tv-mobile-footer__statuses p {
+        white-space: nowrap;
+      }
+
       .tv-mobile-footer__statuses {
         color: var(--muted);
+        justify-items: end;
+        text-align: right;
+        width: 100%;
+        justify-self: end;
       }
 
       .tv-mobile-footer__contacts {
         position: absolute;
         top: 84px;
-        left: 235px;
+        right: 0;
         display: flex;
         gap: 8px;
+        justify-content: flex-end;
       }
 
       @media (max-width: 767px) {
@@ -2099,12 +2164,14 @@
             </div>
           </div>
           <div class="tv-mobile-hero__wolf">
-            <img src="public/media/mobile/mobile-hero-wolf.png" alt="" />
+            <video autoplay loop muted playsinline webkit-playsinline preload="auto" disablepictureinpicture aria-hidden="true">
+              <source src="public/media/figma/Wolfy video.mp4" type="video/mp4" />
+            </video>
           </div>
         </section>
 
         <section class="tv-mobile-case tv-mobile-case--atom">
-          <div class="tv-mobile-case-atom__logo"><img src="public/media/figma/atom-logo.svg" alt="ATOM" /></div>
+          <div class="tv-mobile-case-atom__logo"><img src="public/media/figma/Case/Atom/Atom logo.png" alt="ATOM" /></div>
           <div class="tv-mobile-case-atom__intro">
             <div class="tv-mobile-case-atom__meta">
               <div class="tv-mobile-case-atom__title-block">
@@ -2132,7 +2199,7 @@
         </section>
 
         <section class="tv-mobile-case tv-mobile-case--obj">
-          <div class="tv-mobile-case-obj__logo"><img src="public/media/figma/obu-logo.svg" alt="OBJ" /></div>
+          <div class="tv-mobile-case-obj__logo"><img src="public/media/figma/Case/Obj/OBJ logo.png" alt="OBJ" /></div>
           <div class="tv-mobile-case-obj__intro">
             <div class="tv-mobile-case-obj__meta">
               <div class="tv-mobile-case-obj__title-block">
@@ -2148,7 +2215,7 @@
         </section>
 
         <section class="tv-mobile-case tv-mobile-case--pochta">
-          <div class="tv-mobile-case-pochta__logo"><img src="public/media/mobile/mobile-pochta-logo.svg" alt="Pochta Bank" /></div>
+          <div class="tv-mobile-case-pochta__logo"><img src="public/media/figma/Case/PB/logo.png" alt="Pochta Bank" /></div>
           <div class="tv-mobile-case-pochta__intro">
             <div class="tv-mobile-case-pochta__meta">
               <div class="tv-mobile-case-pochta__title-block">
@@ -2173,7 +2240,7 @@
         </section>
 
         <section class="tv-mobile-case tv-mobile-case--bitrix">
-          <div class="tv-mobile-case-bitrix__logo"><img src="public/media/mobile/mobile-bitrix-logo.svg" alt="Bitrix24" /></div>
+          <div class="tv-mobile-case-bitrix__logo"><img src="public/media/figma/Case/Bitrix24 logo.png" alt="Bitrix24" /></div>
           <div class="tv-mobile-case-bitrix__intro">
             <div class="tv-mobile-case-bitrix__meta">
               <div class="tv-mobile-case-bitrix__title-block">
@@ -2196,7 +2263,7 @@
         </section>
 
         <section class="tv-mobile-case tv-mobile-case--stoloto">
-          <div class="tv-mobile-case-stoloto__logo"><img src="public/media/mobile/mobile-stoloto-logo.svg" alt="Stoloto" /></div>
+          <div class="tv-mobile-case-stoloto__logo"><img src="public/media/figma/Case/Stoloto/logo.png" alt="Stoloto" /></div>
           <div class="tv-mobile-case-stoloto__intro">
             <div class="tv-mobile-case-stoloto__meta">
               <div class="tv-mobile-case-stoloto__title-block">
