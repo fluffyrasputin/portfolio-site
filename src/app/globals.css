@@ -3061,11 +3061,9 @@ body.site-loader-closing .skip-link {
   width: 100%;
   max-width: 462px;
   margin: 0 auto;
-  padding-inline: 16px;
-  box-sizing: border-box;
   display: grid;
   gap: 120px;
-  justify-items: center;
+  justify-items: stretch;
 }
 
 .mobile-hero,
@@ -3076,6 +3074,8 @@ body.site-loader-closing .skip-link {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
+  padding-inline: 16px;
+  box-sizing: border-box;
 }
 
 .mobile-hero {
