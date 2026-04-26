@@ -3057,7 +3057,8 @@ body.site-loader-closing .skip-link {
 }
 
 .mobile-page__container {
-  --mobile-col-gap: clamp(12px, 4vw, 22px);
+  --mobile-col-gap: clamp(12px, 4vw, 18px);
+  --mobile-meta-col: clamp(120px, 34vw, 143px);
   width: 100%;
   max-width: 462px;
   margin: 0 auto;
@@ -3269,8 +3270,8 @@ body.site-loader-closing .skip-link {
 
 .mobile-case-atom__intro {
   display: grid;
-  grid-template-columns: 143px minmax(0, 1fr);
-  column-gap: clamp(18px, 5vw, 26px);
+  grid-template-columns: var(--mobile-meta-col) minmax(0, 1fr);
+  column-gap: var(--mobile-col-gap);
   row-gap: 16px;
   width: 100%;
   margin-bottom: 32px;
@@ -3279,7 +3280,7 @@ body.site-loader-closing .skip-link {
 .mobile-case-atom__meta {
   display: grid;
   gap: 0;
-  width: 143px;
+  width: var(--mobile-meta-col);
   font-size: 13px;
   line-height: 17px;
   align-content: start;
@@ -3513,7 +3514,7 @@ body.site-loader-closing .skip-link {
 .mobile-case-bitrix__intro,
 .mobile-case-stoloto__intro {
   display: grid;
-  grid-template-columns: 143px minmax(0, 1fr);
+  grid-template-columns: var(--mobile-meta-col) minmax(0, 1fr);
   column-gap: var(--mobile-col-gap);
   row-gap: 16px;
   width: 100%;
@@ -3524,7 +3525,7 @@ body.site-loader-closing .skip-link {
 .mobile-case-stoloto__meta {
   display: grid;
   gap: 0;
-  width: 143px;
+  width: var(--mobile-meta-col);
   font-size: 13px;
   line-height: 17px;
   align-content: start;
