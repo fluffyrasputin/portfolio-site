@@ -3299,7 +3299,7 @@ body.site-loader-closing .skip-link {
 .mobile-case-atom__description {
   grid-column: 2;
   grid-row: 1 / span 2;
-  width: 100%;
+  width: min(180px, 100%);
   min-width: 0;
   justify-self: end;
 }
@@ -3339,7 +3339,7 @@ body.site-loader-closing .skip-link {
 
 .mobile-case-atom__copy {
   width: 100%;
-  max-width: min(225px, 100%);
+  max-width: min(180px, 100%);
 }
 
 .mobile-case-atom__kamaz {
@@ -3921,6 +3921,13 @@ body.site-loader-closing .skip-link {
   width: 100%;
   margin: 0 auto;
   padding-bottom: 60px;
+}
+
+.wall-mobile-page .mobile-page-end,
+.wall-mobile-page .mobile-footer {
+  width: 100%;
+  padding-inline: 16px;
+  box-sizing: border-box;
 }
 
 .mobile-page-end__up {
