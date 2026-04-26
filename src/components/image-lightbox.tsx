@@ -39,6 +39,7 @@ const LIGHTBOX_EXCLUDE_SELECTOR = [
 function computeInitialScale(image: LightboxImageState) {
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
+  const isMobileViewport = viewportWidth <= 767;
   const horizontalPadding = viewportWidth <= 767 ? 24 : 96;
   const verticalPadding = viewportWidth <= 767 ? 120 : 168;
   const availableWidth = Math.max(160, viewportWidth - horizontalPadding);
@@ -58,10 +59,15 @@ function computeInitialScale(image: LightboxImageState) {
   const initialScale = isSmallImage
     ? Math.min(fitScale, displayedScale * 2)
     : Math.min(fitScale, displayedScale * enlargementLimit);
+  const mobileMaxScale = Math.min(fitScale, Math.max(displayedScale * 2, initialScale));
+  const desktopMaxScale = Math.min(
+    1,
+    Math.max(displayedScale * 3.2, initialScale * 2.1, fitScale),
+  );
 
   return {
     initialScale,
-    maxScale: Math.min(fitScale, Math.max(displayedScale * 2, initialScale)),
+    maxScale: isMobileViewport ? mobileMaxScale : desktopMaxScale,
   };
 }
 
